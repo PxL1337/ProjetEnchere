@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<settings>
+    <connection>
+        <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+        <url>jdbc:sqlserver://localhost:1433;databaseName=ENCHERE_DB;encrypt=false;trustServerCertificate=true</url>
+        <user>Username</user>
+        <password>Password</password>
+    </connection>
+</settings>
