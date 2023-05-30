@@ -1,6 +1,10 @@
 # ProjetEnchere
 
-[Description du projet]
+## Description
+Projet Java Web ENI-Ecole Informatique 
+
+Technos : JavaEE, HTML/CSS, Servlets, JSP, SQL Server. Running on Appache Tomcat
+
 
 ## Configuration de la base de données
 
