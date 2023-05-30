@@ -22,7 +22,7 @@ public class Settings {
 
     static {
         try {
-            File settingsFile = new File("src/main/webapp/META-INF/context.xml");
+            File settingsFile = new File("src/main/resources/META-INF/db_config.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(settingsFile);

@@ -1,6 +1,11 @@
 # ProjetEnchere
 
+[Description du projet]
 
-Projet Java Web ENI-Ecole Informatique
+## Configuration de la base de données
 
-Technos : JavaEE, HTML/CSS, Servlets, JSP, SQL Server. Running on Appache Tomcat
+Avant d'exécuter l'application, vous devrez configurer votre base de données. 
+
+Suivez les instructions dans [ce guide](database_setup.md) pour savoir comment le faire.
+
+

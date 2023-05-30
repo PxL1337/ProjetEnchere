@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<settings>
-    <connection>
-        <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
-        <url>jdbc:sqlserver://pixdev.ovh:1433;databaseName=ENCHERE_DB;encrypt=false;trustServerCertificate=true</url>
-        <user>PLANB</user>
-        <password>PLANBPLANB</password>
-    </connection>
-</settings>

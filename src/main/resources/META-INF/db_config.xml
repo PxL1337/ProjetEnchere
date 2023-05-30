@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<connection>
+    <url>URL_DATABASE</url>
+    <user>USER_DATABASE</user>
+    <password>PASSWORD_DATABASE</password>
+    <driver>DRIVER_DATABASE</driver>
+</connection>
