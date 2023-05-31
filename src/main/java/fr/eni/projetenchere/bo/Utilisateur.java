@@ -59,13 +59,20 @@ public class Utilisateur {
 
 	
 
-    public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email) {
+    public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String ville, String codePostal) {
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.ville = ville;
+		this.codePostal = codePostal;
 	}
+
+
 
 	//---------------------------------------METHODE/FUNCTION ZONE---------------------------------------//
     public void addEnchereToList(Enchere enchere) {
