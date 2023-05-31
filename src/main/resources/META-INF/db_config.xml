@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <connection>
-    <url>jdbc:sqlserver://pixdev.ovh:1433;databaseName=PAPETERIE_DB;encrypt=false;trustServerCertificate=true</url>
+    <url>jdbc:sqlserver://pixdev.ovh:1433;databaseName=ENCHERE_DB;encrypt=false;trustServerCertificate=true</url>
     <user>USER_DATABASE</user>
     <password>PASSWORD_DATABASE</password>
     <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>

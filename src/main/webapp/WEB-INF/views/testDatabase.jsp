@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.io.StringWriter" %>
+<%@ page import="java.io.PrintWriter" %><%--
   Created by IntelliJ IDEA.
   User: valpx
   Date: 31/05/2023
@@ -25,9 +26,18 @@
 <div class="container">
 <h1>Database Test</h1>
 <p>Status: ${status}</p>
-<c:if test="${not empty exception}">
-    <p>Exception: ${exception}</p>
-</c:if>
+    <% if (request.getAttribute("exception") != null) { %>
+    <pre>
+    <%
+        Exception e = (Exception)request.getAttribute("exception");
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        String stackTrace = sw.toString();
+    %>
+    <%= stackTrace %>
+    </pre>
+    <% } %>
 </div>
 
 

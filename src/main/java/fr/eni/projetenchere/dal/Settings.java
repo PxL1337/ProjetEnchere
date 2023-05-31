@@ -2,6 +2,7 @@ package fr.eni.projetenchere.dal;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -9,6 +10,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -22,10 +24,10 @@ public class Settings {
 
     static {
         try {
-            File settingsFile = new File("src/main/resources/META-INF/db_config.xml");
+            InputStream settingsFile = Settings.class.getResourceAsStream("/META-INF/db_config.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(settingsFile);
+            Document doc = dBuilder.parse(new InputSource(settingsFile));
             doc.getDocumentElement().normalize();
 
             NodeList connectionNodeList = doc.getElementsByTagName("connection");
