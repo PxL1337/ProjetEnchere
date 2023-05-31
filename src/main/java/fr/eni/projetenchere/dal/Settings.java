@@ -35,7 +35,12 @@ public class Settings {
                 url = System.getenv(connectionElement.getElementsByTagName("url").item(0).getTextContent());
                 user = System.getenv(connectionElement.getElementsByTagName("user").item(0).getTextContent());
                 password = System.getenv(connectionElement.getElementsByTagName("password").item(0).getTextContent());
-                driver = System.getenv(connectionElement.getElementsByTagName("driver").item(0).getTextContent());
+                driver = connectionElement.getElementsByTagName("driver").item(0).getTextContent();
+
+                if (url == null || user == null || password == null) {
+                    throw new IllegalStateException("Les variables d'environnement ne sont pas définies correctement.");
+                }
+
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();

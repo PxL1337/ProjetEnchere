@@ -1,0 +1,11 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+footer {
+    height: 60px; /* Mettez la hauteur de votre footer ici */
+    text-align: center;
+}

@@ -3,5 +3,5 @@
     <url>URL_DATABASE</url>
     <user>USER_DATABASE</user>
     <password>PASSWORD_DATABASE</password>
-    <driver>DRIVER_DATABASE</driver>
+    <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
 </connection>
