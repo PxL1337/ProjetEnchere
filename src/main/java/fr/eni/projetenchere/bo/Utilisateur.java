@@ -39,7 +39,7 @@ public class Utilisateur {
      * @param ville
      * @param motDePasse
      * @param credit
-     * @param administrateur
+     * @param administrateur 
      */
     public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
                        String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
