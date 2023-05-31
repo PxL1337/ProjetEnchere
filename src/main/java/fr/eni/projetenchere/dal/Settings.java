@@ -32,7 +32,7 @@ public class Settings {
             Node connectionNode = connectionNodeList.item(0);
             if (connectionNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element connectionElement = (Element) connectionNode;
-                url = System.getenv(connectionElement.getElementsByTagName("url").item(0).getTextContent());
+                url = connectionElement.getElementsByTagName("url").item(0).getTextContent();
                 user = System.getenv(connectionElement.getElementsByTagName("user").item(0).getTextContent());
                 password = System.getenv(connectionElement.getElementsByTagName("password").item(0).getTextContent());
                 driver = connectionElement.getElementsByTagName("driver").item(0).getTextContent();
