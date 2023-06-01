@@ -9,11 +9,11 @@ public class Retrait {
     private String ville;
 	
     private ArticleVendu article;
-	private Utilisateur utilisateur;
+	private User utilisateur;
 
     //-------------------- CONSTRUCTOR ZONE --------------------//
 	 public Retrait(int noArticle, String rue, String codePostal, String ville, ArticleVendu article,
-				Utilisateur utilisateur) {
+				User utilisateur) {
 			this.noArticle = noArticle;
 			this.rue = rue;
 			this.codePostal = codePostal;
@@ -28,7 +28,7 @@ public class Retrait {
 	 }
 
 
-	public Retrait(ArticleVendu article, Utilisateur utilisateur) {
+	public Retrait(ArticleVendu article, User utilisateur) {
 		this.article = article;
 		this.utilisateur = utilisateur;
 		this.noArticle = article.getNoArticle();
@@ -54,13 +54,13 @@ public class Retrait {
 
 
 
-	public Utilisateur getUtilisateur() {
+	public User getUtilisateur() {
 		return utilisateur;
 	}
 
 
 
-	public void setUtilisateur(Utilisateur utilisateur) {
+	public void setUtilisateur(User utilisateur) {
 		this.utilisateur = utilisateur;
 	}
 

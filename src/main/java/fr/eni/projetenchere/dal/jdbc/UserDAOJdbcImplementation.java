@@ -8,11 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.projetenchere.bo.Utilisateur;
+import fr.eni.projetenchere.bo.User;
 import fr.eni.projetenchere.dal.ConnectionProvider;
-import fr.eni.projetenchere.dal.UtilisateurDAO;
+import fr.eni.projetenchere.dal.UserDAO;
 
-public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
+public class UserDAOJdbcImplementation implements UserDAO {
 	final String INSERT_USER = "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?";
@@ -29,34 +29,35 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 	final String DELETE_USER_BY_ID = "DELETE FROM UTILISATEURS WHERE no_utilisateur=?";
 	private final String DELETE_ALL_USERS = "DELETE FROM UTILISATEURS";
 
-	private static final String SELECT_BY_PSEUDO_OU_EMAIL = "SELECT * FROM UTILISATEURS WHERE pseudo=? OR email=?";
+	private static final String SELECT_BY_PSEUDO_OR_EMAIL = "SELECT * FROM UTILISATEURS WHERE pseudo=? OR email=?";
 	
 	@Override
-	public void insert(Utilisateur utilisateur)
+	public void insert(User user)
 	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement = 
 						connection.prepareStatement(
 						INSERT_USER, PreparedStatement.RETURN_GENERATED_KEYS);)
 		{
-			preparedStatement.setString(1, utilisateur.getPseudo());
-			preparedStatement.setString(2, utilisateur.getNom());
-			preparedStatement.setString(3, utilisateur.getPrenom());
-			preparedStatement.setString(4, utilisateur.getEmail());
-			preparedStatement.setString(5, utilisateur.getTelephone());
-			preparedStatement.setString(6, utilisateur.getRue());
-			preparedStatement.setString(7, utilisateur.getCodePostal());
-			preparedStatement.setString(8, utilisateur.getVille());
-			preparedStatement.setString(9, utilisateur.getMotDePasse());
-			preparedStatement.setInt(10, utilisateur.getCredit());
-			preparedStatement.setBoolean(11, utilisateur.isAdministrateur());
+			preparedStatement.setString(1, user.getPseudo());
+			preparedStatement.setString(2, user.getNom());
+			preparedStatement.setString(3, user.getPrenom());
+			preparedStatement.setString(4, user.getEmail());
+			preparedStatement.setString(5, user.getTelephone());
+			preparedStatement.setString(6, user.getRue());
+			preparedStatement.setString(7, user.getCodePostal());
+			preparedStatement.setString(8, user.getVille());
+			preparedStatement.setString(9, user.getMotDePasse());
+			preparedStatement.setInt(10, user.getCredit());
+			preparedStatement.setBoolean(11, user.isAdministrateur());
 			  
-			debugAffectedRows(preparedStatement);
+			//debugAffectedRows(preparedStatement);
 			
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-            if (generatedKeys.next()) {
+            if (generatedKeys.next()) 
+            {
                 int nouvelId = generatedKeys.getInt(1);
-                System.out.println("Nouvel utilisateur ajouté avec l'identifiant : " + nouvelId);
+                System.out.println("Nouvel user ajouté avec l'identifiant : " + nouvelId);
             }
 		} 
 		catch (SQLException e )
@@ -70,25 +71,25 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 	}
 	
 	@Override
-	public void update(Utilisateur utilisateur) 
+	public void update(User user) 
 	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
 						connection.prepareStatement(UPDATE_USER);)
 		{
-			preparedStatement.setString(1, utilisateur.getPseudo());
-			preparedStatement.setString(2, utilisateur.getNom());
-			preparedStatement.setString(3, utilisateur.getPrenom());
-			preparedStatement.setString(4, utilisateur.getEmail());
-			preparedStatement.setString(5, utilisateur.getTelephone());
-			preparedStatement.setString(6, utilisateur.getRue());
-			preparedStatement.setString(7, utilisateur.getCodePostal());
-			preparedStatement.setString(8, utilisateur.getVille());
-			preparedStatement.setString(9, utilisateur.getMotDePasse());
+			preparedStatement.setString(1, user.getPseudo());
+			preparedStatement.setString(2, user.getNom());
+			preparedStatement.setString(3, user.getPrenom());
+			preparedStatement.setString(4, user.getEmail());
+			preparedStatement.setString(5, user.getTelephone());
+			preparedStatement.setString(6, user.getRue());
+			preparedStatement.setString(7, user.getCodePostal());
+			preparedStatement.setString(8, user.getVille());
+			preparedStatement.setString(9, user.getMotDePasse());
 			
-			preparedStatement.setInt(10, utilisateur.getNoUtilisateur());
+			preparedStatement.setInt(10, user.getNoUtilisateur());
 			
-			debugAffectedRows(preparedStatement);
+			//debugAffectedRows(preparedStatement);
 			
 			preparedStatement.executeUpdate();
 		} 
@@ -103,9 +104,9 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 	}
 	
 	@Override
-	public Utilisateur selectByID(int ID)
+	public User selectByID(int ID)
 	{		
-		Utilisateur utilisateur = null;
+		User user = null;
 		
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
@@ -116,17 +117,7 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();			
 			if (resultSet.next()) 
 			{
-				utilisateur = new Utilisateur();
-				
-				utilisateur.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
-				utilisateur.setPseudo(resultSet.getString("pseudo"));
-				utilisateur.setNom(resultSet.getString("nom"));
-				utilisateur.setPrenom(resultSet.getString("prenom"));
-				utilisateur.setEmail(resultSet.getString("email"));
-				utilisateur.setTelephone(resultSet.getString("telephone"));
-				utilisateur.setRue(resultSet.getString("rue"));
-				utilisateur.setCodePostal(resultSet.getString("code_postal"));
-				utilisateur.setVille(resultSet.getString("ville"));
+				user = mapAllUserData(resultSet);
 			}
 		} 
 		catch (SQLException e) 
@@ -136,42 +127,26 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 		
 		System.out.println(
 				"User found with ID [ " + ID + " ]"
-		+ utilisateur.toString());
-		return utilisateur;
+		+ user.toString());
+		return user;
 	}
 	
 	@Override
-	public List<Utilisateur> selectAll()
+	public List<User> selectAll()
 	{
-		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+		List<User> users = new ArrayList<User>();
 		
 		try (Connection connection = ConnectionProvider.getConnection();
 				Statement statement = connection.createStatement();)
 		{					
 			ResultSet resultSet = statement.executeQuery(SELECT_ALL_USERS);
 			
-			Utilisateur utilisateur = null;
+			User user = null;
 			while (resultSet.next()) 
 			{
-				utilisateur = new Utilisateur();
-				
-				utilisateur.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
-				utilisateur.setPseudo(resultSet.getString("pseudo"));
-				utilisateur.setNom(resultSet.getString("nom"));
-				utilisateur.setPrenom(resultSet.getString("prenom"));
-				utilisateur.setEmail(resultSet.getString("email"));
-				utilisateur.setTelephone(resultSet.getString("telephone"));
-				utilisateur.setRue(resultSet.getString("rue"));
-				utilisateur.setCodePostal(resultSet.getString("code_postal"));
-				utilisateur.setVille(resultSet.getString("ville"));
-				utilisateur.setMotDePasse(resultSet.getString("mot_de_passe"));
-				utilisateur.setCredit(resultSet.getInt("credit"));
-				utilisateur.setAdministrateur(resultSet.getBoolean("administrateur"));
-				
-				utilisateurs.add(utilisateur);
-				/*
-				 * System.out.println("Found user : " + utilisateur.toString());
-				 */
+				user = mapAllUserData(resultSet);				
+				users.add(user);
+				System.out.println("Found user : " + user.toString());
 			}
 			
 			statement.close();
@@ -182,20 +157,20 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 			System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage()); 
 		}
 		
-		return utilisateurs;
+		return users;
 	}
 	
 	@Override
-	public void delete(Utilisateur utilisateur) 
+	public void delete(User user) 
 	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
 						connection.prepareStatement(DELETE_USER_BY_ID);)
 		{
-			preparedStatement.setInt(1, utilisateur.getNoUtilisateur());
+			preparedStatement.setInt(1, user.getNoUtilisateur());
 			preparedStatement.executeUpdate();
 			
-			debugAffectedRows(preparedStatement);
+			//debugAffectedRows(preparedStatement);
 		} 
 		catch (SQLException e)
 		{
@@ -203,7 +178,7 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 		}
 	}
 	
-	public void updateUserCredit(Utilisateur utilisateur, int newValue)
+	public void updateCredit(User user, int newValue)
 	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
@@ -211,7 +186,7 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 		{
 			preparedStatement.setInt(1, newValue);
 			
-			preparedStatement.setInt(2, utilisateur.getNoUtilisateur());
+			preparedStatement.setInt(2, user.getNoUtilisateur());
 			preparedStatement.executeUpdate();
 		} 
 		catch (SQLException e)
@@ -220,9 +195,9 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 		}
 	}
 	
-	public Utilisateur selectByPseudo(String comparedPseudo)
+	public User selectByPseudo(String comparedPseudo)
 	{
-		Utilisateur utilisateur = null;
+		User user = null;
 		
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
@@ -233,17 +208,7 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();			
 			if (resultSet.next()) 
 			{
-				utilisateur = new Utilisateur();
-				
-				utilisateur.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
-				utilisateur.setPseudo(resultSet.getString("pseudo"));
-				utilisateur.setNom(resultSet.getString("nom"));
-				utilisateur.setPrenom(resultSet.getString("prenom"));
-				utilisateur.setEmail(resultSet.getString("email"));
-				utilisateur.setTelephone(resultSet.getString("telephone"));
-				utilisateur.setRue(resultSet.getString("rue"));
-				utilisateur.setCodePostal(resultSet.getString("code_postal"));
-				utilisateur.setVille(resultSet.getString("ville"));
+				user = mapUserDataUptoCity(resultSet);
 			}
 		} 
 		catch (SQLException e) 
@@ -253,13 +218,13 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 		
 		System.out.println(
 				"User found with pseudo [ " + comparedPseudo + " ]"
-		+ utilisateur.toString());
-		return utilisateur;
+		+ user.toString());
+		return user;
 	}
 	
-	public Utilisateur selectByEmail(String comparedEmail)
+	public User selectByEmail(String comparedEmail)
 	{
-		Utilisateur utilisateur = null;
+		User user = null;
 		
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
@@ -270,17 +235,7 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();			
 			if (resultSet.next()) 
 			{
-				utilisateur = new Utilisateur();
-				
-				utilisateur.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
-				utilisateur.setPseudo(resultSet.getString("pseudo"));
-				utilisateur.setNom(resultSet.getString("nom"));
-				utilisateur.setPrenom(resultSet.getString("prenom"));
-				utilisateur.setEmail(resultSet.getString("email"));
-				utilisateur.setTelephone(resultSet.getString("telephone"));
-				utilisateur.setRue(resultSet.getString("rue"));
-				utilisateur.setCodePostal(resultSet.getString("code_postal"));
-				utilisateur.setVille(resultSet.getString("ville"));
+				user = mapUserDataUptoCity(resultSet);
 			}			
 		} 
 		catch (SQLException e) 
@@ -290,9 +245,30 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 		
 		
 		System.out.println( "User found with email [ " + comparedEmail + " ]"
-		+ utilisateur.toString());
+		+ user.toString());
 		
-		return utilisateur;
+		return user;
+	}
+	
+	@Override
+	public User selectByPseudoOrEmail(String pseudoOuEmail) throws SQLException {
+		User user = null;
+		
+		try (Connection connection = ConnectionProvider.getConnection();
+				PreparedStatement ps = connection.prepareStatement(SELECT_BY_PSEUDO_OR_EMAIL)) 
+		{
+			ps.setString(1, pseudoOuEmail);
+			ps.setString(2, pseudoOuEmail);
+			
+			try (ResultSet rs = ps.executeQuery()) 
+			{
+				if (rs.next()) 
+				{ 
+					user = mapAllUserData(rs); 
+				}
+			}
+		}
+		return user;
 	}
 	
 	public boolean doesThisPseudoAlreadyExists(String comparedPseudo)
@@ -344,6 +320,41 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 		return false;
 	}
 	
+	private User mapUserDataUptoCity(ResultSet rs) throws SQLException {
+		User user = new User();
+		
+		user.setNoUtilisateur(rs.getInt("no_utilisateur"));
+		user.setPseudo(rs.getString("pseudo"));
+		user.setNom(rs.getString("nom"));
+		user.setPrenom(rs.getString("prenom"));
+		user.setEmail(rs.getString("email"));
+		user.setTelephone(rs.getString("telephone"));
+		user.setRue(rs.getString("rue"));
+		user.setCodePostal(rs.getString("code_postal"));
+		user.setVille(rs.getString("ville"));
+		
+		return user;
+	}
+	
+	private User mapAllUserData(ResultSet rs) throws SQLException {
+		User user = new User();
+		
+		user.setNoUtilisateur(rs.getInt("no_utilisateur"));
+		user.setPseudo(rs.getString("pseudo"));
+		user.setNom(rs.getString("nom"));
+		user.setPrenom(rs.getString("prenom"));
+		user.setEmail(rs.getString("email"));
+		user.setTelephone(rs.getString("telephone"));
+		user.setRue(rs.getString("rue"));
+		user.setCodePostal(rs.getString("code_postal"));
+		user.setVille(rs.getString("ville"));
+		user.setMotDePasse(rs.getString("mot_de_passe"));
+		user.setCredit(rs.getInt("credit"));
+		user.setAdministrateur(rs.getBoolean("administrateur"));
+		
+		return user;
+	}
+	
 	// DEBUG PURPOSE ONLY --------------------------------------------------
 	
 	public void deleteAllUser()
@@ -370,40 +381,5 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 			e.printStackTrace();
 		}
 		System.out.println(rowsAffected + " Rows affected.");
-	}
-
-	@Override
-	public Utilisateur selectByPseudoOuEmail(String pseudoOuEmail) throws SQLException {
-		Utilisateur utilisateur = null;
-
-		try (Connection connection = ConnectionProvider.getConnection();
-			 PreparedStatement ps = connection.prepareStatement(SELECT_BY_PSEUDO_OU_EMAIL)) {
-			ps.setString(1, pseudoOuEmail);
-			ps.setString(2, pseudoOuEmail);
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					utilisateur = mapUtilisateur(rs);
-				}
-			}
-		}
-		return utilisateur;
-	}
-
-	private Utilisateur mapUtilisateur(ResultSet rs) throws SQLException {
-		Utilisateur utilisateur = new Utilisateur();
-
-		utilisateur.setPseudo(rs.getString("pseudo"));
-		utilisateur.setNom(rs.getString("nom"));
-		utilisateur.setPrenom(rs.getString("prenom"));
-		utilisateur.setEmail(rs.getString("email"));
-		utilisateur.setTelephone(rs.getString("telephone"));
-		utilisateur.setRue(rs.getString("rue"));
-		utilisateur.setCodePostal(rs.getString("code_postal"));
-		utilisateur.setVille(rs.getString("ville"));
-		utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
-		utilisateur.setCredit(rs.getInt("credit"));
-		utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
-
-		return utilisateur;
 	}
 }

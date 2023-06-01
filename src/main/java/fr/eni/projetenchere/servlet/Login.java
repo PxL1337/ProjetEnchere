@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import fr.eni.projetenchere.bll.UtilisateurManager;
-import fr.eni.projetenchere.bo.Utilisateur;
-import fr.eni.projetenchere.dal.UtilisateurDAO;
-import fr.eni.projetenchere.dal.jdbc.UtilisateurDAOJdbcImplementation;
+import fr.eni.projetenchere.bo.User;
+import fr.eni.projetenchere.dal.UserDAO;
+import fr.eni.projetenchere.dal.jdbc.UserDAOJdbcImplementation;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,9 +33,9 @@ public class Login extends HttpServlet {
 
         //Valider les données utilisateur
         UtilisateurManager utilisateurManager = new UtilisateurManager();
-        Utilisateur utilisateur = null;
+        User utilisateur = null;
         try {
-            utilisateur = utilisateurManager.selectByPseudoOuEmail(pseudoOuEmail);
+            utilisateur = utilisateurManager.selectByPseudoOrEmail(pseudoOuEmail);
         } catch (SQLException e) {
             // Logger l'erreur
             e.printStackTrace();

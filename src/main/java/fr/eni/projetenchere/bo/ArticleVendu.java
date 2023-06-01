@@ -13,12 +13,12 @@ public class ArticleVendu {
     private Date dateFinEncheres;
     private int prixInitial;
     private int prixVente;
-    private Utilisateur utilisateur;
+    private User utilisateur;
     private Categorie categorie;
 
     //-------------------- CONSTRUCTOR ZONE --------------------//
     public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie) {
+			Date dateFinEncheres, int prixInitial, int prixVente, User utilisateur, Categorie categorie) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -39,7 +39,7 @@ public class ArticleVendu {
 		}
 
 		 public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
-					int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie) {
+					int prixInitial, int prixVente, User utilisateur, Categorie categorie) {
 				this.nomArticle = nomArticle;
 				this.description = description;
 				this.dateDebutEncheres = dateDebutEncheres;
@@ -130,12 +130,12 @@ public class ArticleVendu {
 		}
 
 
-		public Utilisateur getUtilisateur() {
+		public User getUtilisateur() {
 			return utilisateur;
 		}
 
 
-		public void setUtilisateur(Utilisateur utilisateur) {
+		public void setUtilisateur(User utilisateur) {
 			this.utilisateur = utilisateur;
 		}
 

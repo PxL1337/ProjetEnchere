@@ -1,12 +1,12 @@
 package fr.eni.projetenchere.dal.jdbc;
 
-import fr.eni.projetenchere.bo.Utilisateur;
+import fr.eni.projetenchere.bo.User;
 
 public class TestDAL 
 {
 	public static void main(String[] args) 
 	{
-		UtilisateurDAOJdbcImplementation userDAO = new UtilisateurDAOJdbcImplementation();
+		UserDAOJdbcImplementation userDAO = new UserDAOJdbcImplementation();
 		
 		
 		/*
@@ -26,17 +26,16 @@ public class TestDAL
 		
 		
 		
-		  Utilisateur utilisateur = new Utilisateur( 3, "vzevez", "JOSvevE",
-		  "YAvvNN", "TORTUEGENIALE@outlook.fr", "0688559977",
-		  "69 avenue de la grande maison", "Bordeaux", "33500", "golemPlanB");
-		  
-		  // Tu récupèrs l'utilisateur que tu veux
-		  // Modifies 
-		  userDAO.update(utilisateur);
-		 
+		/*
+		 * User utilisateur = new User( 10, "p", "JOSvevE", "YAvvNN",
+		 * "TORTUEGENIALE@outlook.fr", "0688559977",
+		 * "69 avenue de la grande maison", "Bordeaux", "33500", "mdp");
+		 * 
+		 * userDAO.update(utilisateur);
+		 */
 		 
 		
-		/* userDAO.delete(userDAO.selectByID(2)); */
+		/* userDAO.delete(userDAO.selectByID(12)); */
 		
 		
 		/*
@@ -46,7 +45,7 @@ public class TestDAL
 		 
 		
 		/* userDAO.updateUserCredit( userDAO.selectByID(3), 50); */
-		/* userDAO.selectByPseudo(userDAO.selectByID(3).getPseudo()); */
+		 userDAO.selectByEmail(userDAO.selectByID(10).getEmail()); 
 		  
 		/* userDAO.deleteAllUser(); */
 	}

@@ -1,9 +1,9 @@
 package fr.eni.projetenchere.bll;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import fr.eni.projetenchere.bo.User;
-import fr.eni.projetenchere.bo.Utilisateur;
 import fr.eni.projetenchere.dal.jdbc.UserDAOJdbcImplementation;
 
 public class UserManager {
@@ -23,13 +23,10 @@ public class UserManager {
 
 	private UserDAOJdbcImplementation userDAOJdbc;	
 	
-	private UserManager() {
-		userDAOJdbc = new UserDAOJdbcImplementation();}
-	
-	
-
-	
-	
+	private UserManager() 
+	{
+		userDAOJdbc = new UserDAOJdbcImplementation();
+	}
 	
 	public void insertUser(User user){
 	    userDAOJdbc.insert(user);	
@@ -56,7 +53,7 @@ public class UserManager {
 	}
 	
 	public User selectUserByPseudoOuEmail(String pseudoOuEmail) throws SQLException {
-        return userDAOJdbc.selectByPseudoOuEmail(pseudoOuEmail);
+        return userDAOJdbc.selectByPseudoOrEmail(pseudoOuEmail);
     }
 	
 	public User selectUserByPseudo(String comparedPseudo){

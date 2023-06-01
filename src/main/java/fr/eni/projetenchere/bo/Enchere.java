@@ -11,13 +11,13 @@ public class Enchere {
     private int noArticle;
 
     private ArticleVendu article;
-    private Utilisateur encherisseur;
+    private User encherisseur;
 	
 
 
     //-------------------- CONSTRUCTOR ZONE --------------------//
     public Enchere(Date dateEnchere, int montantEnchere, ArticleVendu article,
-			Utilisateur encherisseur) {
+			User encherisseur) {
 		this.dateEnchere = article.getDateDebutEncheres();
 		this.montantEnchere = article.getPrixInitial();
 		this.noArticle = article.getNoArticle();
@@ -90,13 +90,13 @@ public class Enchere {
 
 
 
-	public Utilisateur getEncherisseur() {
+	public User getEncherisseur() {
 		return encherisseur;
 	}
 
 
 
-	public void setEncherisseur(Utilisateur encherisseur) {
+	public void setEncherisseur(User encherisseur) {
 		this.encherisseur = encherisseur;
 	}
 

@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class Utilisateur {
+public class User {
     //-------------------- VARIABLES ZONE --------------------//
     private int noUtilisateur;
     private String nom;
@@ -24,7 +24,7 @@ public class Utilisateur {
 
     //-------------------- CONSTRUCTOR ZONE --------------------//
 
-    public Utilisateur() {
+    public User() {
 
     }
 
@@ -44,7 +44,7 @@ public class Utilisateur {
      * @param credit
      * @param administrateur 
      */
-    public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+    public User(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
                        String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
         this.noUtilisateur = noUtilisateur;
         this.pseudo = pseudo;
@@ -62,7 +62,7 @@ public class Utilisateur {
 
 	
 
-    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, 
+    public User(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, 
 			String ville, String motDePasse, int credit, boolean administrateur) {
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -77,7 +77,7 @@ public class Utilisateur {
 		this.administrateur = administrateur;
 	}
 
-	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+	public User(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville) {
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -92,7 +92,7 @@ public class Utilisateur {
 
 
 
-	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+	public User(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) {
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -105,7 +105,7 @@ public class Utilisateur {
 		this.ville = ville;
 		this.motDePasse = motDePasse;
 	}
-	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+	public User(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) {
 		this.pseudo = pseudo;
 		this.nom = nom;

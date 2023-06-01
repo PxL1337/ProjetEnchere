@@ -1,12 +1,12 @@
 package fr.eni.projetenchere.dal.jdbc;
 
-import fr.eni.projetenchere.dal.UtilisateurDAO;
+import fr.eni.projetenchere.dal.UserDAO;
 
 public class DAOFactory
 {
-	public static UtilisateurDAO getUtilisateurDAO()
+	public static UserDAO getUtilisateurDAO()
 	{
-		UtilisateurDAO utilisateurDAO = new UtilisateurDAOJdbcImplementation();
+		UserDAO utilisateurDAO = new UserDAOJdbcImplementation();
 		return utilisateurDAO;
 	}
 }
