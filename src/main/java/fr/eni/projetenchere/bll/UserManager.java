@@ -23,7 +23,7 @@ public class UserManager {
 
 	private UserDAOJdbcImplementation userDAOJdbc;	
 	
-	private UserManager() 
+	public UserManager()
 	{
 		userDAOJdbc = new UserDAOJdbcImplementation();
 	}

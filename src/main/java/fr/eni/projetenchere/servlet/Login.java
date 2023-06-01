@@ -3,7 +3,7 @@ package fr.eni.projetenchere.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import fr.eni.projetenchere.bll.UtilisateurManager;
+import fr.eni.projetenchere.bll.UserManager;
 import fr.eni.projetenchere.bo.User;
 import fr.eni.projetenchere.dal.UserDAO;
 import fr.eni.projetenchere.dal.jdbc.UserDAOJdbcImplementation;
@@ -32,10 +32,10 @@ public class Login extends HttpServlet {
         String motDePasse = request.getParameter("motDePasse");
 
         //Valider les données utilisateur
-        UtilisateurManager utilisateurManager = new UtilisateurManager();
+        UserManager userManager = new UserManager();
         User utilisateur = null;
         try {
-            utilisateur = utilisateurManager.selectByPseudoOrEmail(pseudoOuEmail);
+            utilisateur = userManager.selectUserByPseudoOuEmail(pseudoOuEmail);
         } catch (SQLException e) {
             // Logger l'erreur
             e.printStackTrace();
