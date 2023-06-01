@@ -11,8 +11,9 @@ public class Utilisateur {
     private String email;
     private String telephone;
     private String rue;
-    private String ville;
     private String codePostal;
+    private String ville;
+    
     private String motDePasse;
     private int credit = 100;
     private boolean administrateur = false;
@@ -59,8 +60,8 @@ public class Utilisateur {
 
 	
 
-    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String ville, String codePostal, String motDePasse, int credit, boolean administrateur) {
+    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, 
+			String ville, String motDePasse, int credit, boolean administrateur) {
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -75,7 +76,7 @@ public class Utilisateur {
 	}
 
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String ville, String codePostal) {
+			String rue, String codePostal, String ville) {
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
 		this.nom = nom;
