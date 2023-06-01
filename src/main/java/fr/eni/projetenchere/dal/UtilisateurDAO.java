@@ -11,6 +11,7 @@ public interface UtilisateurDAO
 	public void update(Utilisateur utilisateur);
 	public void delete(Utilisateur utilisateur);
 	
+	// Read section
 	public Utilisateur selectByID(int ID);
 	public List<Utilisateur> selectAll();
 }
