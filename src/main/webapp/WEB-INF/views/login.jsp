@@ -26,18 +26,18 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">Se connecter</div>
+                <div class="card-header">Veuillez vous connecter</div>
                 <div class="card-body">
                     <form action="${pageContext.request.contextPath}/login" method="post">
-                        <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="pseudoOuEmail" name="pseudoOuEmail" placeholder="Pseudo ou Email" required>
                             <label for="pseudoOuEmail">Pseudo ou Email</label>
-                            <input type="text" class="form-control" id="pseudoOuEmail" name="pseudoOuEmail" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="motDePasse" name="motDePasse" placeholder="Mot de passe" required>
                             <label for="motDePasse">Mot de passe</label>
-                            <input type="password" class="form-control" id="motDePasse" name="motDePasse" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Se connecter</button>
+                        <button type="submit" class="btn btn-success">Se connecter</button>
                     </form>
                     <c:if test="${not empty requestScope.loginError}">
                         <div class="alert alert-danger mt-3">${requestScope.loginError}</div>
@@ -50,6 +50,7 @@
         </div>
     </div>
 </div>
+
 
 
 
