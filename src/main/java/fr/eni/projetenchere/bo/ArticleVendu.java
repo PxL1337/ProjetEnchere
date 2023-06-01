@@ -38,7 +38,17 @@ public class ArticleVendu {
 		
 		}
 
-
+		 public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
+					int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie) {
+				this.nomArticle = nomArticle;
+				this.description = description;
+				this.dateDebutEncheres = dateDebutEncheres;
+				this.dateFinEncheres = dateFinEncheres;
+				this.prixInitial = prixInitial;
+				this.prixVente = prixVente;
+				this.utilisateur = utilisateur;
+				this.categorie = categorie;
+			}
 		
    
 
@@ -46,7 +56,10 @@ public class ArticleVendu {
     //---------------------------------------METHODE/FUNCTION ZONE---------------------------------------//
 
 
-    //---------------------------------------------GETTER SETTER ZONE-------------------------------------------------------//
+   
+
+
+		//---------------------------------------------GETTER SETTER ZONE-------------------------------------------------------//
 		public int getNoArticle() {
 			return noArticle;
 		}
