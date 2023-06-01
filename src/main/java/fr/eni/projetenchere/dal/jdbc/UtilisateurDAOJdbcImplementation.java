@@ -215,7 +215,7 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO
 		{
 			Connection connection = ConnectionProvider.getConnection();
 			
-			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);			
+			PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_PSEUDO);			
 			preparedStatement.setString(1, comparedPseudo);
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
