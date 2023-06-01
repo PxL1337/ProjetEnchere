@@ -85,29 +85,7 @@
                 <a href="${pageContext.request.contextPath}/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
                     <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
                 </a>
-                <% if (session.getAttribute("utilisateurConnecte") == null) { %>
-                <!-- Menu Non Cconnecé -->
-                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/" class="nav-link text-success">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
-                            Accueil
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link text-white">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
-                            Tableau de bord
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link text-white">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
-                            Produits
-                        </a>
-                    </li>
-                </ul>
-                <% } else { %>
+
                 <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                     <li>
                         <a href="${pageContext.request.contextPath}/" class="nav-link text-success">
@@ -146,7 +124,6 @@
                         </a>
                     </li>
                 </ul>
-                <% } %>
             </div>
         </div>
     </div>
@@ -156,14 +133,9 @@
                 <input type="search" class="form-control" placeholder="Recherche..." aria-label="Search">
             </form>
 
-
-            <% if (session.getAttribute("utilisateurConnecte") == null) { %>
-            <!-- Boutons Connexion et Inscription -->
-            <a href="${pageContext.request.contextPath}/login"><button type="button" class="btn btn-light text-dark me-2">Connexion</button></a>            <button type="button" class="btn btn-secondary">Inscription</button>
-            <% } else { %>
-            <!-- Bouton Déconnexion -->
-            <a href="${pageContext.request.contextPath}/Deconnexion"><button type="button" class="btn btn-danger">Déconnexion</button></a>
-            <% } %>
+            <div class="text-end">
+                <a href="${pageContext.request.contextPath}/Deconnexion"><button type="button" class="btn btn-primary">Deconnexion</button></a>
+            </div>
         </div>
     </div>
 </header>

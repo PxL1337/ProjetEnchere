@@ -13,7 +13,7 @@
 </head>
 <body>
 <!-- Barre de navigation -->
-<jsp:include page="/WEB-INF/views/header.jsp" />
+<jsp:include page="/WEB-INF/views/headerConnecte.jsp" />
 
 <!-- Contenu de la page -->
 <div class="container">
@@ -23,6 +23,7 @@
 
 <!-- Footer -->
 <jsp:include page="/footer.jsp" />
+
 
 <!-- JS Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

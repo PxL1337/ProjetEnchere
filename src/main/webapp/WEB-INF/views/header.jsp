@@ -159,7 +159,8 @@
 
             <% if (session.getAttribute("utilisateurConnecte") == null) { %>
             <!-- Boutons Connexion et Inscription -->
-            <a href="${pageContext.request.contextPath}/login"><button type="button" class="btn btn-light text-dark me-2">Connexion</button></a>            <button type="button" class="btn btn-secondary">Inscription</button>
+            <a href="${pageContext.request.contextPath}/login"><button type="button" class="btn btn-light text-dark me-2">Connexion</button></a>
+            <button type="button" class="btn btn-secondary">Inscription</button>
             <% } else { %>
             <!-- Bouton Déconnexion -->
             <a href="${pageContext.request.contextPath}/Deconnexion"><button type="button" class="btn btn-danger">Déconnexion</button></a>

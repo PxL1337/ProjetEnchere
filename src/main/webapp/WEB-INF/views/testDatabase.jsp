@@ -22,7 +22,7 @@
 </head>
 <body>
 <!-- Barre de navigation -->
-<jsp:include page="/header.jsp" />
+<jsp:include page="/WEB-INF/views/header.jsp" />
 
 <div class="container">
 <h1>Database Test</h1>

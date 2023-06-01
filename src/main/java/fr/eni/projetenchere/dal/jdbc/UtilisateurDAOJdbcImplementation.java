@@ -12,8 +12,7 @@ import fr.eni.projetenchere.bo.Utilisateur;
 import fr.eni.projetenchere.dal.ConnectionProvider;
 import fr.eni.projetenchere.dal.UtilisateurDAO;
 
-public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO 
-{	
+public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO {
 	final String INSERT_USER = "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?";
@@ -29,6 +28,8 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO
 	
 	final String DELETE_USER_BY_ID = "DELETE FROM UTILISATEURS WHERE no_utilisateur=?";
 	private final String DELETE_ALL_USERS = "DELETE FROM UTILISATEURS";
+
+	private static final String SELECT_BY_PSEUDO_OU_EMAIL = "SELECT * FROM UTILISATEURS WHERE pseudo=? OR email=?";
 	
 	@Override
 	public void insert(Utilisateur utilisateur)
@@ -369,5 +370,40 @@ public class UtilisateurDAOJdbcImplementation implements UtilisateurDAO
 			e.printStackTrace();
 		}
 		System.out.println(rowsAffected + " Rows affected.");
+	}
+
+	@Override
+	public Utilisateur selectByPseudoOuEmail(String pseudoOuEmail) throws SQLException {
+		Utilisateur utilisateur = null;
+
+		try (Connection connection = ConnectionProvider.getConnection();
+			 PreparedStatement ps = connection.prepareStatement(SELECT_BY_PSEUDO_OU_EMAIL)) {
+			ps.setString(1, pseudoOuEmail);
+			ps.setString(2, pseudoOuEmail);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					utilisateur = mapUtilisateur(rs);
+				}
+			}
+		}
+		return utilisateur;
+	}
+
+	private Utilisateur mapUtilisateur(ResultSet rs) throws SQLException {
+		Utilisateur utilisateur = new Utilisateur();
+
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setNom(rs.getString("nom"));
+		utilisateur.setPrenom(rs.getString("prenom"));
+		utilisateur.setEmail(rs.getString("email"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		utilisateur.setRue(rs.getString("rue"));
+		utilisateur.setCodePostal(rs.getString("code_postal"));
+		utilisateur.setVille(rs.getString("ville"));
+		utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
+		utilisateur.setCredit(rs.getInt("credit"));
+		utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+
+		return utilisateur;
 	}
 }
