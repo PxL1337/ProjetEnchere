@@ -17,6 +17,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 	
 	final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?";
 	final String UPDATE_USER_CREDIT = "UPDATE UTILISATEURS SET credit=? WHERE no_utilisateur=?";
+	final String UPDATE_USER_IS_ADMIN = "UPDATE UTILISATEURS SET administrateur=? WHERE no_utilisateur=?";
 	
 	final String SELECT_ALL_USERS = "SELECT * FROM UTILISATEURS";
 	final String SELECT_USER_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?";
@@ -30,6 +31,9 @@ public class UserDAOJdbcImplementation implements UserDAO {
 	private final String DELETE_ALL_USERS = "DELETE FROM UTILISATEURS";
 
 	private static final String SELECT_BY_PSEUDO_OR_EMAIL = "SELECT * FROM UTILISATEURS WHERE pseudo=? OR email=?";
+	
+	public static final int DEFAULT_USER_CREDIT = 100;
+	public static boolean DEFAULT_IS_ADMIN_VALUE = false;
 	
 	@Override
 	public void insert(User user)
@@ -50,8 +54,6 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			preparedStatement.setString(9, user.getMotDePasse());
 			preparedStatement.setInt(10, user.getCredit());
 			preparedStatement.setBoolean(11, user.isAdministrateur());
-			  
-			//debugAffectedRows(preparedStatement);
 			
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) 
@@ -88,8 +90,6 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			preparedStatement.setString(9, user.getMotDePasse());
 			
 			preparedStatement.setInt(10, user.getNoUtilisateur());
-			
-			//debugAffectedRows(preparedStatement);
 			
 			preparedStatement.executeUpdate();
 		} 
@@ -169,8 +169,6 @@ public class UserDAOJdbcImplementation implements UserDAO {
 		{
 			preparedStatement.setInt(1, user.getNoUtilisateur());
 			preparedStatement.executeUpdate();
-			
-			//debugAffectedRows(preparedStatement);
 		} 
 		catch (SQLException e)
 		{
@@ -185,6 +183,23 @@ public class UserDAOJdbcImplementation implements UserDAO {
 						connection.prepareStatement(UPDATE_USER_CREDIT);)
 		{
 			preparedStatement.setInt(1, newValue);
+			
+			preparedStatement.setInt(2, user.getNoUtilisateur());
+			preparedStatement.executeUpdate();
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateIsAdmin(User user, boolean newValue)
+	{
+		try (Connection connection = ConnectionProvider.getConnection();
+				PreparedStatement preparedStatement =
+						connection.prepareStatement(UPDATE_USER_IS_ADMIN);)
+		{
+			preparedStatement.setBoolean(1, newValue);
 			
 			preparedStatement.setInt(2, user.getNoUtilisateur());
 			preparedStatement.executeUpdate();
@@ -369,17 +384,5 @@ public class UserDAOJdbcImplementation implements UserDAO {
 		{
 			e.printStackTrace();
 		}
-	}
-	
-	private void debugAffectedRows(PreparedStatement pS)
-	{
-		int rowsAffected = 0;
-		try {
-			rowsAffected = pS.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(rowsAffected + " Rows affected.");
 	}
 }

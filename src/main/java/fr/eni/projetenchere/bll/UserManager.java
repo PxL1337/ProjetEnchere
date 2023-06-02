@@ -44,6 +44,10 @@ public class UserManager {
 		userDAOJdbc.updateCredit(user, newValue);
 	}
 	
+	public void updateUserIsAdmin(User user, boolean newValue) {
+		userDAOJdbc.updateIsAdmin(user, newValue);
+	}
+	
 	public User selectUserByID(int ID) {
 		return userDAOJdbc.selectByID(ID);
 	}
@@ -64,76 +68,57 @@ public class UserManager {
 		return userDAOJdbc.selectByEmail(comparedEmail);
 	}
 	
+	// CHECK SECTION ------------------------------------------------------------------------
 	
+//noUser
 	
-	
-
-	
-	
-	
-	
-//noUser	
-//Pseudo
+	//Pseudo
 	
 	public boolean checkPseudoAvailability(String pseudo) {			
 	    return userDAOJdbc.doesThisPseudoAlreadyExists(pseudo);
 	}
+	
+	//Telephone
+	
+	public static boolean validatePhoneNumber(String phoneNumber) {
+		String phoneNumberPattern = "^\\+?[1-9]\\d{1,14}$";
+		return phoneNumber.matches(phoneNumberPattern);
+	}	
 
+	// VALIDATIO SECTION ------------------------------------------------------------------------
 	
-//nom
-	
+	//nom	
 	public static boolean validateNom(String nom) {
 		String nomPattern = "^[a-zA-Z]+$";
 		return nom.matches(nomPattern);
 		}
-//prenom
 	
+	//prenom	
 	public static boolean validatePrenom(String prenom) {
 		String prenomPattern = "^[a-zA-Z]+$";
 		return prenom.matches(prenomPattern);
 		}
 	
-//email
-
+	//email
 	public boolean checkEmailAvailability(String email) {		
 		return userDAOJdbc.doesThisEmailAlreadyExists(email);
 	}
 
-//telephone
+
+	//rue
+	//ville
 	
-	public static boolean validatePhoneNumber(String phoneNumber) {
-		String phoneNumberPattern = "^\\+?[1-9]\\d{1,14}$";
-		return phoneNumber.matches(phoneNumberPattern);
-	}
-//rue
-//ville
-//codePostal
-	
+	//codePostal	
 	public static boolean validateCodePostal(String codePostal) {
 		String postalCodePattern = "\\d{5}";
 		return codePostal.matches(postalCodePattern);
 	}
 
-//motDePasse
-	
+	//motDePasse	
 	public static boolean validateMotDePasse(String motDePasse) {
 		return motDePasse.length() >=6 && motDePasse.matches(".*[A-Z].*");		
 	}
-
 	
-//credit
-//administrateur
-	
-	
+	//credit
+	//administrateur
 }
-			
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
