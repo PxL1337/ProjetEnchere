@@ -38,8 +38,8 @@ public class Inscriptiontest extends HttpServlet {
         String email = request.getParameter("email");
         String telephone = request.getParameter("telephone");
         String rue = request.getParameter("rue");
-        String ville = request.getParameter("ville");
         String codePostal = request.getParameter("codePostal");
+        String ville = request.getParameter("ville");
         String motDePasse = request.getParameter("motDePasse");
 
         UserManager userManager = UserManager.getInstance();
@@ -66,9 +66,10 @@ public class Inscriptiontest extends HttpServlet {
                 request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
                 request.getRequestDispatcher("/WEB-INF/views/inscription.jsp").forward(request, response);
             } else {
-                User user = new User(pseudo, nom, prenom, email, telephone, rue, ville, codePostal, motDePasse, userManager.DEFAULT_USER_CREDIT, userManager.DEFAULT_IS_ADMIN_VALUE);
+                User user = new User(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, userManager.DEFAULT_USER_CREDIT, userManager.DEFAULT_IS_ADMIN_VALUE);
                 userManager.insertUser(user);
                 request.setAttribute("message", "Votre compte a été créé avec succès");
+                request.setAttribute("utilisateurConnecte", user);
                 request.getRequestDispatcher("/").forward(request, response);
             }
         } catch (SQLException e) {

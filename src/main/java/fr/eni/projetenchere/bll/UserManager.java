@@ -6,6 +6,7 @@ import java.util.List;
 import fr.eni.projetenchere.bo.User;
 import fr.eni.projetenchere.dal.jdbc.UserDAOJdbcImplementation;
 import fr.eni.projetenchere.exception.BusinessException;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UserManager {
 	public final int DEFAULT_USER_CREDIT = 100;
@@ -31,11 +32,15 @@ public class UserManager {
 	}
 	
 	public void insertUser(User user){
-	    userDAOJdbc.insert(user);	
+		String hashedPassword = BCrypt.hashpw(user.getMotDePasse(), BCrypt.gensalt());
+		user.setMotDePasse(hashedPassword);
+		userDAOJdbc.insert(user);
 	}
 	
 	public void updateUser(User user){
-	    userDAOJdbc.update(user);	
+		String hashedPassword = BCrypt.hashpw(user.getMotDePasse(), BCrypt.gensalt());
+		user.setMotDePasse(hashedPassword);
+		userDAOJdbc.update(user);
 	}
 	
 	public void deleteUser(User user){

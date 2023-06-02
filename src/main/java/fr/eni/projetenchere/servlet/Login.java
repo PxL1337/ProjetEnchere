@@ -45,7 +45,7 @@ public class Login extends HttpServlet {
             request.setAttribute("loginSqlError", "Une erreur est survenue lors de la tentative de connexion. Veuillez réessayer plus tard.");
         }
 
-        if (utilisateur != null && utilisateur.getMotDePasse().equals(motDePasse)/**BCrypt.checkpw(motDePasse, utilisateur.getMotDePasse())*/) {
+        if (utilisateur != null && BCrypt.checkpw(motDePasse, utilisateur.getMotDePasse())) {
             // Si les données sont valides, demarrer une session
             HttpSession session = request.getSession();
             session.setAttribute("utilisateurConnecte", utilisateur);

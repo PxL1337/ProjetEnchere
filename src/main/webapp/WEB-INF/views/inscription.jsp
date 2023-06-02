@@ -14,6 +14,9 @@
     <link href="${pageContext.request.contextPath}/style/headers.css" rel="stylesheet">
 </head>
 <body>
+<!-- Barre de navigation -->
+<jsp:include page="/WEB-INF/views/header.jsp" />
+
 <div class="container">
     <h1>Inscription</h1>
     <% if(request.getAttribute("listeCodesErreur") != null) { %>
@@ -33,39 +36,76 @@
     </div>
     <% } %>
 
-    <form action="${pageContext.request.contextPath}/inscription" method="POST">
+    <form action="${pageContext.request.contextPath}/inscription" method="POST" class="row g-3">
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="Ex : Michoudu78" required>
+                <label for="pseudo">Pseudo</label>
+            </div>
+        </div>
 
-        <label for="pseudo">Pseudo:</label>
-        <input type="text" id="pseudo" name="pseudo" required><br>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="password" id="motDePasse" name="motDePasse" class="form-control" placeholder="Ex : MySecuredPassword" required>
+                <label for="motDePasse">Mot de passe</label>
+            </div>
+        </div>
 
-        <label for="motDePasse">Mot de passe:</label>
-        <input type="password" id="motDePasse" name="motDePasse" required><br>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="text" id="nom" name="nom" class="form-control" placeholder="Ex : Durand" required>
+                <label for="nom">Nom</label>
+            </div>
+        </div>
 
-        <label for="nom">Nom:</label>
-        <input type="text" id="nom" name="nom" required><br>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="text" id="prenom" name="prenom" class="form-control" placeholder="Ex : Bernard" required>
+                <label for="prenom">Prénom</label>
+            </div>
+        </div>
 
-        <label for="prenom">Prénom:</label>
-        <input type="text" id="prenom" name="prenom" required><br>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="email" id="email" name="email" class="form-control" placeholder="Ex : xyz@xyz.com" required>
+                <label for="email">Email</label>
+            </div>
+        </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="tel" id="tel" name="telephone" class="form-control" pattern="[0-9]{10}" placeholder="Ex : 0123456789">
+                <label for="tel">Téléphone</label>
+            </div>
+        </div>
 
-        <label for="tel">Téléphone:</label>
-        <input type="tel" id="tel" name="tel" ><br>
+        <div class="col-12">
+            <div class="form-floating">
+                <input type="text" id="rue" name="rue" class="form-control" placeholder="Ex : rue de la paix" required>
+                <label for="rue">Rue</label>
+            </div>
+        </div>
 
-        <label for="rue">Rue:</label>
-        <input type="text" id="rue" name="rue" required><br>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="text" id="codePostal" name="codePostal" class="form-control" placeholder="Ex : 01000" required>
+                <label for="codePostal">Code Postal</label>
+            </div>
+        </div>
 
-        <label for="codePostal">Code Postal:</label>
-        <input type="text" id="codePostal" name="codePostal" required><br>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="text" id="ville" name="ville" class="form-control" placeholder="Ex : Madrid" required>
+                <label for="ville">Ville</label>
+            </div>
+        </div>
 
-        <label for="ville">Ville:</label>
-        <input type="text" id="ville" name="ville" required><br>
-
-
-
-        <input type="submit" value="S'inscrire">
+        <div class="col-12">
+            <input type="submit" value="S'inscrire" class="btn btn-primary">
+        </div>
     </form>
+
+
 
 </div>
 
