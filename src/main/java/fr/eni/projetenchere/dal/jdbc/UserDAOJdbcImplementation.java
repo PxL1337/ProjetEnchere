@@ -34,7 +34,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 
 	
 	@Override
-	public void insert(User user)
+	/**public void insert(User user)
 	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement = 
@@ -52,24 +52,60 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			preparedStatement.setString(9, user.getMotDePasse());
 			preparedStatement.setInt(10, user.getCredit());
 			preparedStatement.setBoolean(11, user.isAdministrateur());
-			
+
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-            if (generatedKeys.next()) 
+            if (generatedKeys.next())
             {
                 int nouvelId = generatedKeys.getInt(1);
                 System.out.println("Nouvel user ajouté avec l'identifiant : " + nouvelId);
             }
-		} 
+		}
 		catch (SQLException e )
 		{
 			System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
 		}
 		catch (Exception e)
 		{
+			System.err.println("Exception: " + e.getClass().getName());
+			System.err.println("Message: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}*/
+
+	public void insert(User user) {
+		try (Connection connection = ConnectionProvider.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+			preparedStatement.setString(1, user.getPseudo());
+			preparedStatement.setString(2, user.getNom());
+			preparedStatement.setString(3, user.getPrenom());
+			preparedStatement.setString(4, user.getEmail());
+			preparedStatement.setString(5, user.getTelephone());
+			preparedStatement.setString(6, user.getRue());
+			preparedStatement.setString(7, user.getCodePostal());
+			preparedStatement.setString(8, user.getVille());
+			preparedStatement.setString(9, user.getMotDePasse());
+			preparedStatement.setInt(10, user.getCredit());
+			preparedStatement.setBoolean(11, user.isAdministrateur());
+
+			// Exécuter l'instruction SQL
+			int rowsAffected = preparedStatement.executeUpdate();
+
+			if (rowsAffected > 0) {
+				ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+				if (generatedKeys.next()) {
+					int nouvelId = generatedKeys.getInt(1);
+					System.out.println("Nouvel utilisateur ajouté avec l'identifiant : " + nouvelId);
+				}
+			}
+		} catch (SQLException e) {
+			System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+
 	@Override
 	public void update(User user) 
 	{
