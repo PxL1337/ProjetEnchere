@@ -24,5 +24,11 @@
 		<li>Telephone : ${user.telephone }</li>
 		<li>Adresse : ${user.rue }<br/> ${user.codePostal }  ${user.ville }</li>
 	</ul>
+	<jsp:include page="/WEB-INF/views/footer.jsp" />
+
+	<!-- JS Bootstrap -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

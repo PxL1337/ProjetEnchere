@@ -17,8 +17,8 @@ public class TestDAL
 		 * 
 		 * userDAO.insert(userTest); }
 		 */
-		 
-		
+
+		User userTest = new User("GOLEM", "JOSE", "YANN", "golem@outlook.fr", "0688559977", "69 avenue de la grande maison", "Bordeaux", "33500", "golemPlanB", 200, true );
 		/*
 		 * no_utilisateur=?, pseudo=?, nom=?, prenom=?, email=?, telephone=?,
 		 * rue=?, code_postal=?, ville=?, mot_de_passe=?

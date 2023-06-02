@@ -1,3 +1,5 @@
+<%@ page import="fr.eni.projetenchere.bll.CodeErreur" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,25 +16,33 @@
 <body>
 <div class="container">
     <h1>Inscription</h1>
-    <form action="/inscription" method="POST">
+    <% if(request.getAttribute("listeCodesErreur") != null) { %>
+    <div class="alert alert-danger">
+        <% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
+        <% for(Integer codeErreur : listeCodesErreur) { %>
+        <% if(codeErreur.equals(CodeErreur.EMAIL_EXISTANT)) { %>
+        Email indisponible<br/>
+        <% } else if(codeErreur.equals(CodeErreur.PSEUDO_EXISTANT)) { %>
+        Pseudo indisponible<br/>
+        <% } else if(codeErreur.equals(CodeErreur.CODE_POSTAL_INVALIDE)) { %>
+        Code postal erroné<br/>
+        <% } else if(codeErreur.equals(CodeErreur.MDP_INVALIDE)) { %>
+        Mot de passe erroné<br/>
+        <% } %>
+        <% } %>
+    </div>
+    <% } %>
+
+    <form action="${pageContext.request.contextPath}/inscription" method="POST">
 
         <label for="pseudo">Pseudo:</label>
         <input type="text" id="pseudo" name="pseudo" required><br>
-        <c:if test="${not empty requestScope.error}">
-            <div class="alert alert-danger mt-3">${requestScope.error}</div>
-        </c:if>
 
         <label for="motDePasse">Mot de passe:</label>
         <input type="password" id="motDePasse" name="motDePasse" required><br>
-        <c:if test="${not empty requestScope.error}">
-            <div class="alert alert-danger mt-3">${requestScope.error}</div>
-        </c:if>
 
         <label for="nom">Nom:</label>
         <input type="text" id="nom" name="nom" required><br>
-        <c:if test="${not empty requestScope.error}">
-            <div class="alert alert-danger mt-3">${requestScope.error}</div>
-        </c:if>
 
         <label for="prenom">Prénom:</label>
         <input type="text" id="prenom" name="prenom" required><br>
@@ -56,12 +66,6 @@
 
         <input type="submit" value="S'inscrire">
     </form>
-    <c:if test="${not empty requestScope.inscriptionError}">
-         <div class="alert alert-danger mt-3">${requestScope.inscriptionError}</div>
-    </c:if>
-    <c:if test="${not empty requestScope.inscriptionSqlError}">
-          <div class="alert alert-danger mt-3">${requestScope.inscriptionSqlError}</div>
-    </c:if>
 
 </div>
 

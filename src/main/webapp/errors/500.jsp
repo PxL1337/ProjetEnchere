@@ -18,7 +18,7 @@
         <!--h1(data-h1='403') 403-->
         <!--p(data-p='FORBIDDEN') FORBIDDEN-->
         <h1 data-h1="500">500</h1>
-        <p data-p="ERREUR SERVEUR">ERREUR SERVEUR DON'T PANIC !</p>
+        <p data-p="ERREUR SERVEUR DON'T PANIC !">ERREUR SERVEUR DON'T PANIC !</p>
         <!--h1(data-h1='500') 500-->
         <!--p(data-p='SERVER ERROR') SERVER ERROR-->
     </div>

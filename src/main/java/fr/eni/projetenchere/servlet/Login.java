@@ -51,9 +51,9 @@ public class Login extends HttpServlet {
             session.setAttribute("utilisateurConnecte", utilisateur);
 
             // Créer un cookie pour l'utilisateur
-            Cookie cookie = new Cookie("utilisateurConnecte", utilisateur.getPseudo());
-            cookie.setMaxAge(60 * 60 * 24 * 30); // 30 jours
-            response.addCookie(cookie);
+            Cookie cookie1 = new Cookie("utilisateurConnecte", utilisateur.getPseudo());
+            cookie1.setMaxAge(60 * 60 * 24 * 30); // 30 jours
+            response.addCookie(cookie1);
 
             // Redirection vers la page d'accueil
             response.sendRedirect(request.getContextPath() + "/Accueil");

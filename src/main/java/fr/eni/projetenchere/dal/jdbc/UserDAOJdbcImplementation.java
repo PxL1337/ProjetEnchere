@@ -31,9 +31,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 	private final String DELETE_ALL_USERS = "DELETE FROM UTILISATEURS";
 
 	private static final String SELECT_BY_PSEUDO_OR_EMAIL = "SELECT * FROM UTILISATEURS WHERE pseudo=? OR email=?";
-	
-	public static final int DEFAULT_USER_CREDIT = 100;
-	public static boolean DEFAULT_IS_ADMIN_VALUE = false;
+
 	
 	@Override
 	public void insert(User user)
@@ -311,7 +309,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 	{
 		try (Connection connection = ConnectionProvider.getConnection();				
 				PreparedStatement preparedStatement = 
-						connection.prepareStatement(CHECK_USER_PSEUDO);)
+						connection.prepareStatement(CHECK_USER_EMAIL);)
 		{		
 			preparedStatement.setString(1, comparedEmail);			
 			ResultSet resultSet = preparedStatement.executeQuery();

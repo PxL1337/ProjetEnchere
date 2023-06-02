@@ -35,7 +35,6 @@ public class AfficherProfil extends HttpServlet {
         } else {
             // Si non, affichez la page de connexion
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-            
        }
 	}
 

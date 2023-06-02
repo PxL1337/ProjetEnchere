@@ -8,7 +8,8 @@ import fr.eni.projetenchere.dal.jdbc.UserDAOJdbcImplementation;
 import fr.eni.projetenchere.exception.BusinessException;
 
 public class UserManager {
-	
+	public final int DEFAULT_USER_CREDIT = 100;
+	public final boolean DEFAULT_IS_ADMIN_VALUE = false;
 	//SINGLETON
 
 	private static UserManager instance;
