@@ -24,8 +24,16 @@ public class ModifyUserProfile extends HttpServlet {
     	// Vérifiez si l'utilisateur est déjà connecté...
         if (request.getSession().getAttribute(userConnectedValue) != null) 
         {
+        	UserManager userManager = UserManager.getInstance();
+        	
         	// Stocker l'utilisateur connecté pour réutiliser ses infos ensuite...
-        	User connectedUser = (User) request.getAttribute(userConnectedValue);
+			/* User user = (User) request.getAttribute(userConnectedValue); */
+			/*
+			 * String id = request.getParameter("no_utilisateur"); User user =
+			 * userManager.selectUserByID(Integer.parseInt(id));
+			 * request.setAttribute("user", user);
+			 */
+        	
             // Et afficher la page de modification.
             request.getRequestDispatcher(
             		"/WEB-INF/views/modifyUserProfile.jsp").forward(request, response);            

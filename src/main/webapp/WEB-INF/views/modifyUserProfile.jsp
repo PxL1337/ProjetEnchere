@@ -70,7 +70,7 @@
 		</section>
 		
 		<!-- Credit display here (je ne sais pas si c'est comme ça qu'il faut faire) -->
-		<!-- <p> Crédit : ${user.credit} }</p> -->
+		<p> Crédit : ${user.credit}</p>
 
 		<!-- Section contenant les boutons d'actions agissants sur le formulaire -->
 		<section class="buttons">

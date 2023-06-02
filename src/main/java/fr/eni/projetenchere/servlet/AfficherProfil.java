@@ -24,6 +24,7 @@ public class AfficherProfil extends HttpServlet {
 		 // Vérifiez si l'utilisateur est déjà connecté
         if (request.getSession().getAttribute("utilisateurConnecte") != null) {
             // Si oui, affichage du profil
+        	// Id c'est pas le bon paramètre à récupérer c'est plutôt no_utilisateur
         	String id = request.getParameter("id");
         	User user = new User();
         	UserManager um = UserManager.getInstance();
