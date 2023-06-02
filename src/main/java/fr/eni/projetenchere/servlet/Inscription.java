@@ -11,17 +11,36 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList; import java.util.List;
 
 @WebServlet(name = "Inscription", value = "/Inscription")
 public class Inscription extends HttpServlet {
     
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: Implement
+    	 // Vérifiez si l'utilisateur est déjà connecté
+        if (request.getSession().getAttribute("utilisateurConnecte") != null) {
+            // Si oui, redirection vers une autre page ou affichez un message
+            request.setAttribute("message", "Vous êtes déjà connecté");
+            request.getRequestDispatcher("/WEB-INF/views/accueil.jsp").forward(request, response);
+        } else {
+            // Si non, affichez la page de connexion
+            request.getRequestDispatcher("/WEB-INF/views/inscription.jsp").forward(request, response);
+        }
     }
 
     
+/*
+ * on doit gerer les exceptionsql ici
+ * et toutes les autres exceptions
+ * 
+ */
+    
+    List<String> errorMessages = new ArrayList<String>();
+        
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
     	String pseudo = request.getParameter("pseudo");
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
@@ -33,65 +52,49 @@ public class Inscription extends HttpServlet {
         String motDePasse = request.getParameter("motDePasse");
 
         //Valider les données utilisateur
-        UserManager userManager = new UserManager();
-        boolean utilisateur = true;
+        UserManager userManager = UserManager.getInstance();
+       
         
         try {
-            utilisateur = userManager.checkEmailAvailability(email);
-        } catch (SQLException e) {
-            // Logger l'erreur
-            e.printStackTrace();
-
-            // Afficher un message d'erreur
-            request.setAttribute("inscriptionSqlError", "L'email saisit existe déjà");
-        }
-        try {
-            utilisateur = userManager.checkPseudoAvailability(pseudo);
-        } catch (SQLException e) {
-            // Logger l'erreur
-            e.printStackTrace();
-
-            // Afficher un message d'erreur
-            request.setAttribute("inscriptionSqlError", "Le pseudo saisit existe déjà");
-        }
-        try {
-            utilisateur = userManager.validateCodePostal(codePostal);
-        } catch (SQLException e) {
-            // Logger l'erreur
-            e.printStackTrace();
-
-            // Afficher un message d'erreur
-            request.setAttribute("inscriptionSqlError", "Le code postal doit comporter 5 chiffres");
-        }
-        try {
-            utilisateur = userManager.validateMotDePasse(motDePasse);
-        } catch (SQLException e) {
-            // Logger l'erreur
-            e.printStackTrace();
-            
-            // Afficher un message d'erreur
-            request.setAttribute("inscriptionSqlError", "Le mot de passe doit faire au moins 6 caracteres et doit posséder au moins une majuscule");
-        }
+			if (userManager.checkEmailAvailability(email) 
+					& userManager.checkPseudoAvailability(pseudo) 
+					& userManager.validateCodePostal(codePostal) 
+					& userManager.validateMotDePasse(motDePasse)) 
+			{
+				request.getRequestDispatcher(request.getContextPath()+"/");
+			}
+      
+			else {
+				if(userManager.checkEmailAvailability(email) == false) 
+				{
+					errorMessages.add("Email indisponible");
+				}
+				
+					
+				if(userManager.checkPseudoAvailability(pseudo) == false) 
+				{
+			    		errorMessages.add("Pseudo indisponible");
+				}
+				
+				if(userManager.validateCodePostal(codePostal) == false) 
+				{
+			    		errorMessages.add("Code postal erroné");
+				}
+				
+				if(userManager.validateMotDePasse(motDePasse) == false) 
+				{
+			    		errorMessages.add("Mot de passe erroné");
+				}
+				
+				
+				// Si il manque des données, afficher un message d'erreur
+			    request.setAttribute("inscriptionError", "Vous devez remplir tous les champs");
+			    request.getRequestDispatcher("/WEB-INF/views/inscription.jsp").forward(request, response);
+			    }
+		} catch (SQLException | ServletException | IOException e) {
+			e.printStackTrace();
+		}
         
-        
 
-        if (utilisateur = true) {
-        	if(nom.isEmpty() || prenom.isEmpty() || pseudo.isEmpty() || email.isEmpty() || rue.isEmpty() || ville.isEmpty() || codePostal.isEmpty() || motDePasse.isEmpty()) {
-        		response.sendRedirect("login.jsp");
-        	}
-           else {
-	            // Si il manque des données, afficher un message d'erreur
-	            request.setAttribute("inscriptionError", "Vous devez remplir tous les champs");
-	            request.getRequestDispatcher("/WEB-INF/views/inscription.jsp").forward(request, response);
-        }
-        
-        
-        }
-    
-        else {
-            // Si les données ne sont pas valides, afficher un message d'erreur
-            request.setAttribute("inscriptionError", "Un champ n'est pas correct");
-            request.getRequestDispatcher("/WEB-INF/views/inscription.jsp").forward(request, response);
-        }
 }
 }

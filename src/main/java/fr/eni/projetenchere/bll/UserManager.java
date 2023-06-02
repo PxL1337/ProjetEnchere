@@ -5,7 +5,7 @@ import java.util.List;
 
 import fr.eni.projetenchere.bo.User;
 import fr.eni.projetenchere.dal.jdbc.UserDAOJdbcImplementation;
-import org.mindrot.jbcrypt.BCrypt;
+import fr.eni.projetenchere.exception.BusinessException;
 
 public class UserManager {
 	
@@ -30,15 +30,11 @@ public class UserManager {
 	}
 	
 	public void insertUser(User user){
-		/**String hashedPassword = BCrypt.hashpw(user.getMotDePasse(), BCrypt.gensalt());
-		user.setMotDePasse(hashedPassword);*/
-		userDAOJdbc.insert(user);
+	    userDAOJdbc.insert(user);	
 	}
 	
 	public void updateUser(User user){
-		/*String hashedPassword = BCrypt.hashpw(user.getMotDePasse(), BCrypt.gensalt());
-		user.setMotDePasse(hashedPassword);*/
-		userDAOJdbc.update(user);
+	    userDAOJdbc.update(user);	
 	}
 	
 	public void deleteUser(User user){
@@ -51,6 +47,7 @@ public class UserManager {
 	
 	public void updateUserIsAdmin(User user, boolean newValue) {
 		userDAOJdbc.updateIsAdmin(user, newValue);
+		
 	}
 	
 	public User selectUserByID(int ID) {
