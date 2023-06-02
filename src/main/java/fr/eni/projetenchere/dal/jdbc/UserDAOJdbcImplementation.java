@@ -286,7 +286,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 		return user;
 	}
 	
-	public boolean doesThisPseudoAlreadyExists(String comparedPseudo)
+	public boolean doesThisPseudoAlreadyExists(String comparedPseudo) throws SQLException
 	{
 		try (Connection connection = ConnectionProvider.getConnection();				
 				PreparedStatement preparedStatement =
@@ -302,16 +302,12 @@ public class UserDAOJdbcImplementation implements UserDAO {
 				return true; 
 			}
 		} 
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
 		
 		System.out.println("Le pseudo spécifié [" + comparedPseudo + "] n'est pas présent dans la BDD.");
 		return false;
 	}
 	
-	public boolean doesThisEmailAlreadyExists(String comparedEmail)
+	public boolean doesThisEmailAlreadyExists(String comparedEmail) throws SQLException
 	{
 		try (Connection connection = ConnectionProvider.getConnection();				
 				PreparedStatement preparedStatement = 
@@ -326,10 +322,6 @@ public class UserDAOJdbcImplementation implements UserDAO {
 				return true; 
 			}			
 		} 
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
 		
 		System.out.println("L'email spécifié [" + comparedEmail + "] n'est pas présent dans la BDD.");
 		return false;

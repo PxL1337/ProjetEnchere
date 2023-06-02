@@ -47,6 +47,12 @@
 
         <input type="submit" value="S'inscrire">
     </form>
+    <c:if test="${not empty requestScope.inscriptionError}">
+         <div class="alert alert-danger mt-3">${requestScope.inscriptionError}</div>
+    </c:if>
+    <c:if test="${not empty requestScope.inscriptionSqlError}">
+          <div class="alert alert-danger mt-3">${requestScope.inscriptionSqlError}</div>
+    </c:if>
 
 </div>
 

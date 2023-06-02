@@ -74,7 +74,7 @@ public class UserManager {
 	
 	//Pseudo
 	
-	public boolean checkPseudoAvailability(String pseudo) {			
+	public boolean checkPseudoAvailability(String pseudo) throws SQLException {			
 	    return userDAOJdbc.doesThisPseudoAlreadyExists(pseudo);
 	}
 	
@@ -100,7 +100,7 @@ public class UserManager {
 		}
 	
 	//email
-	public boolean checkEmailAvailability(String email) {		
+	public boolean checkEmailAvailability(String email) throws SQLException{		
 		return userDAOJdbc.doesThisEmailAlreadyExists(email);
 	}
 
@@ -109,13 +109,13 @@ public class UserManager {
 	//ville
 	
 	//codePostal	
-	public static boolean validateCodePostal(String codePostal) {
+	public static boolean validateCodePostal(String codePostal) throws SQLException{
 		String postalCodePattern = "\\d{5}";
 		return codePostal.matches(postalCodePattern);
 	}
 
 	//motDePasse	
-	public static boolean validateMotDePasse(String motDePasse) {
+	public static boolean validateMotDePasse(String motDePasse) throws SQLException{
 		return motDePasse.length() >=6 && motDePasse.matches(".*[A-Z].*");		
 	}
 	
