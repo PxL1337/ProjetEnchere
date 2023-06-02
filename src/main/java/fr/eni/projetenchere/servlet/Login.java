@@ -11,6 +11,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(name = "Connection", value = "/login")
 public class Login extends HttpServlet {
@@ -44,15 +45,15 @@ public class Login extends HttpServlet {
             request.setAttribute("loginSqlError", "Une erreur est survenue lors de la tentative de connexion. Veuillez réessayer plus tard.");
         }
 
-        if (utilisateur != null && utilisateur.getMotDePasse().equals(motDePasse)) {
+        if (utilisateur != null && utilisateur.getMotDePasse().equals(motDePasse)/**BCrypt.checkpw(motDePasse, utilisateur.getMotDePasse())*/) {
             // Si les données sont valides, demarrer une session
             HttpSession session = request.getSession();
             session.setAttribute("utilisateurConnecte", utilisateur);
 
             // Créer un cookie pour l'utilisateur
-            //Cookie cookie = new Cookie("utilisateurConnecte", utilisateur.getPseudo());
-            //cookie.setMaxAge(60 * 60 * 24 * 30); // 30 jours
-            //response.addCookie(cookie);
+            Cookie cookie = new Cookie("utilisateurConnecte", utilisateur.getPseudo());
+            cookie.setMaxAge(60 * 60 * 24 * 30); // 30 jours
+            response.addCookie(cookie);
 
             // Redirection vers la page d'accueil
             response.sendRedirect(request.getContextPath() + "/Accueil");

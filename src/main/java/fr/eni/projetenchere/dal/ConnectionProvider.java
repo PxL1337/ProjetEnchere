@@ -1,26 +1,27 @@
 package fr.eni.projetenchere.dal;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionProvider {
-    private static Connection connection;
+    private static DataSource ds;
+
+    static {
+        try {
+            Context ctx = new InitialContext();
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ENCHERE_DB");
+        } catch (NamingException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
 
     public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            try {
-                Class.forName(Settings.getProperty("driver"));
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            connection = DriverManager.getConnection(
-                    Settings.getProperty("url"),
-                    Settings.getProperty("user"),
-                    Settings.getProperty("password")
-            );
-        }
-        return connection;
+        return ds.getConnection();
     }
 }
 

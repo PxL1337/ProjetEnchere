@@ -18,12 +18,21 @@
 
         <label for="pseudo">Pseudo:</label>
         <input type="text" id="pseudo" name="pseudo" required><br>
+        <c:if test="${not empty requestScope.error}">
+            <div class="alert alert-danger mt-3">${requestScope.error}</div>
+        </c:if>
 
         <label for="motDePasse">Mot de passe:</label>
         <input type="password" id="motDePasse" name="motDePasse" required><br>
+        <c:if test="${not empty requestScope.error}">
+            <div class="alert alert-danger mt-3">${requestScope.error}</div>
+        </c:if>
 
         <label for="nom">Nom:</label>
         <input type="text" id="nom" name="nom" required><br>
+        <c:if test="${not empty requestScope.error}">
+            <div class="alert alert-danger mt-3">${requestScope.error}</div>
+        </c:if>
 
         <label for="prenom">Prénom:</label>
         <input type="text" id="prenom" name="prenom" required><br>
@@ -32,7 +41,7 @@
         <input type="email" id="email" name="email" required><br>
 
         <label for="tel">Téléphone:</label>
-        <input type="text" id="tel" name="te" ><br>
+        <input type="tel" id="tel" name="tel" ><br>
 
         <label for="rue">Rue:</label>
         <input type="text" id="rue" name="rue" required><br>

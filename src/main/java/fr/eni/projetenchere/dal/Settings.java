@@ -1,6 +1,5 @@
 package fr.eni.projetenchere.dal;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
@@ -24,20 +23,20 @@ public class Settings {
 
     static {
         try {
-            InputStream settingsFile = Settings.class.getResourceAsStream("/META-INF/db_config.xml");
+            InputStream settingsFile = Settings.class.getResourceAsStream("/META-INF/context.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(new InputSource(settingsFile));
             doc.getDocumentElement().normalize();
 
-            NodeList connectionNodeList = doc.getElementsByTagName("connection");
-            Node connectionNode = connectionNodeList.item(0);
-            if (connectionNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element connectionElement = (Element) connectionNode;
-                url = connectionElement.getElementsByTagName("url").item(0).getTextContent();
-                user = System.getenv(connectionElement.getElementsByTagName("user").item(0).getTextContent());
-                password = System.getenv(connectionElement.getElementsByTagName("password").item(0).getTextContent());
-                driver = connectionElement.getElementsByTagName("driver").item(0).getTextContent();
+            NodeList resourceNodeList = doc.getElementsByTagName("Resource");
+            Node resourceNode = resourceNodeList.item(0);
+            if (resourceNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element resourceElement = (Element) resourceNode;
+                url = resourceElement.getAttribute("url");
+                user = System.getenv(resourceElement.getAttribute("username"));
+                password = System.getenv(resourceElement.getAttribute("password"));
+                driver = resourceElement.getAttribute("driverClassName");
 
                 if (url == null || user == null || password == null) {
                     throw new IllegalStateException("Les variables d'environnement ne sont pas définies correctement.");

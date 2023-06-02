@@ -21,25 +21,32 @@ public class DatabaseTestServlet extends HttpServlet {
         String status;
         Exception exception = null;  // Add this line
 
-        try {
-            Connection conn = ConnectionProvider.getConnection();
-            if (conn != null) {
-                status = "La connexion à la base de données a réussi.";
-                conn.close();
-            } else {
-                status = "La connexion à la base de données a échoué.";
+        // Vérifiez si l'utilisateur est déjà connecté
+        if (request.getSession().getAttribute("utilisateurConnecte") != null) {
+            // Si oui, redirection vers une autre page ou affichez un message
+            try {
+                Connection conn = ConnectionProvider.getConnection();
+                if (conn != null) {
+                    status = "La connexion à la base de données a réussi.";
+                    conn.close();
+                } else {
+                    status = "La connexion à la base de données a échoué.";
+                }
+            } catch (SQLException e) {
+                status = "Erreur lors de la tentative de connexion à la base de données: " + e.getMessage();
+                exception = e;  // Add this line
+            } catch (NullPointerException e) {
+                status = "Les variables d'environnement ne sont pas définies correctement. Veuillez consulter les instructions ici: " +
+                        "<a href='https://github.com/PxL1337/ProjetEnchere/blob/master/database_config.md'>Configuration d'accès à la base de données</a>";
             }
-        } catch (SQLException e) {
-            status = "Erreur lors de la tentative de connexion à la base de données: " + e.getMessage();
-            exception = e;  // Add this line
-        } catch (NullPointerException e) {
-            status = "Les variables d'environnement ne sont pas définies correctement. Veuillez consulter les instructions ici: " +
-                    "<a href='https://github.com/PxL1337/ProjetEnchere/blob/master/database_config.md'>Configuration d'accès à la base de données</a>";
-        }
 
-        request.setAttribute("status", status);
-        request.setAttribute("exception", exception);  // Add this line
-        request.getRequestDispatcher("/WEB-INF/views/testDatabase.jsp").forward(request, response);
+            request.setAttribute("status", status);
+            request.setAttribute("exception", exception);  // Add this line
+            request.getRequestDispatcher("/WEB-INF/views/testDatabase.jsp").forward(request, response);
+        } else {
+            // Si non, affichez la page de connexion
+            request.getRequestDispatcher("/errors/403.jsp").forward(request, response);
+        }
     }
 
 

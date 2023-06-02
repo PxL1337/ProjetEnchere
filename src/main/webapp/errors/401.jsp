@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>CodePen - Error Pages</title>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="/AppliDemo/errors/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/errors/style.css">
 
 </head>
 <body>
@@ -24,10 +24,10 @@
     </div>
 </div>
 <div id="particles-js"></div>
-<a href="/AppliDemo/index.html" class="back">GO BACK</a>
+<a href="${pageContext.request.contextPath}/" class="back">Accueil</a>
 <!-- partial -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'></script>
-<script  src="/AppliDemo/errors/script.js"></script>
+<script  src="${pageContext.request.contextPath}/errors/script.js"></script>
 
 </body>
 </html>

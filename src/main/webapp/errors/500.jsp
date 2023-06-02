@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>CodePen - Error Pages</title>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="/AppliDemo/errors/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/errors/style.css">
 
 </head>
 <body>
@@ -17,17 +17,17 @@
         <!--p(data-p='UNAUTHORIZED') UNAUTHORIZED-->
         <!--h1(data-h1='403') 403-->
         <!--p(data-p='FORBIDDEN') FORBIDDEN-->
-        <h1 data-h1="403">403</h1>
-        <p data-p="FORBIDDEN">FORBIDDEN</p>
+        <h1 data-h1="500">500</h1>
+        <p data-p="ERREUR SERVEUR">ERREUR SERVEUR DON'T PANIC !</p>
         <!--h1(data-h1='500') 500-->
         <!--p(data-p='SERVER ERROR') SERVER ERROR-->
     </div>
 </div>
 <div id="particles-js"></div>
-<a href="/AppliDemo/index.html" class="back">GO BACK</a>
+<a href="${pageContext.request.contextPath}/" class="back">Accueil</a>
 <!-- partial -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'></script>
-<script  src="/AppliDemo/errors/script.js"></script>
+<script  src="${pageContext.request.contextPath}/errors/script.js"></script>
 
 </body>
 </html>

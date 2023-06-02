@@ -18,14 +18,14 @@ public class Deconnexion extends HttpServlet {
         request.getSession().invalidate();
 
         // Supprimer le cookie de JSESSIONID
-        /**Cookie[] cookies = request.getCookies();
+        Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("JSESSIONID")) {
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
                 break;
             }
-        }**/
+        }
 
         // Rediriger l'utilisateur vers la page d'accueil
         response.sendRedirect(request.getContextPath() + "/");
