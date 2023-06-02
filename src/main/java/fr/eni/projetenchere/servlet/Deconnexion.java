@@ -28,7 +28,7 @@ public class Deconnexion extends HttpServlet {
         }**/
 
         // Rediriger l'utilisateur vers la page d'accueil
-        response.sendRedirect(request.getContextPath() + "/Accueil");
+        response.sendRedirect(request.getContextPath() + "/");
 
     }
 
