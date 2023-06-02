@@ -19,7 +19,7 @@
 	<h1>Profil de ${user.pseudo }</h1>
 	<ul>
 		<li>Nom : ${user.nom }</li>
-		<li>Prenom : ${user.Prenom }</li>
+		<li>Prenom : ${user.prenom }</li>
 		<li>Email : ${user.email }</li>
 		<li>Telephone : ${user.telephone }</li>
 		<li>Adresse : ${user.rue }<br/> ${user.codePostal }  ${user.ville }</li>

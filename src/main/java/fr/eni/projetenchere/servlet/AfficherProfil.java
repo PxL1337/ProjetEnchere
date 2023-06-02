@@ -26,7 +26,7 @@ public class AfficherProfil extends HttpServlet {
             // Si oui, affichage du profil
         	String id = request.getParameter("id");
         	User user = new User();
-        	UserManager um = new UserManager();
+        	UserManager um = UserManager.getInstance();
         	user = um.selectUserByID(Integer.parseInt(id));
         	request.setAttribute("user", user);
         	request.getRequestDispatcher("/WEB-INF/views/ShowUser.jsp").forward(request, response);
