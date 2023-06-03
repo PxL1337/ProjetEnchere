@@ -17,33 +17,21 @@ import jakarta.servlet.http.HttpServletResponse;
 public class AfficherProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 // Vérifiez si l'utilisateur est déjà connecté
-        if (request.getSession().getAttribute("utilisateurConnecte") != null) {
-            // Si oui, affichage du profil
-        	// Id c'est pas le bon paramètre à récupérer c'est plutôt no_utilisateur
-        	String id = request.getParameter("id");
-        	User user = new User();
-        	UserManager um = UserManager.getInstance();
-        	user = um.selectUserByID(Integer.parseInt(id));
-        	request.setAttribute("user", user);
-        	request.getRequestDispatcher("/WEB-INF/views/ShowUser.jsp").forward(request, response);
+		if (request.getSession().getAttribute("utilisateurConnecte") != null) {
+			User currentUser = (User) request.getSession().getAttribute("utilisateurConnecte");
+			// Maintenant, utilisez cet objet User pour récupérer les informations de l'utilisateur à partir de la base de données
+			UserManager um = UserManager.getInstance();
+			User user = um.selectUserByID(currentUser.getNoUtilisateur()); // Assurez-vous que votre objet User a une méthode getId() pour obtenir l'id de l'utilisateur
 
-        } else {
-            // Si non, affichez la page de connexion
-            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-       }
+			request.setAttribute("user", user);
+			request.getRequestDispatcher("/WEB-INF/views/ShowUser.jsp").forward(request, response);
+		} else {
+			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
