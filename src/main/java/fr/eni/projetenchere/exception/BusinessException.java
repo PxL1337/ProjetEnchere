@@ -30,6 +30,7 @@ import java.util.List;
     public List<Integer> getListeCodesErreur(){
         return this.listeCodesErreur;
     }
-
+    
+    
 
 }
