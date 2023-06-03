@@ -5,7 +5,12 @@ import java.util.List;
 
     public class BusinessException extends Exception{
 
-    private List<Integer> listeCodesErreur;
+    /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+	
+		private List<Integer> listeCodesErreur;
 
     public BusinessException() {
         super();
