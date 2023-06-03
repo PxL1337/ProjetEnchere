@@ -75,6 +75,7 @@ public class UserManager {
 	public User selectUserByEmail(String comparedEmail){
 		return userDAOJdbc.selectByEmail(comparedEmail);
 	}
+
 	
 	// CHECK SECTION ------------------------------------------------------------------------
 	

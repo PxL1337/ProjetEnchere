@@ -19,22 +19,6 @@
 
 <div class="container">
     <h1>Inscription</h1>
-    <% if(request.getAttribute("listeCodesErreur") != null) { %>
-    <div class="alert alert-danger">
-        <% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
-        <% for(Integer codeErreur : listeCodesErreur) { %>
-        <% if(codeErreur.equals(CodeErreur.EMAIL_EXISTANT)) { %>
-        Email indisponible<br/>
-        <% } else if(codeErreur.equals(CodeErreur.PSEUDO_EXISTANT)) { %>
-        Pseudo indisponible<br/>
-        <% } else if(codeErreur.equals(CodeErreur.CODE_POSTAL_INVALIDE)) { %>
-        Code postal erroné<br/>
-        <% } else if(codeErreur.equals(CodeErreur.MDP_INVALIDE)) { %>
-        Mot de passe erroné<br/>
-        <% } %>
-        <% } %>
-    </div>
-    <% } %>
 
     <form action="${pageContext.request.contextPath}/inscription" method="POST" class="row g-3">
         <div class="col-md-6">
@@ -103,6 +87,22 @@
         <div class="col-12">
             <input type="submit" value="S'inscrire" class="btn btn-primary">
         </div>
+        <% if(request.getAttribute("listeCodesErreur") != null) { %>
+        <div class="alert alert-danger">
+            <% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
+            <% for(Integer codeErreur : listeCodesErreur) { %>
+            <% if(codeErreur.equals(CodeErreur.EMAIL_EXISTANT)) { %>
+            Email indisponible<br/>
+            <% } else if(codeErreur.equals(CodeErreur.PSEUDO_EXISTANT)) { %>
+            Pseudo indisponible<br/>
+            <% } else if(codeErreur.equals(CodeErreur.CODE_POSTAL_INVALIDE)) { %>
+            Code postal erroné<br/>
+            <% } else if(codeErreur.equals(CodeErreur.MDP_INVALIDE)) { %>
+            Mot de passe erroné<br/>
+            <% } %>
+            <% } %>
+        </div>
+        <% } %>
     </form>
 
 
