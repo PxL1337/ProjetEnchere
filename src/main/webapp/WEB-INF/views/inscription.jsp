@@ -31,7 +31,7 @@
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="password" id="motDePasse" name="motDePasse" class="form-control" placeholder="Ex : MySecuredPassword" required>
+                <input type="password" id="motDePasse" name="motDePasse" class="form-control" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Ex : MySecuredPassword" oninvalid="this.setCustomValidity('Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.')" oninput="this.setCustomValidity('')" required>
                 <label for="motDePasse">Mot de passe</label>
             </div>
         </div>
@@ -52,14 +52,14 @@
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="email" id="email" name="email" class="form-control" placeholder="Ex : xyz@xyz.com" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getEmail() : "" %>"required>
+                <input type="email" id="email" name="email" class="form-control" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="Ex : xyz@xyz.com" oninvalid="this.setCustomValidity('Veuillez entrer un email valide. Exemple : xyz@xyz.com')" oninput="this.setCustomValidity('')" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getEmail() : "" %>" required>
                 <label for="email">Email</label>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="tel" id="tel" name="telephone" class="form-control" pattern="[0-9]{10}" placeholder="Ex : 0123456789" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getTelephone() : "" %>">
+                <input type="tel" id="tel" name="telephone" class="form-control" pattern="[0-9]{10}" placeholder="Ex : 0123456789" title="Veuillez entrer un numéro de téléphone à 10 chiffres." required oninvalid="this.setCustomValidity('Veuillez entrer un numéro de téléphone à 10 chiffres.')" oninput="this.setCustomValidity('')" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getTelephone() : "" %>">
                 <label for="tel">Téléphone</label>
             </div>
         </div>
@@ -73,7 +73,7 @@
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="text" id="codePostal" name="codePostal" class="form-control" placeholder="Ex : 01000" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getCodePostal() : "" %>"required>
+                <input type="text" id="codePostal" name="codePostal" class="form-control" pattern="^[0-9]{5}$" placeholder="Ex : 01000" oninvalid="this.setCustomValidity('Veuillez entrer un code postal à 5 chiffres.')" oninput="this.setCustomValidity('')" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getCodePostal() : "" %>"required>
                 <label for="codePostal">Code Postal</label>
             </div>
         </div>
