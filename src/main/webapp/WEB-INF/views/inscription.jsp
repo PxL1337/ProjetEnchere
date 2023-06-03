@@ -1,5 +1,6 @@
 <%@ page import="fr.eni.projetenchere.bll.CodeErreur" %>
 <%@ page import="java.util.List" %>
+<%@ page import="fr.eni.projetenchere.bo.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,7 +24,7 @@
     <form action="${pageContext.request.contextPath}/inscription" method="POST" class="row g-3">
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="Ex : Michoudu78" required>
+                <input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="Ex : Michoudu78" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getPseudo() : "" %>" required>
                 <label for="pseudo">Pseudo</label>
             </div>
         </div>
@@ -37,49 +38,49 @@
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="text" id="nom" name="nom" class="form-control" placeholder="Ex : Durand" required>
+                <input type="text" id="nom" name="nom" class="form-control" placeholder="Ex : Durand" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getNom() : "" %>" required>
                 <label for="nom">Nom</label>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="text" id="prenom" name="prenom" class="form-control" placeholder="Ex : Bernard" required>
+                <input type="text" id="prenom" name="prenom" class="form-control" placeholder="Ex : Bernard" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getPrenom() : "" %>" required>
                 <label for="prenom">Prénom</label>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="email" id="email" name="email" class="form-control" placeholder="Ex : xyz@xyz.com" required>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Ex : xyz@xyz.com" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getEmail() : "" %>"required>
                 <label for="email">Email</label>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="tel" id="tel" name="telephone" class="form-control" pattern="[0-9]{10}" placeholder="Ex : 0123456789">
+                <input type="tel" id="tel" name="telephone" class="form-control" pattern="[0-9]{10}" placeholder="Ex : 0123456789" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getTelephone() : "" %>">
                 <label for="tel">Téléphone</label>
             </div>
         </div>
 
         <div class="col-12">
             <div class="form-floating">
-                <input type="text" id="rue" name="rue" class="form-control" placeholder="Ex : rue de la paix" required>
-                <label for="rue">Rue</label>
+                <input type="text" id="rue" name="rue" class="form-control" placeholder="Ex : rue de la paix" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getRue() : "" %>" required>
+                <label for="rue">Adresse</label>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="text" id="codePostal" name="codePostal" class="form-control" placeholder="Ex : 01000" required>
+                <input type="text" id="codePostal" name="codePostal" class="form-control" placeholder="Ex : 01000" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getCodePostal() : "" %>"required>
                 <label for="codePostal">Code Postal</label>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="text" id="ville" name="ville" class="form-control" placeholder="Ex : Madrid" required>
+                <input type="text" id="ville" name="ville" class="form-control" placeholder="Ex : Madrid" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getVille() : "" %>"required>
                 <label for="ville">Ville</label>
             </div>
         </div>
@@ -88,20 +89,13 @@
             <input type="submit" value="S'inscrire" class="btn btn-primary">
         </div>
         <% if(request.getAttribute("listeCodesErreur") != null) { %>
-        <div class="alert alert-danger">
-            <% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
-            <% for(Integer codeErreur : listeCodesErreur) { %>
-            <% if(codeErreur.equals(CodeErreur.EMAIL_EXISTANT)) { %>
-            Email indisponible<br/>
-            <% } else if(codeErreur.equals(CodeErreur.PSEUDO_EXISTANT)) { %>
-            Pseudo indisponible<br/>
-            <% } else if(codeErreur.equals(CodeErreur.CODE_POSTAL_INVALIDE)) { %>
-            Code postal erroné<br/>
-            <% } else if(codeErreur.equals(CodeErreur.MDP_INVALIDE)) { %>
-            Mot de passe erroné<br/>
-            <% } %>
-            <% } %>
-        </div>
+            <div class="alert alert-danger">
+                <% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
+                <% for(Integer codeErreur : listeCodesErreur) { %>
+                <% String messageErreur = fr.eni.projetenchere.messages.LecteurMessage.getMessage(codeErreur); %>
+                <%= messageErreur %><br/>
+                <% } %>
+            </div>
         <% } %>
     </form>
 

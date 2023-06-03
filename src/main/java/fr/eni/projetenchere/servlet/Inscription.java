@@ -61,6 +61,8 @@ public class Inscription extends HttpServlet {
             }
 
             if (businessException.hasErreurs()) {
+                User user = new User(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, userManager.DEFAULT_USER_CREDIT, userManager.DEFAULT_IS_ADMIN_VALUE);
+                request.setAttribute("utilisateur", user);
                 request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
                 request.getRequestDispatcher("/WEB-INF/views/inscription.jsp").forward(request, response);
             } else {
