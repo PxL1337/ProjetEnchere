@@ -3,7 +3,7 @@ package fr.eni.projetenchere.messages;
 import java.util.ResourceBundle;
 
 public class LecteurMessage {
-	private final static String MESSAGES_PROPERTIES =  "fr.eni.projetenchere.messages_erreur";
+	private final static String MESSAGES_PROPERTIES =  "fr.eni.projetenchere.messages.messages_erreur";
 	private static ResourceBundle rb;
 	
 	static {
