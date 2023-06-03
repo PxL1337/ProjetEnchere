@@ -29,7 +29,7 @@
 			<p class="card-text">Adresse : ${user.rue }, ${user.codePostal }, ${user.ville }</p>
 
 			<div class="mt-4 d-flex justify-content-between">
-				<a href="lien_vers_servlet_de_modification" class="btn btn-primary">Modifier Profil</a>
+				<a href="${pageContext.request.contextPath}/ModifyUserProfile" class="btn btn-primary">Modifier Profil</a>
 				<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer Mon Compte</a>
 			</div>
 		</div>
@@ -39,25 +39,7 @@
 <!-- Footer -->
 <jsp:include page="/WEB-INF/views/footer.jsp" />
 
-<!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-				<a href="${pageContext.request.contextPath}/DeleteAccount" class="btn btn-danger">Supprimer</a>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Fin du modal -->
+<jsp:include page="/WEB-INF/views/modal/DeleteAccountModal.jsp" />
 
 <!-- JS Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

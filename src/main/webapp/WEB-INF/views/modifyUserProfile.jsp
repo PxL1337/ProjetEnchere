@@ -16,87 +16,110 @@
 <!-- Barre de navigation -->
 <jsp:include page="/WEB-INF/views/header.jsp" />
 
-<h1 id="pageName"> Mon Profil </h1>
-
 <!-- À mettre en page pour afficher les éléments dans un ordre choisi. -->
-<div class="content">
+<div class="container">
+	<h1 id="pageName"> Mon Profil </h1>
 
-	<form action="${pageContext.request.contextPath}/modifyUserProfile" method="POST">
+	<form action="${pageContext.request.contextPath}/modifyUserProfile" method="POST" class="row g-3">
+		<div class="col-md-6">
+			<div class="form-floating">
+				<input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="Ex : Michoudu78" value="" required>
+				<label for="pseudo">Pseudo</label>
+			</div>
+		</div>
 
-        <label for="pseudo">Pseudo:</label>
-        <input type="text" id="pseudo" name="pseudo"><br>
+		<div class="col-md-6">
+			<div class="form-floating">
+				<input type="password" id="motDePasse" name="motDePasse" class="form-control" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Ex : MySecuredPassword" oninvalid="this.setCustomValidity('Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.')" oninput="this.setCustomValidity('')" required>
+				<label for="motDePasse">Mot de passe</label>
+			</div>
+		</div>
 
-        <label for="motDePasse">Mot de passe:</label>
-        <input type="password" id="motDePasse" name="motDePasse"><br>
+		<div class="col-md-6">
+			<div class="form-floating">
+				<input type="text" id="nom" name="nom" class="form-control" placeholder="Ex : Durand" value="" required>
+				<label for="nom">Nom</label>
+			</div>
+		</div>
 
-        <label for="nom">Nom:</label>
-        <input type="text" id="nom" name="nom"><br>
+		<div class="col-md-6">
+			<div class="form-floating">
+				<input type="text" id="prenom" name="prenom" class="form-control" placeholder="Ex : Bernard" value="" required>
+				<label for="prenom">Prénom</label>
+			</div>
+		</div>
 
-        <label for="prenom">Prénom:</label>
-        <input type="text" id="prenom" name="prenom"><br>
+		<div class="col-md-6">
+			<div class="form-floating">
+				<input type="email" id="email" name="email" class="form-control" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="Ex : xyz@xyz.com" oninvalid="this.setCustomValidity('Veuillez entrer un email valide. Exemple : xyz@xyz.com')" oninput="this.setCustomValidity('')" value="" required>
+				<label for="email">Email</label>
+			</div>
+		</div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email"><br>
+		<div class="col-md-6">
+			<div class="form-floating">
+				<input type="tel" id="tel" name="telephone" class="form-control" pattern="[0-9]{10}" placeholder="Ex : 0123456789" title="Veuillez entrer un numéro de téléphone à 10 chiffres." required oninvalid="this.setCustomValidity('Veuillez entrer un numéro de téléphone à 10 chiffres.')" oninput="this.setCustomValidity('')" value="">
+				<label for="tel">Téléphone</label>
+			</div>
+		</div>
 
-        <label for="tel">Téléphone:</label>
-        <input type="text" id="tel" name="te" ><br>
+		<div class="col-12">
+			<div class="form-floating">
+				<input type="text" id="rue" name="rue" class="form-control" placeholder="Ex : rue de la paix" value="" required>
+				<label for="rue">Adresse</label>
+			</div>
+		</div>
 
-        <label for="rue">Rue:</label>
-        <input type="text" id="rue" name="rue"><br>
+		<div class="col-md-6">
+			<div class="form-floating">
+				<input type="text" id="codePostal" name="codePostal" class="form-control" pattern="^[0-9]{5}$" placeholder="Ex : 01000" oninvalid="this.setCustomValidity('Veuillez entrer un code postal à 5 chiffres.')" oninput="this.setCustomValidity('')" value="" required>
+				<label for="codePostal">Code Postal</label>
+			</div>
+		</div>
 
-        <label for="codePostal">Code Postal:</label>
-        <input type="text" id="codePostal" name="codePostal"><br>
+		<div class="col-md-6">
+			<div class="form-floating">
+				<input type="text" id="ville" name="ville" class="form-control" placeholder="Ex : Madrid" value="" required>
+				<label for="ville">Ville</label>
+			</div>
+		</div>
 
-        <label for="ville">Ville:</label>
-        <input type="text" id="ville" name="ville"><br>
-        
-        <label for="currentMdp">Mot de passe actuel:</label>
-        <input type="text" id="currentMdp" name="currentMdp"><br>
-        
-        <!-- Section contenant les champs newMDP et confirmationMDP -->
-        <section class="newMDPSection">
-			<table>
-				<tr>
-					<td>
-						<label for="newMdp">Nouveau Mot de passe:</label>
-						<input type="text" id="newMdp" name="newMdp">
-					</td>
-					<td>
-						<label for="confirmationMdp">Confirmation:</label>
-        				<input type="text" id="confirmationMdp" name="confirmationMdp">
-					</td>
-				</tr>
-			</table>		
-		</section>
-		
-		<!-- Credit display here (je ne sais pas si c'est comme ça qu'il faut faire) -->
-		<p> Crédit : ${user.credit}</p>
+		<div class="col-12">
+			<div class="form-floating">
+				<input type="text" id="currentMdp" name="currentMdp" class="form-control" placeholder="Mot de passe actuel" required>
+				<label for="currentMdp">Mot de passe actuel</label>
+			</div>
+		</div>
 
-		<!-- Section contenant les boutons d'actions agissants sur le formulaire -->
-		<section class="buttons">
-		<table>
-			<tr>
-				<td>
-				<!-- Point to a page ? -->
-					<a href=""> 
-						<input type="submit" value="Enregistrer">
-					</a>
-				</td>
-				<td>
-				<!-- Point to a page ? -->
-					<a href=""> 
-						<input type="submit" value="Supprimer mon compte">
-					</a>
-				</td>
-			</tr>
-		</table>		
-		</section>		
-    </form>
+		<div class="col-12">
+			<div class="form-floating">
+				<input type="text" id="newMdp" name="newMdp" class="form-control" placeholder="Nouveau mot de passe" required>
+				<label for="newMdp">Nouveau mot de passe</label>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="form-floating">
+				<input type="text" id="confirmationMdp" name="confirmationMdp" class="form-control" placeholder="Confirmation du nouveau mot de passe" required>
+				<label for="confirmationMdp">Confirmation du nouveau mot de passe</label>
+			</div>
+		</div>
+
+		<p>Crédit : ${user.credit}</p>
+
+		<div class="mt-4 d-flex justify-content-between">
+			<input type="submit" value="Enregistrer" class="btn btn-primary">
+			<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer Mon Compte</a>
+		</div>
+	</form>
 </div>
+
 
 
 <!-- Footer -->
 <jsp:include page="/WEB-INF/views/footer.jsp" />
+
+<jsp:include page="/WEB-INF/views/modal/DeleteAccountModal.jsp" />
 
 <!-- JS Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

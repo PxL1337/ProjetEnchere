@@ -30,4 +30,8 @@ public class CodeErreur {
     public static final int MONTANT_INVALIDE = 20025;
     public static final int ENCHERE_INFERIEUR_PRIX_DE_VENTE = 20026;
 
+    public static final int MDP_INCORRECT = 20027;
+
+    public static final int CONFIRMATION_MDP_INCORRECTE = 20028;
+
 }

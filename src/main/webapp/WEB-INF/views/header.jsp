@@ -159,11 +159,7 @@
 
 
             <% if (session.getAttribute("utilisateurConnecte") == null) { %>
-            <c:if test="${param.accountDeleted != null}">
-                <div class="alert alert-success" role="alert">
-                    Votre compte a été supprimé avec succès.
-                </div>
-            </c:if>
+
             <!-- Boutons Connexion et Inscription -->
             <a href="${pageContext.request.contextPath}/login"><button type="button" class="btn btn-light text-dark me-2">Connexion</button></a>
             <a href="${pageContext.request.contextPath}/inscription"><button type="button" class="btn btn-primary">Inscription</button></a>
