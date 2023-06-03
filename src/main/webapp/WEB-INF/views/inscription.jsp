@@ -1,6 +1,7 @@
 <%@ page import="fr.eni.projetenchere.bll.CodeErreur" %>
 <%@ page import="java.util.List" %>
 <%@ page import="fr.eni.projetenchere.bo.User" %>
+<%@ page import="fr.eni.projetenchere.messages.LecteurMessage" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -92,7 +93,7 @@
             <div class="alert alert-danger">
                 <% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
                 <% for(Integer codeErreur : listeCodesErreur) { %>
-                <% String messageErreur = fr.eni.projetenchere.messages.LecteurMessage.getMessage(codeErreur); %>
+                <% String messageErreur = LecteurMessage.getMessage(codeErreur); %>
                 <%= messageErreur %><br/>
                 <% } %>
             </div>

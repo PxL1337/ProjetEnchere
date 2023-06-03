@@ -130,4 +130,19 @@ public class UserManager {
 	
 	//credit
 	//administrateur
+
+	//Password
+
+	public boolean checkPassword(int userId, String password) throws BusinessException {
+		// Retrieve the user from the database based on the userId
+		User user = selectUserByID(userId);
+
+		// Check the password
+		if (BCrypt.checkpw(password, user.getMotDePasse())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }
