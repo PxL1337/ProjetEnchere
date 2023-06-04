@@ -22,7 +22,7 @@ public class AfficherProfil extends HttpServlet {
 			User currentUser = (User) request.getSession().getAttribute("utilisateurConnecte");
 			// Maintenant, utilisez cet objet User pour récupérer les informations de l'utilisateur à partir de la base de données
 			UserManager um = UserManager.getInstance();
-			User user = um.selectUserByID(currentUser.getNoUtilisateur()); // Assurez-vous que votre objet User a une méthode getId() pour obtenir l'id de l'utilisateur
+			User user = um.selectUserByID(currentUser.getNoUtilisateur());
 
 			request.setAttribute("user", user);
 			request.getRequestDispatcher("/WEB-INF/views/ShowUser.jsp").forward(request, response);
