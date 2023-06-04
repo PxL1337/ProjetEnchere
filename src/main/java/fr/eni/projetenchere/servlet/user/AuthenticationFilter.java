@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/Profile", "/ModifyUserProfile", "/DeleteAccount", "/Profile"})
+@WebFilter(urlPatterns = {"/Profile", "/ModifyUserProfile", "/Deconnexion"})
 public class AuthenticationFilter implements Filter {
 
     @Override

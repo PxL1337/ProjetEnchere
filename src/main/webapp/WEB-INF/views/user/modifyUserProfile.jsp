@@ -23,7 +23,7 @@
 	<h1 id="pageName"> Modifier mon Profil </h1>
 
 	<form action="${pageContext.request.contextPath}/ModifyUserProfile" method="POST" class="row g-3">
-		<div class="col-md-6">
+		<div class="col-12">
 			<div class="form-floating">
 				<input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="Ex : Michoudu78" value="">
 				<label for="pseudo">Pseudo</label>
@@ -80,20 +80,20 @@
 		</div>
 
 		<div class="col-12">
-				<div class="form-floating">
-					<input type="password" id="motDePasse" name="motDePasse" class="form-control" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Ex : MySecuredPassword" oninvalid="this.setCustomValidity('Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.')" oninput="this.setCustomValidity('')" required>
-					<label for="motDePasse">Mot de passe</label>
-				</div>
+			<div class="form-floating">
+				<input type="password" id="motDePasse" name="motDePasse" class="form-control" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Ex : MySecuredPassword" oninvalid="this.setCustomValidity('Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.')" oninput="this.setCustomValidity('')" required>
+				<label for="motDePasse">Mot de passe</label>
+			</div>
 		</div>
 
-		<div class="col-12">
+		<div class="col-md-6">
 			<div class="form-floating">
 				<input type="password" id="newMdp" name="newMdp" class="form-control" placeholder="Nouveau mot de passe" >
 				<label for="newMdp">Nouveau mot de passe</label>
 			</div>
 		</div>
 
-		<div class="col-12">
+		<div class="col-md-6">
 			<div class="form-floating">
 				<input type="password" id="confirmationMdp" name="confirmationMdp" class="form-control" placeholder="Confirmation du nouveau mot de passe" >
 				<label for="confirmationMdp">Confirmation du nouveau mot de passe</label>
@@ -107,6 +107,7 @@
 			<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer Mon Compte</a>
 		</div>
 	</form>
+
 	<% if(request.getAttribute("listeCodesErreur") != null) { %>
 	<div class="alert alert-danger">
 		<% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>

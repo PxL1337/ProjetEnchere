@@ -32,13 +32,6 @@
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="password" id="motDePasse" name="motDePasse" class="form-control" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Ex : MySecuredPassword" oninvalid="this.setCustomValidity('Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.')" oninput="this.setCustomValidity('')" required>
-                <label for="motDePasse">Mot de passe</label>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-floating">
                 <input type="text" id="nom" name="nom" class="form-control" placeholder="Ex : Durand" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getNom() : "" %>" required>
                 <label for="nom">Nom</label>
             </div>
@@ -86,17 +79,32 @@
             </div>
         </div>
 
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="password" id="motDePasse" name="motDePasse" class="form-control" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Ex : MySecuredPassword" oninvalid="this.setCustomValidity('Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.')" oninput="this.setCustomValidity('')" required>
+                <label for="motDePasse">Mot de passe</label>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="password" id="confirmationMotDePasse" name="confirmationMotDePasse" class="form-control" placeholder="Confirmez votre mot de passe" required>
+                <label for="confirmationMotDePasse">Confirmez le mot de passe</label>
+            </div>
+        </div>
+
         <div class="col-12">
             <input type="submit" value="S'inscrire" class="btn btn-primary">
         </div>
+
         <% if(request.getAttribute("listeCodesErreur") != null) { %>
-            <div class="alert alert-danger">
-                <% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
-                <% for(Integer codeErreur : listeCodesErreur) { %>
-                <% String messageErreur = LecteurMessage.getMessage(codeErreur); %>
-                <%= messageErreur %><br/>
-                <% } %>
-            </div>
+        <div class="alert alert-danger">
+            <% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
+            <% for(Integer codeErreur : listeCodesErreur) { %>
+            <% String messageErreur = LecteurMessage.getMessage(codeErreur); %>
+            <%= messageErreur %><br/>
+            <% } %>
+        </div>
         <% } %>
     </form>
 

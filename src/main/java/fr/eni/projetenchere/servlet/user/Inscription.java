@@ -39,46 +39,31 @@ public class Inscription extends HttpServlet {
         String codePostal = request.getParameter("codePostal");
         String ville = request.getParameter("ville");
         String motDePasse = request.getParameter("motDePasse");
+        String passwordConfirmation = request.getParameter("confirmationMotDePasse");
 
         UserManager userManager = UserManager.getInstance();
-        BusinessException businessException = new BusinessException();
+        User user = null;
 
         try {
-            if (userManager.checkEmailAvailability(email)) {
-                businessException.ajouterErreur(CodeErreur.EMAIL_EXISTANT);
-            }
+            user = new User(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, userManager.DEFAULT_USER_CREDIT, userManager.DEFAULT_IS_ADMIN_VALUE);
+            userManager.validate(user, passwordConfirmation);
+            userManager.insertUser(user);
 
-            if(userManager.checkPseudoAvailability(pseudo)) {
-                businessException.ajouterErreur(CodeErreur.PSEUDO_EXISTANT);
-            }
+            User connected = userManager.selectUserByPseudoOuEmail(user.getPseudo());
 
-            if(!userManager.validateCodePostal(codePostal)) {
-                businessException.ajouterErreur(CodeErreur.CODE_POSTAL_INVALIDE);
-            }
-
-            if(!userManager.validateMotDePasse(motDePasse)) {
-                businessException.ajouterErreur(CodeErreur.MDP_INVALIDE);
-            }
-
-            if (businessException.hasErreurs()) {
-                User user = new User(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, userManager.DEFAULT_USER_CREDIT, userManager.DEFAULT_IS_ADMIN_VALUE);
-                request.setAttribute("utilisateur", user);
-                request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
-                request.getRequestDispatcher("/WEB-INF/views/user/inscription.jsp").forward(request, response);
-            } else {
-                User user = new User(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, userManager.DEFAULT_USER_CREDIT, userManager.DEFAULT_IS_ADMIN_VALUE);
-                userManager.insertUser(user);
-
-                User connected = userManager.selectUserByPseudoOuEmail(user.getPseudo());
-
-                // Créer une nouvelle session avec l'utilisateur de la base de données
-                request.getSession().setAttribute("utilisateurConnecte", connected);
+            // Créer une nouvelle session avec l'utilisateur de la base de données
+            request.getSession().setAttribute("utilisateurConnecte", connected);
 
             // Rediriger vers la page d'accueil
-                response.sendRedirect(request.getContextPath() + "/");
-            }
+            response.sendRedirect(request.getContextPath() + "/");
+        } catch (BusinessException e) {
+            request.setAttribute("utilisateur", user);
+            request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+            request.getRequestDispatcher("/WEB-INF/views/user/inscription.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
+            request.setAttribute("erreur", "Une erreur est survenue lors de l'inscription. Veuillez réessayer plus tard.");
+            request.getRequestDispatcher("/WEB-INF/views/user/inscription.jsp").forward(request, response);
         }
     }
 }

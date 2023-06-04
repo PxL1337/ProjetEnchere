@@ -143,4 +143,111 @@ public class UserManager {
 		}
 	}
 
+	public void validate(User user, String passwordConfirmation) throws BusinessException, SQLException {
+		BusinessException businessException = new BusinessException();
+
+		if (checkPseudoAvailability(user.getPseudo())) {
+			businessException.ajouterErreur(CodeErreur.PSEUDO_EXISTANT);
+		}
+
+		if (checkEmailAvailability(user.getEmail())) {
+			businessException.ajouterErreur(CodeErreur.EMAIL_EXISTANT);
+		}
+
+		if (!validateNom(user.getNom())) {
+			businessException.ajouterErreur(CodeErreur.NOM_INVALIDE);
+		}
+
+		if (!validatePrenom(user.getPrenom())) {
+			businessException.ajouterErreur(CodeErreur.PRENOM_INVALIDE);
+		}
+
+		if (!validateCodePostal(user.getCodePostal())) {
+			businessException.ajouterErreur(CodeErreur.CODE_POSTAL_INVALIDE);
+		}
+
+		if (!validateMotDePasse(user.getMotDePasse())) {
+			businessException.ajouterErreur(CodeErreur.MDP_INVALIDE);
+		}
+
+		if (!user.getMotDePasse().equals(passwordConfirmation)) {
+			businessException.ajouterErreur(CodeErreur.CONFIRMATION_MDP_INCORRECTE);
+		}
+
+		if (businessException.hasErreurs()) {
+			throw businessException;
+		}
+	}
+
+	public void validateAndUpdateUser(User user, String currentPassword, String newPassword, String confirmationPassword, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville) throws BusinessException, SQLException {
+		BusinessException businessException = new BusinessException();
+
+		// Vérifiez si le mot de passe actuel est correct
+		if (!this.checkPassword(user.getNoUtilisateur(), currentPassword)) {
+			businessException.ajouterErreur(CodeErreur.MDP_INCORRECT);
+		}
+
+		// Vérifiez si le nouveau mot de passe et la confirmation du mot de passe correspondent
+		if (newPassword != null && !newPassword.isEmpty() && confirmationPassword != null && !confirmationPassword.isEmpty()) {
+			if (!newPassword.equals(confirmationPassword)) {
+				businessException.ajouterErreur(CodeErreur.CONFIRMATION_MDP_INCORRECTE);
+			} else if (!UserManager.validateMotDePasse(newPassword)) {
+				businessException.ajouterErreur(CodeErreur.MDP_INVALIDE);
+			} else {
+				user.setMotDePasse(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+			}
+		}
+
+		// Vérifiez si le pseudo est disponible
+		if (pseudo != null && !pseudo.isEmpty() && !pseudo.equals(user.getPseudo())) {
+			if (this.checkPseudoAvailability(pseudo)) {
+				businessException.ajouterErreur(CodeErreur.PSEUDO_EXISTANT);
+			} else {
+				user.setPseudo(pseudo);
+			}
+		}
+
+		// Vérifiez si l'email est disponible
+		if (email != null && !email.isEmpty() && !email.equals(user.getEmail())) {
+			if (this.checkEmailAvailability(email)) {
+				businessException.ajouterErreur(CodeErreur.EMAIL_EXISTANT);
+			} else {
+				user.setEmail(email);
+			}
+		}
+
+		// Mettez à jour les autres champs de l'utilisateur
+		if (nom != null && !nom.isEmpty() && !nom.equals(user.getNom())) {
+			user.setNom(nom);
+		}
+
+		if (prenom != null && !prenom.isEmpty() && !prenom.equals(user.getPrenom())) {
+			user.setPrenom(prenom);
+		}
+
+		if (telephone != null && !telephone.isEmpty() && !telephone.equals(user.getTelephone())) {
+			user.setTelephone(telephone);
+		}
+
+		if (rue != null && !rue.isEmpty() && !rue.equals(user.getRue())) {
+			user.setRue(rue);
+		}
+
+		if (codePostal != null && !codePostal.isEmpty() && !codePostal.equals(user.getCodePostal())) {
+			user.setCodePostal(codePostal);
+		}
+
+		if (ville != null && !ville.isEmpty() && !ville.equals(user.getVille())) {
+			user.setVille(ville);
+		}
+
+		// S'il y a des erreurs, lancez une exception
+		if (businessException.hasErreurs()) {
+			throw businessException;
+		}
+
+		// Si tout va bien, mettez à jour l'utilisateur
+		this.updateUser(user);
+	}
+
 }
