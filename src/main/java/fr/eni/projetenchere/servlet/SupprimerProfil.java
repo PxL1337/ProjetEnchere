@@ -27,7 +27,7 @@ public class SupprimerProfil extends HttpServlet {
             request.getSession().invalidate();
 
             // Rediriger vers la page d'accueil
-            response.sendRedirect(request.getContextPath() + "/?accountDeleted=true");
+            response.sendRedirect(request.getContextPath() + "/");
         } else {
             // Si l'utilisateur n'est pas connecté, redirigez vers la page de connexion
             response.sendRedirect(request.getContextPath() + "/Login");

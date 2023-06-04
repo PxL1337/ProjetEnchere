@@ -120,9 +120,11 @@ public class ModifyUserProfile extends HttpServlet {
 
 						// Créer une nouvelle session avec l'utilisateur de la base de données
 						request.getSession().setAttribute("utilisateurConnecte", connected);
+						request.setAttribute("message", "Votre profil a été mis à jour avec succès.");
+
 
 						// Rediriger vers la page d'accueil
-						request.getRequestDispatcher("/").forward(request, response);
+						response.sendRedirect(request.getContextPath() + "/Profile");
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();

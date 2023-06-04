@@ -38,7 +38,7 @@
     </error-page>-->
     <!-- END ERROR PAGES -->
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>5</session-timeout>
     </session-config>
 
 </web-app>

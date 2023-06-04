@@ -21,7 +21,7 @@ public class Login extends HttpServlet {
         if (request.getSession().getAttribute("utilisateurConnecte") != null) {
             // Si oui, redirection vers une autre page ou affichez un message
             request.setAttribute("message", "Vous êtes déjà connecté");
-            request.getRequestDispatcher("/WEB-INF/views/accueil.jsp").forward(request, response);
+            request.getRequestDispatcher("/").forward(request, response);
         } else {
             // Si non, affichez la page de connexion
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
@@ -51,12 +51,12 @@ public class Login extends HttpServlet {
             session.setAttribute("utilisateurConnecte", utilisateur);
 
             // Créer un cookie pour l'utilisateur
-            Cookie cookie1 = new Cookie("utilisateurConnecte", utilisateur.getPseudo());
-            cookie1.setMaxAge(60 * 60 * 24 * 30); // 30 jours
-            response.addCookie(cookie1);
+            Cookie cookie = new Cookie("utilisateurConnecte", utilisateur.getPseudo());
+            cookie.setMaxAge(60 * 5); // 5 minutes
+            response.addCookie(cookie);
 
             // Redirection vers la page d'accueil
-            response.sendRedirect(request.getContextPath() + "/Accueil");
+            response.sendRedirect(request.getContextPath() + "/");
     } else {
             // Si les données ne sont pas valides, afficher un message d'erreur
             request.setAttribute("loginError", "Pseudo ou mot de passe incorrect");

@@ -27,7 +27,7 @@ public class AfficherProfil extends HttpServlet {
 			request.setAttribute("user", user);
 			request.getRequestDispatcher("/WEB-INF/views/ShowUser.jsp").forward(request, response);
 		} else {
-			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/login");
 		}
 	}
 

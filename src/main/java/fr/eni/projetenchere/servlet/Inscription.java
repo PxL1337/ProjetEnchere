@@ -21,7 +21,7 @@ public class Inscription extends HttpServlet {
         if (request.getSession().getAttribute("utilisateurConnecte") != null) {
             // Si oui, redirection vers une autre page ou affichez un message
             request.setAttribute("message", "Vous êtes déjà connecté");
-            request.getRequestDispatcher("/WEB-INF/views/accueil.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/");
         } else {
             // Si non, affichez la page de connexion
             request.getRequestDispatcher("/WEB-INF/views/inscription.jsp").forward(request, response);
@@ -75,7 +75,7 @@ public class Inscription extends HttpServlet {
                 request.getSession().setAttribute("utilisateurConnecte", connected);
 
             // Rediriger vers la page d'accueil
-                request.getRequestDispatcher("/").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/");
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -30,6 +30,13 @@
 
 			<div class="mt-4 d-flex justify-content-between">
 				<a href="${pageContext.request.contextPath}/ModifyUserProfile" class="btn btn-primary">Modifier Profil</a>
+				<% if (request.getAttribute("message") != null) { %>
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<!--<svg class="bi flex-fill me-0" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>-->
+					<%= request.getAttribute("message") %>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+				<% } %>
 				<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer Mon Compte</a>
 			</div>
 		</div>
