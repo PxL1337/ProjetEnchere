@@ -111,6 +111,10 @@ public class UserManager {
 		return userDAOJdbc.doesThisEmailAlreadyExists(email);
 	}
 
+	public static boolean validateEmail(String email) {
+		String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+		return email.matches(emailPattern);
+	}
 
 	//rue
 	//ville
@@ -148,6 +152,10 @@ public class UserManager {
 
 		if (checkPseudoAvailability(user.getPseudo())) {
 			businessException.ajouterErreur(CodeErreur.PSEUDO_EXISTANT);
+		}
+
+		if (!validateEmail(user.getEmail())) {
+			businessException.ajouterErreur(CodeErreur.EMAIL_INVALIDE);
 		}
 
 		if (checkEmailAvailability(user.getEmail())) {
@@ -209,7 +217,9 @@ public class UserManager {
 
 		// Vérifiez si l'email est disponible
 		if (email != null && !email.isEmpty() && !email.equals(user.getEmail())) {
-			if (this.checkEmailAvailability(email)) {
+			if (!validateEmail(email)) {
+				businessException.ajouterErreur(CodeErreur.EMAIL_INVALIDE);
+			} else if (this.checkEmailAvailability(email)) {
 				businessException.ajouterErreur(CodeErreur.EMAIL_EXISTANT);
 			} else {
 				user.setEmail(email);

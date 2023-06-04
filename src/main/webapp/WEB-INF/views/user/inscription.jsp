@@ -95,6 +95,7 @@
 
         <div class="col-12">
             <input type="submit" value="S'inscrire" class="btn btn-primary">
+            <a href="${pageContext.request.contextPath}/" class="btn btn-secondary">Annuler</a>
         </div>
 
         <% if(request.getAttribute("listeCodesErreur") != null) { %>
