@@ -45,6 +45,9 @@ public class ModifyUserProfile extends HttpServlet {
 		String newPassword = request.getParameter("newMdp");
 		String confirmationMdp = request.getParameter("confirmationMdp");
 
+		System.out.println("New password : " + newPassword);
+		System.out.println("Confirmation password : " + confirmationMdp);
+
 		UserManager userManager = UserManager.getInstance();
 		BusinessException businessException = new BusinessException();
 
@@ -55,7 +58,7 @@ public class ModifyUserProfile extends HttpServlet {
 				businessException.ajouterErreur(CodeErreur.MDP_INCORRECT);
 			} else {
 				try {
-					if (pseudo != null && !pseudo.equals(user.getPseudo())) {
+					if (pseudo != null && !pseudo.isEmpty() && !pseudo.equals(user.getPseudo())) {
 						if (userManager.checkPseudoAvailability(pseudo)) {
 							businessException.ajouterErreur(CodeErreur.PSEUDO_EXISTANT);
 						} else {
@@ -63,15 +66,15 @@ public class ModifyUserProfile extends HttpServlet {
 						}
 					}
 
-					if (nom != null && !nom.equals(user.getNom())) {
+					if (nom != null && !nom.isEmpty() && !nom.equals(user.getNom())) {
 						user.setNom(nom);
 					}
 
-					if (prenom != null && !prenom.equals(user.getPrenom())) {
+					if (prenom != null && !prenom.isEmpty() && !prenom.equals(user.getPrenom())) {
 						user.setPrenom(prenom);
 					}
 
-					if (email != null && !email.equals(user.getEmail())) {
+					if (email != null && !email.isEmpty() && !email.equals(user.getEmail())) {
 						if (userManager.checkEmailAvailability(email)) {
 							businessException.ajouterErreur(CodeErreur.EMAIL_EXISTANT);
 						} else {
@@ -79,33 +82,32 @@ public class ModifyUserProfile extends HttpServlet {
 						}
 					}
 
-					if (telephone != null && !telephone.equals(user.getTelephone())) {
+					if (telephone != null && !telephone.isEmpty() && !telephone.equals(user.getTelephone())) {
 						user.setTelephone(telephone);
 					}
 
-					if (rue != null && !rue.equals(user.getRue())) {
+					if (rue != null && !rue.isEmpty() && !rue.equals(user.getRue())) {
 						user.setRue(rue);
 					}
 
-					if (codePostal != null && !codePostal.equals(user.getCodePostal())) {
+					if (codePostal != null && !codePostal.isEmpty() && !codePostal.equals(user.getCodePostal())) {
 						user.setCodePostal(codePostal);
 					}
 
-					if (ville != null && !ville.equals(user.getVille())) {
+					if (ville != null && !ville.isEmpty() && !ville.equals(user.getVille())) {
 						user.setVille(ville);
 					}
 
-					if (newPassword != null && confirmationMdp != null && newPassword.equals(confirmationMdp)) {
-						if (!userManager.validateMotDePasse(newPassword)) {
+					if ((newPassword != null && !newPassword.isEmpty()) && (confirmationMdp != null && !confirmationMdp.isEmpty())) {
+						if (!newPassword.equals(confirmationMdp)) {
+							businessException.ajouterErreur(CodeErreur.CONFIRMATION_MDP_INCORRECTE);
+						} else if (!userManager.validateMotDePasse(newPassword)) {
 							businessException.ajouterErreur(CodeErreur.MDP_INVALIDE);
-						} else if (newPassword != null && confirmationMdp != null && newPassword.equals(confirmationMdp)) {
-							if(!userManager.validateMotDePasse(newPassword)) {
-								businessException.ajouterErreur(CodeErreur.MDP_INVALIDE);
-							} else {
-								user.setMotDePasse(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
-							}
+						} else {
+							user.setMotDePasse(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
 						}
 					}
+
 
 					if (businessException.hasErreurs()) {
 						request.setAttribute("utilisateur", user);

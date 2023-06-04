@@ -38,8 +38,6 @@ public class UserManager {
 	}
 	
 	public void updateUser(User user){
-		String hashedPassword = BCrypt.hashpw(user.getMotDePasse(), BCrypt.gensalt());
-		user.setMotDePasse(hashedPassword);
 		userDAOJdbc.update(user);
 	}
 	
