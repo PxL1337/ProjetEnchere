@@ -106,17 +106,19 @@
 			<input type="submit" value="Enregistrer" class="btn btn-primary">
 			<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer Mon Compte</a>
 		</div>
+
+		<% if(request.getAttribute("listeCodesErreur") != null) { %>
+		<div class="alert alert-danger">
+			<% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
+			<% for(Integer codeErreur : listeCodesErreur) { %>
+			<% String messageErreur = LecteurMessage.getMessage(codeErreur); %>
+			<%= messageErreur %><br/>
+			<% } %>
+		</div>
+		<% } %>
 	</form>
 
-	<% if(request.getAttribute("listeCodesErreur") != null) { %>
-	<div class="alert alert-danger">
-		<% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
-		<% for(Integer codeErreur : listeCodesErreur) { %>
-		<% String messageErreur = LecteurMessage.getMessage(codeErreur); %>
-		<%= messageErreur %><br/>
-		<% } %>
-	</div>
-	<% } %>
+
 </div>
 
 
