@@ -103,7 +103,10 @@
 		<p>Crédit : ${user.credit}</p>
 
 		<div class="mt-4 d-flex justify-content-between">
-			<input type="submit" value="Enregistrer" class="btn btn-primary">
+			<div>
+				<input type="submit" value="Enregistrer" class="btn btn-primary">
+				<button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/Profile';">Annuler</button>
+			</div>
 			<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer Mon Compte</a>
 		</div>
 

@@ -18,4 +18,11 @@ public interface UserDAO
 
 	// Check section
 	public User selectByPseudoOrEmail(String pseudoOuEmail) throws SQLException;
+
+	void updateCredit(User user, int newValue);
+	void updateIsAdmin(User user, boolean newValue);
+	User selectByPseudo(String comparedPseudo);
+	User selectByEmail(String comparedEmail);
+	boolean doesThisPseudoAlreadyExists(String pseudo) throws SQLException;
+	boolean doesThisEmailAlreadyExists(String email) throws SQLException;
 }

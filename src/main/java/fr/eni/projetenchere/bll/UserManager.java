@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import fr.eni.projetenchere.bo.User;
+import fr.eni.projetenchere.dal.UserDAO;
+import fr.eni.projetenchere.dal.jdbc.DAOFactory;
 import fr.eni.projetenchere.dal.jdbc.UserDAOJdbcImplementation;
 import fr.eni.projetenchere.exception.BusinessException;
 import org.mindrot.jbcrypt.BCrypt;
@@ -24,54 +26,54 @@ public class UserManager {
 		return instance;
 	}
 
-	private UserDAOJdbcImplementation userDAOJdbc;	
+	private UserDAO userDAO;
 	
 	public UserManager()
 	{
-		userDAOJdbc = new UserDAOJdbcImplementation();
+		userDAO = DAOFactory.getUtilisateurDAO();
 	}
 	
 	public void insertUser(User user){
 		String hashedPassword = BCrypt.hashpw(user.getMotDePasse(), BCrypt.gensalt());
 		user.setMotDePasse(hashedPassword);
-		userDAOJdbc.insert(user);
+		userDAO.insert(user);
 	}
 	
-	public void updateUser(User user){
-		userDAOJdbc.update(user);
+	public void updateUser(User user) throws SQLException {
+		userDAO.update(user);
 	}
 	
 	public void deleteUser(User user){
-	    userDAOJdbc.delete(user);	
+	    userDAO.delete(user);
 	}
 	
 	public void updateUserCredit(User user, int newValue) {
-		userDAOJdbc.updateCredit(user, newValue);
+		userDAO.updateCredit(user, newValue);
 	}
 	
 	public void updateUserIsAdmin(User user, boolean newValue) {
-		userDAOJdbc.updateIsAdmin(user, newValue);
+		userDAO.updateIsAdmin(user, newValue);
 		
 	}
 	
 	public User selectUserByID(int ID) {
-		return userDAOJdbc.selectByID(ID);
+		return userDAO.selectByID(ID);
 	}
 	
 	public List<User> selectAllUser() {
-		return userDAOJdbc.selectAll();
+		return userDAO.selectAll();
 	}
 	
 	public User selectUserByPseudoOuEmail(String pseudoOuEmail) throws SQLException {
-        return userDAOJdbc.selectByPseudoOrEmail(pseudoOuEmail);
+        return userDAO.selectByPseudoOrEmail(pseudoOuEmail);
     }
 	
 	public User selectUserByPseudo(String comparedPseudo){
-		return userDAOJdbc.selectByPseudo(comparedPseudo);
+		return userDAO.selectByPseudo(comparedPseudo);
 	}
 	
 	public User selectUserByEmail(String comparedEmail){
-		return userDAOJdbc.selectByEmail(comparedEmail);
+		return userDAO.selectByEmail(comparedEmail);
 	}
 
 	
@@ -82,7 +84,7 @@ public class UserManager {
 	//Pseudo
 	
 	public boolean checkPseudoAvailability(String pseudo) throws SQLException {			
-	    return userDAOJdbc.doesThisPseudoAlreadyExists(pseudo);
+	    return userDAO.doesThisPseudoAlreadyExists(pseudo);
 	}
 	
 	//Telephone
@@ -108,7 +110,7 @@ public class UserManager {
 	
 	//email
 	public boolean checkEmailAvailability(String email) throws SQLException{		
-		return userDAOJdbc.doesThisEmailAlreadyExists(email);
+		return userDAO.doesThisEmailAlreadyExists(email);
 	}
 
 	public static boolean validateEmail(String email) {

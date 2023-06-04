@@ -5,9 +5,6 @@ import java.sql.SQLException;
 
 import fr.eni.projetenchere.bll.UserManager;
 import fr.eni.projetenchere.bo.User;
-import fr.eni.projetenchere.dal.UserDAO;
-import fr.eni.projetenchere.dal.jdbc.UserDAOJdbcImplementation;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;

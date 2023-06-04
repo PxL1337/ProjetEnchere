@@ -29,7 +29,10 @@
 			<p class="card-text">Adresse : ${user.rue }, ${user.codePostal }, ${user.ville }</p>
 
 			<div class="mt-4 d-flex justify-content-between">
-				<a href="${pageContext.request.contextPath}/ModifyUserProfile" class="btn btn-primary">Modifier Profil</a>
+				<div>
+					<a href="${pageContext.request.contextPath}/ModifyUserProfile" class="btn btn-primary">Modifier Profil</a>
+					<button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/';">Retour</button>
+				</div>
 				<% if (request.getAttribute("message") != null) { %>
 				<div class="alert alert-success alert-dismissible fade show" role="alert">
 					<!--<svg class="bi flex-fill me-0" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>-->
