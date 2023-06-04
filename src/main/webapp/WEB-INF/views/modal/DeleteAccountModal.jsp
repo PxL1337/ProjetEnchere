@@ -18,7 +18,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        <a href="${pageContext.request.contextPath}/DeleteAccount" class="btn btn-danger">Supprimer</a>
+        <form action="${pageContext.request.contextPath}/ConfirmDeleteAccount" method="post">
+          <button type="submit" class="btn btn-danger">Supprimer</button>
+        </form>
       </div>
     </div>
   </div>

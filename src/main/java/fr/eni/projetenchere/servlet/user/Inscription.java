@@ -1,4 +1,4 @@
-package fr.eni.projetenchere.servlet;
+package fr.eni.projetenchere.servlet.user;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -24,7 +24,7 @@ public class Inscription extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/");
         } else {
             // Si non, affichez la page de connexion
-            request.getRequestDispatcher("/WEB-INF/views/inscription.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/user/inscription.jsp").forward(request, response);
         }
     }
 
@@ -64,7 +64,7 @@ public class Inscription extends HttpServlet {
                 User user = new User(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, userManager.DEFAULT_USER_CREDIT, userManager.DEFAULT_IS_ADMIN_VALUE);
                 request.setAttribute("utilisateur", user);
                 request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
-                request.getRequestDispatcher("/WEB-INF/views/inscription.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/user/inscription.jsp").forward(request, response);
             } else {
                 User user = new User(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, userManager.DEFAULT_USER_CREDIT, userManager.DEFAULT_IS_ADMIN_VALUE);
                 userManager.insertUser(user);

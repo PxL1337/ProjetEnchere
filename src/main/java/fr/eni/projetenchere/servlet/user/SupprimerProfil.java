@@ -1,4 +1,4 @@
-package fr.eni.projetenchere.servlet;
+package fr.eni.projetenchere.servlet.user;
 
 import java.io.IOException;
 
@@ -18,7 +18,6 @@ public class SupprimerProfil extends HttpServlet {
         // Récupérer l'utilisateur de la session
         User user = (User) request.getSession().getAttribute("utilisateurConnecte");
 
-        if (user != null) {
             // Appeler la méthode de suppression d'utilisateur dans UserManager
             UserManager um = UserManager.getInstance();
             um.deleteUser(user);
@@ -28,9 +27,6 @@ public class SupprimerProfil extends HttpServlet {
 
             // Rediriger vers la page d'accueil
             response.sendRedirect(request.getContextPath() + "/");
-        } else {
-            // Si l'utilisateur n'est pas connecté, redirigez vers la page de connexion
-            response.sendRedirect(request.getContextPath() + "/Login");
-        }
+
     }
 }

@@ -1,4 +1,4 @@
-package fr.eni.projetenchere.servlet;
+package fr.eni.projetenchere.servlet.user;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,17 +18,11 @@ import org.mindrot.jbcrypt.BCrypt;
 public class ModifyUserProfile extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Vérifiez si l'utilisateur est connecté
-		if (request.getSession().getAttribute("utilisateurConnecte") == null) {
-			// Si non, redirection vers la page de connexion ou afficher un message d'erreur
-			request.setAttribute("message", "Vous n'êtes pas connecté");
-			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-		} else {
-			// Si oui, affichez la page de modification de profil avec les informations actuelles de l'utilisateur
+			// affichez la page de modification de profil avec les informations actuelles de l'utilisateur
 			User user = (User) request.getSession().getAttribute("utilisateurConnecte");
 			request.setAttribute("user", user);
-			request.getRequestDispatcher("/WEB-INF/views/modifyUserProfile.jsp").forward(request, response);
-		}
+			request.getRequestDispatcher("/WEB-INF/views/user/modifyUserProfile.jsp").forward(request, response);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -112,7 +106,7 @@ public class ModifyUserProfile extends HttpServlet {
 					if (businessException.hasErreurs()) {
 						request.setAttribute("utilisateur", user);
 						request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
-						request.getRequestDispatcher("/WEB-INF/views/modifyUserProfile.jsp").forward(request, response);
+						request.getRequestDispatcher("/WEB-INF/views/user/modifyUserProfile.jsp").forward(request, response);
 					} else {
 						userManager.updateUser(user);
 

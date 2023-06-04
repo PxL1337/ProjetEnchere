@@ -1,4 +1,4 @@
-package fr.eni.projetenchere.servlet;
+package fr.eni.projetenchere.servlet.user;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,11 +20,11 @@ public class Login extends HttpServlet {
         // Vérifiez si l'utilisateur est déjà connecté
         if (request.getSession().getAttribute("utilisateurConnecte") != null) {
             // Si oui, redirection vers une autre page ou affichez un message
-            request.setAttribute("message", "Vous êtes déjà connecté");
-            request.getRequestDispatcher("/").forward(request, response);
+            request.getSession().setAttribute("message", "Vous êtes déjà connecté");
+            response.sendRedirect(request.getContextPath() + "/");
         } else {
             // Si non, affichez la page de connexion
-            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(request, response);
         }
     }
 
@@ -60,7 +60,7 @@ public class Login extends HttpServlet {
     } else {
             // Si les données ne sont pas valides, afficher un message d'erreur
             request.setAttribute("loginError", "Pseudo ou mot de passe incorrect");
-            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(request, response);
         }
     }
 }
