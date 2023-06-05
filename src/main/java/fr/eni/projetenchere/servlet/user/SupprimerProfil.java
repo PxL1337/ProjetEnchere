@@ -1,6 +1,7 @@
 package fr.eni.projetenchere.servlet.user;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import fr.eni.projetenchere.bll.UserManager;
 import fr.eni.projetenchere.bo.User;
@@ -20,7 +21,13 @@ public class SupprimerProfil extends HttpServlet {
 
             // Appeler la méthode de suppression d'utilisateur dans UserManager
             UserManager um = UserManager.getInstance();
-            um.deleteUser(user);
+            
+            try {
+				um.deleteUser(user);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
             // Terminer la session
             request.getSession().invalidate();
