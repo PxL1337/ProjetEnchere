@@ -27,10 +27,12 @@ public class UserManager {
 	}
 
 	private UserDAO userDAO;
+	private BusinessException businessException;
 	
 	private UserManager()
 	{
 		userDAO = DAOFactory.getUtilisateurDAO();
+		businessException = new BusinessException();
 	}
 	
 	public void insertUser(User user) throws SQLException {
@@ -149,9 +151,7 @@ public class UserManager {
 		}
 	}
 
-	public void validate(User user, String passwordConfirmation) throws BusinessException, SQLException {
-		BusinessException businessException = new BusinessException();
-
+	public void validate(User user, String passwordConfirmation) throws BusinessException, SQLException {		
 		if (checkPseudoAvailability(user.getPseudo())) {
 			businessException.ajouterErreur(CodeErreur.PSEUDO_EXISTANT);
 		}
@@ -190,8 +190,6 @@ public class UserManager {
 	}
 
 	public void validateAndUpdateUser(User user, String currentPassword, String newPassword, String confirmationPassword, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville) throws BusinessException, SQLException {
-		BusinessException businessException = new BusinessException();
-
 		// Vérifiez si le mot de passe actuel est correct
 		if (!this.checkPassword(user.getNoUtilisateur(), currentPassword)) {
 			businessException.ajouterErreur(CodeErreur.MDP_INCORRECT);

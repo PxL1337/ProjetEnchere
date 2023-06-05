@@ -10,7 +10,6 @@ import java.sql.SQLException;
 public class ArticleManager
 {
 	private static ArticleManager instance;
-	private ArticleDAO articleDAO;
 	
 	public static ArticleManager getInstance()
 	{
@@ -20,31 +19,49 @@ public class ArticleManager
 		
 		return instance; 
 	}
+	
+	private ArticleDAO articleDAO;
+	private BusinessException businessException;
 
-
-	/**private ArticleManager()
+	private ArticleManager()
 	{
 		articleDAO = DAOFactory.getArticleDAO();
-	}*/
+		businessException = new BusinessException();
+	}
 
-	/**public void insert(Article article) throws SQLException, BusinessException {
-		validateArticle(article);
+	public void insert(ArticleVendu article) throws SQLException, BusinessException 
+	{
+		if ( !isThisArticleValid(article) )
+		{
+			businessException.ajouterErreur(CodeErreur.ARTICLE_INVALIDE);
+			return;
+		}
+		
 		articleDAO.insert(article);
 	}
 
-	public void update(Article article) throws SQLException { articleDAO.update(article); }
+	public void update(ArticleVendu article) throws SQLException { 
+		articleDAO.update(article); 
+	}
 
-	public void delete(Article article) throws SQLException { articleDAO.delete(article); }
+	public void delete(ArticleVendu article) throws SQLException { 
+		articleDAO.delete(article); 
+	}
 
+	public ArticleVendu selectByID(int ID) throws SQLException {
+		return articleDAO.selectByID(ID);
+	}
+	
+	public void updateArticleSellingPrice(ArticleVendu article, int newPrice) throws SQLException
+	{
+		articleDAO.updateSellingPrice(article, newPrice);
+	}
 
-	public Article selectByID(int ID) throws SQLException { return articleDAO.selectByID(ID); }
+	private boolean isThisArticleValid(ArticleVendu article) throws BusinessException, SQLException {
+		return articleDAO.isValid(article.getNoArticle());
+	}
 
-	private void validateArticle(Article article) throws BusinessException {
-		//TODO: validate article
-	}*/
-
-	public ArticleVendu selectArticleByID(int ID) throws SQLException { return articleDAO.selectByID(ID);}
-
-
-
+	public ArticleVendu selectArticleByID(int ID) throws SQLException {
+		return articleDAO.selectByID(ID);
+	}
 }

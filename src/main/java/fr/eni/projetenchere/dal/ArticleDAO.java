@@ -14,4 +14,7 @@ public interface ArticleDAO {
 		// Read section
 		public ArticleVendu selectByID(int ID) throws SQLException;
 		public List<ArticleVendu> selectAll() throws SQLException;
+		
+		public void updateSellingPrice(ArticleVendu article, int newPrice) throws SQLException;
+		public boolean isValid(int ID) throws SQLException;
 }

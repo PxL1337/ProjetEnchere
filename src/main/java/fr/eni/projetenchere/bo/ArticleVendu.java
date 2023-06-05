@@ -24,7 +24,7 @@ public class ArticleVendu
     //-------------------- CONSTRUCTOR ZONE --------------------//
     public ArticleVendu() {}
     
-    // Insert
+    // READ
     public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
 			Date dateFinEncheres, int prixInitial, int prixVente, int userID, int categoryID) throws SQLException
     {
@@ -39,14 +39,11 @@ public class ArticleVendu
 		this.utilisateur = UserManager.getInstance().selectUserByID(userID);
 		this.utilisateur.addArticleToList(this);
 		
-		/*
-		 * this.category = CategorieManager.getInstance().selectCategoryByID(categoryID);			
-		 * CategorieManager.getInstance().selectCategoryByID(categoryID).
-		 * addArticleToList(this);
-		 */
+		this.categorie = CategorieManager.getInstance().selectCategorieByID(categoryID);
+		this.categorie.addArticleToList(this);
     }
 
-    // Read article
+    // INSERT
     public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
 			int prixInitial, int prixVente, int userID, int categoryID) throws SQLException
     {
@@ -57,25 +54,8 @@ public class ArticleVendu
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;		
 		this.utilisateur = UserManager.getInstance().selectUserByID(userID);		
-		/*
-		 * this.category = CategorieManager.getInstance().selectCategoryByID(categoryID);
-		 */
+		this.categorie = CategorieManager.getInstance().selectCategorieByID(categoryID);		 
 	}
-
-    // !!!!!!!!!!!!!! TEMPORAIRE !!!!!!!!!!!!!!
-    public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
-			int prixInitial, int prixVente, int userID) throws SQLException
-    {
-		this.nomArticle = nomArticle;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.prixInitial = prixInitial;
-		this.prixVente = prixVente;
-		this.utilisateur = UserManager.getInstance().selectUserByID(userID);
-	}
-   
-
 
 		//---------------------------------------------GETTER SETTER ZONE-------------------------------------------------------//
 		public int getNoArticle() {

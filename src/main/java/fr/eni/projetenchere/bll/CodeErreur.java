@@ -26,17 +26,23 @@ public class CodeErreur {
     public static final int DATE_DEBUT_INFERIEUR = 20020;
     public static final int DATE_DEBUT_INFERIEUR_JOUR = 20021;
     public static final int DESCRITPION_INVALIDE = 20022;
-    public static final int ARTICLE_NOM_INVALIDE = 20023;
-    public static final int NO_ARTICLE_INVALIDE = 20024;
     public static final int MONTANT_INVALIDE = 20025;
     public static final int ENCHERE_INFERIEUR_PRIX_DE_VENTE = 20026;
     public static final int MDP_INCORRECT = 20027;
     public static final int CONFIRMATION_MDP_INCORRECTE = 20028;
 
+    // ARTICLES - 20100 a 20199
+    public static final int ARTICLE_INVALIDE = 20100;
+    public static final int NO_ARTICLE_INVALIDE = 20101;
+    public static final int ARTICLE_NOM_INVALIDE = 20102;
+    public static final int ARTICLE_DESCRIPTION_INVALIDE = 20103;
+    public static final int ARTICLE_PRIX_INITIAL_INVALIDE = 20104;
+    public static final int ARTICLE_UTILISATEUR_INVALIDE = 20105;
+    public static final int ARTICLE_CATEGORIE_INVALIDE = 20106;
 
-    // Categorie
-    public static final int CATEGORIE_LIBELLE_NULL = 20029;
-    public static final int CATEGORIE_LIBELLE_TROP_LONG = 20030;
-    public static final int CATEGORIE_LIBELLE_EXISTANT = 20031;
+    // Categorie - 20200 a 20299
+    public static final int CATEGORIE_LIBELLE_NULL = 20200;
+    public static final int CATEGORIE_LIBELLE_TROP_LONG = 20201;
+    public static final int CATEGORIE_LIBELLE_EXISTANT = 200202;
 
 }
