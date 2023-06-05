@@ -28,7 +28,7 @@ public class UserManager {
 
 	private UserDAO userDAO;
 	
-	public UserManager()
+	private UserManager()
 	{
 		userDAO = DAOFactory.getUtilisateurDAO();
 	}

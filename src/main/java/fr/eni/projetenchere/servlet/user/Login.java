@@ -30,7 +30,7 @@ public class Login extends HttpServlet {
         String motDePasse = request.getParameter("motDePasse");
 
         //Valider les données utilisateur
-        UserManager userManager = new UserManager();
+        UserManager userManager = UserManager.getInstance();
         User utilisateur = null;
         try {
             utilisateur = userManager.selectUserByPseudoOuEmail(pseudoOuEmail);
