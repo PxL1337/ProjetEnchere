@@ -20,7 +20,7 @@ public class ConnectionProvider {
             Context ctx = new InitialContext();
             ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ENCHERE_DB");
         } catch (NamingException e) {
-            throw new ExceptionInInitializerError(e);
+            System.out.println("Vérifiez la table sur laquelle vous agissez !");
         }
     }
 
