@@ -14,14 +14,15 @@ import fr.eni.projetenchere.dal.ConnectionProvider;
 
 public class ArticleVenduDAOJdbcImplementation implements ArticleDAO
 {
-	final String INSERT_ARTICLE = "INSERT INTO UTILISATEURS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente) VALUES( ?, ?, ?, ?, ?, ? )";	
+	final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente) VALUES( ?, ?, ?, ?, ?, ? )";
 	
 	final String SELECT_ALL_ARTICLES = "SELECT * FROM VueArticles";
 	final String SELECT_ARTICLE_BY_ID = "SELECT * FROM VueArticles WHERE no_article=?";
 	final String SELECT_ARTICLE_BY_NAME = "SELECT * FROM VueArticles WHERE nom_article=?";
+
 	// + UTILISER LA VUE POUR LES AUTRES SELECT
 	
-	final String UPDATE_ARTICLE = "UPDATE UTILISATEURS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, prix_vente=? WHERE no_article=?";
+	final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, prix_vente=? WHERE no_article=?";
 	
 	final String DELETE_ARTICLE_BY_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_article=?";
 	
