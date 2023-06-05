@@ -1,7 +1,8 @@
 package fr.eni.projetenchere.bll;
 
 public class CodeErreur {
-	
+
+    // User
 	public static final int PSEUDO_INVALIDE = 20000;
     public static final int NOM_INVALIDE = 20001;
     public static final int PRENOM_INVALIDE = 20002;
@@ -29,9 +30,13 @@ public class CodeErreur {
     public static final int NO_ARTICLE_INVALIDE = 20024;
     public static final int MONTANT_INVALIDE = 20025;
     public static final int ENCHERE_INFERIEUR_PRIX_DE_VENTE = 20026;
-
     public static final int MDP_INCORRECT = 20027;
-
     public static final int CONFIRMATION_MDP_INCORRECTE = 20028;
+
+
+    // Categorie
+    public static final int CATEGORIE_LIBELLE_NULL = 20029;
+    public static final int CATEGORIE_LIBELLE_TROP_LONG = 20030;
+    public static final int CATEGORIE_LIBELLE_EXISTANT = 20031;
 
 }

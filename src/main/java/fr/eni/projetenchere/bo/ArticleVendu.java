@@ -1,7 +1,11 @@
 package fr.eni.projetenchere.bo;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+
+import fr.eni.projetenchere.bll.CategorieManager;
+import fr.eni.projetenchere.bll.UserManager;
 
 
 public class ArticleVendu 
@@ -22,7 +26,7 @@ public class ArticleVendu
     
     // Insert
     public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int prixInitial, int prixVente, User utilisateur, Categorie categorie) 
+			Date dateFinEncheres, int prixInitial, int prixVente, int userID, int categoryID) throws SQLException
     {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -31,30 +35,36 @@ public class ArticleVendu
 		this.dateFinEncheres = dateFinEncheres;
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
-		this.utilisateur = utilisateur;
-		this.categorie = categorie;
-		categorie.addArticleToList(this);
-		utilisateur.addArticleToList(this);
-    	
-    	}
+		
+		this.utilisateur = UserManager.getInstance().selectUserByID(userID);
+		this.utilisateur.addArticleToList(this);
+		
+		/*
+		 * this.category = CategorieManager.getInstance().selectCategoryByID(categoryID);			
+		 * CategorieManager.getInstance().selectCategoryByID(categoryID).
+		 * addArticleToList(this);
+		 */
+    }
 
     // Read article
     public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
-			int prixInitial, int prixVente, User utilisateur, Categorie categorie) 
+			int prixInitial, int prixVente, int userID, int categoryID) throws SQLException
     {
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.prixInitial = prixInitial;
-		this.prixVente = prixVente;
-		this.utilisateur = utilisateur;
-		this.categorie = categorie;
+		this.prixVente = prixVente;		
+		this.utilisateur = UserManager.getInstance().selectUserByID(userID);		
+		/*
+		 * this.category = CategorieManager.getInstance().selectCategoryByID(categoryID);
+		 */
 	}
 
     // !!!!!!!!!!!!!! TEMPORAIRE !!!!!!!!!!!!!!
     public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
-			int prixInitial, int prixVente, User utilisateur) 
+			int prixInitial, int prixVente, int userID) throws SQLException
     {
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -62,7 +72,7 @@ public class ArticleVendu
 		this.dateFinEncheres = dateFinEncheres;
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
-		this.utilisateur = utilisateur;
+		this.utilisateur = UserManager.getInstance().selectUserByID(userID);
 	}
    
 
@@ -164,10 +174,19 @@ public class ArticleVendu
 			
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 			StringBuilder sb = new StringBuilder();
-			sb.append("Article N° ").append(noArticle).append(" : ").append(nomArticle).append("\n Description de l'article : ")
-			.append(description).append("\n Date des enchères : du ").append(dateFormat.format(dateDebutEncheres)).append(" au ").append(dateFormat.format(dateFinEncheres))
-			.append("\n Prix initial").append(prixInitial).append((prixVente != 0) ? "Plus haute enchère " + String.valueOf(prixVente) : "Aucune enchère n'a été faite pour l'instant")
-			.append("\n Vendeur : ").append(utilisateur.getPseudo()).append("\n Catégorie : ").append(categorie.getLibelle());
+			sb
+			.append("Article N° ").append(noArticle).append(" : ")
+			.append(nomArticle).append("\n Description de l'article : ")
+			.append(description).append("\n Date des enchères : du ")
+			.append(dateFormat.format(dateDebutEncheres)).append(" au ")
+			.append(dateFormat.format(dateFinEncheres))
+			.append("\n Prix initial").append(prixInitial)
+			.append((prixVente != 0) ? "Plus haute enchère " + String.valueOf(prixVente) : "Aucune enchère n'a été faite pour l'instant")
+			.append("\n Vendeur : ").append(utilisateur.getPseudo())
+			.append("\n Catégorie : ").append("0"/*
+							 * CategorieManager.getInstance().selectCategoryByID
+							 * (categoryID).getLibelle()
+							 */);
 			
 			return sb.toString();
 		}
