@@ -12,13 +12,13 @@ public class CategorieManager {
 	private static CategorieManager instance;
 	private CategorieDAO categorieDAO;
 
-	private CategorieManager(CategorieDAO categorieDAO) {
-		this.categorieDAO = categorieDAO;
+	private CategorieManager() {
+		categorieDAO = DAOFactory.getCategorieDAO();
 	}
 
-	public static synchronized CategorieManager getInstance(CategorieDAO categorieDAO) {
+	public static synchronized CategorieManager getInstance() {
 		if (instance == null) {
-			instance = new CategorieManager(categorieDAO);
+			instance = new CategorieManager();
 		}
 		return instance;
 	}
