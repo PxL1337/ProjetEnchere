@@ -43,14 +43,13 @@ public class ModifyUserProfile extends HttpServlet {
 		System.out.println("Confirmation password : " + confirmationMdp);
 
 		UserManager userManager = UserManager.getInstance();
-		BusinessException businessException = new BusinessException();
 
 		User user = (User) request.getSession().getAttribute("utilisateurConnecte");
 		try {
 			userManager.validateAndUpdateUser(user, motDePasse, newPassword, confirmationMdp, pseudo, nom, prenom, email, telephone, rue, codePostal, ville);
 			User connected = userManager.selectUserByPseudoOuEmail(user.getPseudo());
 			request.getSession().setAttribute("utilisateurConnecte", connected);
-			request.setAttribute("message", "Votre profil a été mis à jour avec succès.");
+			request.getSession().setAttribute("message", "Votre profil a été mis à jour avec succès.");
 			response.sendRedirect(request.getContextPath() + "/Profile");
 		} catch (BusinessException e) {
 			request.setAttribute("utilisateur", user);

@@ -23,6 +23,14 @@ public class AfficherProfil extends HttpServlet {
 			UserManager um = UserManager.getInstance();
 			User user = um.selectUserByID(currentUser.getNoUtilisateur());
 
+		// Récupérer le message de la session, si présent
+		if (request.getSession().getAttribute("message") != null) {
+			String message = (String) request.getSession().getAttribute("message");
+			request.getSession().removeAttribute("message");
+			// Ajouter le message à la requête pour qu'il puisse être utilisé dans la JSP
+			request.setAttribute("message", message);
+		}
+
 			request.setAttribute("user", user);
 			request.getRequestDispatcher("/WEB-INF/views/user/ShowUser.jsp").forward(request, response);
 	}

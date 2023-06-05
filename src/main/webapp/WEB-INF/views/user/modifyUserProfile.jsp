@@ -81,7 +81,7 @@
 
 		<div class="col-12">
 			<div class="form-floating">
-				<input type="password" id="motDePasse" name="motDePasse" class="form-control" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Ex : MySecuredPassword" oninvalid="this.setCustomValidity('Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.')" oninput="this.setCustomValidity('')" required>
+				<input type="password" id="motDePasse" name="motDePasse" class="form-control" placeholder="Ex : MySecuredPassword" required>
 				<label for="motDePasse">Mot de passe</label>
 			</div>
 		</div>
