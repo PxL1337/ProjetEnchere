@@ -32,47 +32,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 
 	private static final String SELECT_BY_PSEUDO_OR_EMAIL = "SELECT * FROM UTILISATEURS WHERE pseudo=? OR email=?";
 
-	
-	@Override
-	/**public void insert(User user)
-	{
-		try (Connection connection = ConnectionProvider.getConnection();
-				PreparedStatement preparedStatement = 
-						connection.prepareStatement(
-						INSERT_USER, PreparedStatement.RETURN_GENERATED_KEYS);)
-		{
-			preparedStatement.setString(1, user.getPseudo());
-			preparedStatement.setString(2, user.getNom());
-			preparedStatement.setString(3, user.getPrenom());
-			preparedStatement.setString(4, user.getEmail());
-			preparedStatement.setString(5, user.getTelephone());
-			preparedStatement.setString(6, user.getRue());
-			preparedStatement.setString(7, user.getCodePostal());
-			preparedStatement.setString(8, user.getVille());
-			preparedStatement.setString(9, user.getMotDePasse());
-			preparedStatement.setInt(10, user.getCredit());
-			preparedStatement.setBoolean(11, user.isAdministrateur());
-
-            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-            if (generatedKeys.next())
-            {
-                int nouvelId = generatedKeys.getInt(1);
-                System.out.println("Nouvel user ajouté avec l'identifiant : " + nouvelId);
-            }
-		}
-		catch (SQLException e )
-		{
-			System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-		}
-		catch (Exception e)
-		{
-			System.err.println("Exception: " + e.getClass().getName());
-			System.err.println("Message: " + e.getMessage());
-			e.printStackTrace();
-		}
-	}*/
-
-	public void insert(User user) {
+	public void insert(User user) throws SQLException {
 		try (Connection connection = ConnectionProvider.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
@@ -98,16 +58,15 @@ public class UserDAOJdbcImplementation implements UserDAO {
 					System.out.println("Nouvel utilisateur ajouté avec l'identifiant : " + nouvelId);
 				}
 			}
-		} catch (SQLException e) {
-			System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 
 	@Override
-	public void update(User user) 
+	public void update(User user) throws SQLException
 	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
@@ -126,10 +85,6 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			preparedStatement.setInt(10, user.getNoUtilisateur());
 			
 			preparedStatement.executeUpdate();
-		} 
-		catch (SQLException e) 
-		{
-			System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
 		}
 		catch (Exception e)
 		{
@@ -138,7 +93,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 	}
 	
 	@Override
-	public User selectByID(int ID)
+	public User selectByID(int ID) throws SQLException
 	{		
 		User user = null;
 		
@@ -153,10 +108,6 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			{
 				user = mapAllUserData(resultSet);
 			}
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
 		}
 		
 		System.out.println(
@@ -166,7 +117,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 	}
 	
 	@Override
-	public List<User> selectAll()
+	public List<User> selectAll() throws SQLException
 	{
 		List<User> users = new ArrayList<User>();
 		
@@ -185,17 +136,13 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			
 			statement.close();
 			connection.close();
-		} 
-		catch (SQLException e)  
-		{ 
-			System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage()); 
 		}
 		
 		return users;
 	}
 	
 	@Override
-	public void delete(User user) 
+	public void delete(User user) throws SQLException
 	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
@@ -203,14 +150,10 @@ public class UserDAOJdbcImplementation implements UserDAO {
 		{
 			preparedStatement.setInt(1, user.getNoUtilisateur());
 			preparedStatement.executeUpdate();
-		} 
-		catch (SQLException e)
-		{
-			e.printStackTrace();
 		}
 	}
 	
-	public void updateCredit(User user, int newValue)
+	public void updateCredit(User user, int newValue) throws SQLException
 	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
@@ -220,14 +163,10 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			
 			preparedStatement.setInt(2, user.getNoUtilisateur());
 			preparedStatement.executeUpdate();
-		} 
-		catch (SQLException e)
-		{
-			e.printStackTrace();
 		}
 	}
 	
-	public void updateIsAdmin(User user, boolean newValue)
+	public void updateIsAdmin(User user, boolean newValue) throws SQLException
 	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
@@ -237,14 +176,10 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			
 			preparedStatement.setInt(2, user.getNoUtilisateur());
 			preparedStatement.executeUpdate();
-		} 
-		catch (SQLException e)
-		{
-			e.printStackTrace();
 		}
 	}
 	
-	public User selectByPseudo(String comparedPseudo)
+	public User selectByPseudo(String comparedPseudo) throws SQLException
 	{
 		User user = null;
 		
@@ -259,10 +194,6 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			{
 				user = mapUserDataUptoCity(resultSet);
 			}
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
 		}
 		
 		System.out.println(
@@ -271,7 +202,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 		return user;
 	}
 	
-	public User selectByEmail(String comparedEmail)
+	public User selectByEmail(String comparedEmail) throws SQLException
 	{
 		User user = null;
 		
@@ -286,12 +217,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			{
 				user = mapUserDataUptoCity(resultSet);
 			}			
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
 		}
-		
 		
 		System.out.println( "User found with email [ " + comparedEmail + " ]"
 		+ user.toString());

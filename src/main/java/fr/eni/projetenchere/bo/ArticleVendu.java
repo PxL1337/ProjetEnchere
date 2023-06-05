@@ -4,7 +4,8 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 
-public class ArticleVendu {
+public class ArticleVendu 
+{
     //-------------------- VARIABLES ZONE --------------------//
     private int noArticle;
     private String nomArticle;
@@ -17,8 +18,12 @@ public class ArticleVendu {
     private Categorie categorie;
 
     //-------------------- CONSTRUCTOR ZONE --------------------//
+    public ArticleVendu() {}
+    
+    // Insert
     public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int prixInitial, int prixVente, User utilisateur, Categorie categorie) {
+			Date dateFinEncheres, int prixInitial, int prixVente, User utilisateur, Categorie categorie) 
+    {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -33,29 +38,32 @@ public class ArticleVendu {
     	
     	}
 
+    // Read article
+    public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
+			int prixInitial, int prixVente, User utilisateur, Categorie categorie) 
+    {
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+	}
 
-		public ArticleVendu() {
-		
-		}
-
-		 public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
-					int prixInitial, int prixVente, User utilisateur, Categorie categorie) {
-				this.nomArticle = nomArticle;
-				this.description = description;
-				this.dateDebutEncheres = dateDebutEncheres;
-				this.dateFinEncheres = dateFinEncheres;
-				this.prixInitial = prixInitial;
-				this.prixVente = prixVente;
-				this.utilisateur = utilisateur;
-				this.categorie = categorie;
-			}
-		
-   
-
-
-    //---------------------------------------METHODE/FUNCTION ZONE---------------------------------------//
-
-
+    // !!!!!!!!!!!!!! TEMPORAIRE !!!!!!!!!!!!!!
+    public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
+			int prixInitial, int prixVente, User utilisateur) 
+    {
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.utilisateur = utilisateur;
+	}
    
 
 

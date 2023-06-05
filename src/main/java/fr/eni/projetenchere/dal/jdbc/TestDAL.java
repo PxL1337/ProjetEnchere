@@ -1,12 +1,32 @@
 package fr.eni.projetenchere.dal.jdbc;
 
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
+
+import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.bo.User;
 
 public class TestDAL 
 {
 	public static void main(String[] args) 
 	{
-		UserDAOJdbcImplementation userDAO = new UserDAOJdbcImplementation();
+		/*
+		 * UserDAOJdbcImplementation userDAO = new UserDAOJdbcImplementation();
+		 */
+		
+		ArticleVenduDAOJdbcImplementation articleDAO = new ArticleVenduDAOJdbcImplementation();
+		
+		Date date = new Date( LocalDate.now().toEpochDay() );
+		
+		ArticleVendu article = new ArticleVendu(
+				"Test Article", "Test Description", date, date, 150, 150, new User());
+		try {
+			articleDAO.insert(article);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		/*
@@ -18,7 +38,11 @@ public class TestDAL
 		 * userDAO.insert(userTest); }
 		 */
 
-		User userTest = new User("GOLEM", "JOSE", "YANN", "golem@outlook.fr", "0688559977", "69 avenue de la grande maison", "Bordeaux", "33500", "golemPlanB", 200, true );
+		/*
+		 * User userTest = new User("GOLEM", "JOSE", "YANN", "golem@outlook.fr",
+		 * "0688559977", "69 avenue de la grande maison", "Bordeaux", "33500",
+		 * "golemPlanB", 200, true );
+		 */
 		/*
 		 * no_utilisateur=?, pseudo=?, nom=?, prenom=?, email=?, telephone=?,
 		 * rue=?, code_postal=?, ville=?, mot_de_passe=?
@@ -45,7 +69,11 @@ public class TestDAL
 		 
 		
 		/* userDAO.updateUserCredit( userDAO.selectByID(3), 50); */
-		 userDAO.selectByEmail(userDAO.selectByID(10).getEmail()); 
+		/*
+		 * try { userDAO.selectByEmail(userDAO.selectByID(10).getEmail()); }
+		 * catch (SQLException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
 		  
 		/* userDAO.deleteAllUser(); */
 	}
