@@ -4,11 +4,17 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+
+import java.sql.Connection;
+
 import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.bo.User;
+import org.junit.Before;
 
 public class TestDAL 
 {
+
+		// Vos méthodes de test vont ici
 	public static void main(String[] args) 
 	{
 		/*
@@ -17,11 +23,11 @@ public class TestDAL
 		
 		ArticleVenduDAOJdbcImplementation articleDAO = new ArticleVenduDAOJdbcImplementation();
 		
-		Date date = new Date( LocalDate.now().toEpochDay() );		
+		Date date = Date.valueOf(LocalDate.now());
 		
 		try {
 			ArticleVendu article = new ArticleVendu(
-					"Test Article", "Test Description", date, date, 150, 150, 23);
+					"Test Article", "Test Description", date, date, 150, 150, 23, 1);
 			articleDAO.insert(article);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

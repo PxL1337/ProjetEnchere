@@ -21,6 +21,7 @@ public class CategorieDAOJdbcImplementation implements CategorieDAO {
     final String SELECT_CATEGORIE_BY_LIBELLE = "SELECT * FROM CATEGORIES WHERE libelle = ?";
     final String SELECT_ALL_CATEGORIE = "SELECT * FROM CATEGORIES";
     final String CHECK_LIBELLE_AVAILABILITY = "SELECT libelle FROM CATEGORIES WHERE libelle = ?";
+    final String DELETE_CATEGORIE = "DELETE FROM CATEGORIES WHERE no_categorie = ?";
 
     public void insert(Categorie categorie) throws SQLException {
         try(Connection connection = ConnectionProvider.getConnection();
@@ -56,32 +57,67 @@ public class CategorieDAOJdbcImplementation implements CategorieDAO {
 
     @Override
     public void delete(Categorie categorie) throws SQLException {
-
+        try (Connection connection = ConnectionProvider.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CATEGORIE);) {
+            preparedStatement.setInt(1, categorie.getNoCategorie());
+            preparedStatement.executeUpdate();
+        }
     }
 
     @Override
     public Categorie selectByID(int id) throws SQLException {
-        return null;
+        Categorie categorie = null;
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CATEGORIE_BY_ID);) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet rs = preparedStatement.executeQuery();) {
+                if (rs.next()) {
+                    categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+                }
+            }
+        }
+        return categorie;
     }
 
     @Override
     public Categorie selectByLibelle(String libelle) throws SQLException {
-        return null;
+        Categorie categorie = null;
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CATEGORIE_BY_LIBELLE);) {
+            preparedStatement.setString(1, libelle);
+            try (ResultSet rs = preparedStatement.executeQuery();) {
+                if (rs.next()) {
+                    categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+                }
+            }
+        }
+        return categorie;
     }
 
     @Override
     public List<Categorie> selectAll() throws SQLException {
-        return null;
-    }
-
-    @Override
-    public void selectAllByArticle(int id) throws SQLException {
-
+        List<Categorie> categories = new ArrayList<>();
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_CATEGORIE);
+             ResultSet rs = preparedStatement.executeQuery();) {
+            while (rs.next()) {
+                categories.add(new Categorie(rs.getInt("no_categorie"), rs.getString("libelle")));
+            }
+        }
+        return categories;
     }
 
     @Override
     public boolean checkLibelleAvailability(String libelle) throws SQLException {
-        return false;
+        boolean isAvailable = false;
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_LIBELLE_AVAILABILITY);) {
+            preparedStatement.setString(1, libelle);
+            try (ResultSet rs = preparedStatement.executeQuery();) {
+                isAvailable = !rs.next();
+            }
+        }
+        return isAvailable;
     }
 
 }

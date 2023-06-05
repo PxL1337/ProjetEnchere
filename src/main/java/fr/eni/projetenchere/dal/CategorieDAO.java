@@ -16,7 +16,5 @@ public interface CategorieDAO {
 
     List<Categorie> selectAll() throws SQLException;
 
-    void selectAllByArticle(int id) throws SQLException;
-
     boolean checkLibelleAvailability(String libelle) throws SQLException;
 }

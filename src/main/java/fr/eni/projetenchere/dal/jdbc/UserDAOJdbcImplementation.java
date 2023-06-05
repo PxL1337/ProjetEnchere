@@ -103,11 +103,12 @@ public class UserDAOJdbcImplementation implements UserDAO {
 						connection.prepareStatement(SELECT_USER_BY_ID);)
 		{
 			preparedStatement.setInt(1, ID);
-			
-			ResultSet resultSet = preparedStatement.executeQuery();			
-			if (resultSet.next()) 
-			{
-				user = mapAllUserData(resultSet);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next())
+				{
+					user = mapAllUserData(resultSet);
+				}
 			}
 		}
 		
@@ -134,9 +135,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 				users.add(user);
 				System.out.println("Found user : " + user.toString());
 			}
-			
-			statement.close();
-			connection.close();
+
 		}
 		
 		return users;

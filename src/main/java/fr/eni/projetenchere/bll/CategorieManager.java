@@ -8,32 +8,32 @@ import fr.eni.projetenchere.exception.BusinessException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CategorieManager
-{
+public class CategorieManager {
 	private static CategorieManager instance;
 	private CategorieDAO categorieDAO;
-	private CategorieManager() {
-		categorieDAO = DAOFactory.getCategorieDAO();
+
+	private CategorieManager(CategorieDAO categorieDAO) {
+		this.categorieDAO = categorieDAO;
 	}
 
-	public static CategorieManager getInstance()
-	{
+	public static synchronized CategorieManager getInstance(CategorieDAO categorieDAO) {
 		if (instance == null) {
-			instance = new CategorieManager();
+			instance = new CategorieManager(categorieDAO);
 		}
-		
 		return instance;
 	}
-	
-	public void insert(Categorie categorie) throws SQLException{
+
+	public void insert(Categorie categorie) throws BusinessException, SQLException {
+		validateCategorie(categorie);
 		categorieDAO.insert(categorie);
 	}
 
-	public void update(Categorie categorie) throws SQLException{
+	public void update(Categorie categorie) throws BusinessException, SQLException {
+		validateCategorie(categorie);
 		categorieDAO.update(categorie);
 	}
 
-	public void delete(Categorie categorie) throws SQLException{
+	public void delete(Categorie categorie) throws SQLException {
 		categorieDAO.delete(categorie);
 	}
 
@@ -49,10 +49,6 @@ public class CategorieManager
 		return categorieDAO.selectAll();
 	}
 
-	/**public List<Categorie> selectAllCategorieByArticle(int ID) throws SQLException {
-		return categorieDAO.selectAllByArticle(ID);
-	}*/
-
 	public boolean checkLibelleAvailability(String libelle) throws SQLException {
 		return categorieDAO.checkLibelleAvailability(libelle);
 	}
@@ -62,7 +58,6 @@ public class CategorieManager
 		if (checkLibelleAvailability(categorie.getLibelle()) ){
 			businessException.ajouterErreur(CodeErreur.CATEGORIE_LIBELLE_EXISTANT);
 		}
-
 		if (categorie.getLibelle() == null || categorie.getLibelle().trim().length() == 0) {
 			businessException.ajouterErreur(CodeErreur.CATEGORIE_LIBELLE_NULL);
 		}
@@ -73,6 +68,4 @@ public class CategorieManager
 			throw businessException;
 		}
 	}
-
-
 }
