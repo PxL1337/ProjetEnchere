@@ -11,23 +11,24 @@ import java.util.List;
 import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.dal.ArticleDAO;
 import fr.eni.projetenchere.dal.ConnectionProvider;
+import fr.eni.projetenchere.dal.ConnectionProviderDebug;
 
 public class ArticleVenduDAOJdbcImplementation implements ArticleDAO
 {
-	final String INSERT_ARTICLE = "INSERT INTO UTILISATEURS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente) VALUES( ?, ?, ?, ?, ?, ? )";	
+	final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES( ?, ?, ?, ?, ?, ? ?, ? )";	
 	
 	final String SELECT_ALL_ARTICLES = "SELECT * FROM VueArticles";
 	final String SELECT_ARTICLE_BY_ID = "SELECT * FROM VueArticles WHERE no_article=?";
 	final String SELECT_ARTICLE_BY_NAME = "SELECT * FROM VueArticles WHERE nom_article=?";
 	// + UTILISER LA VUE POUR LES AUTRES SELECT
 	
-	final String UPDATE_ARTICLE = "UPDATE UTILISATEURS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, prix_vente=? WHERE no_article=?";
+	final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, prix_vente=? WHERE no_article=?";
 	
 	final String DELETE_ARTICLE_BY_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_article=?";
 	
 	@Override
 	public void insert(ArticleVendu article) throws SQLException {
-		try (Connection connection = ConnectionProvider.getConnection();
+		try (Connection connection = ConnectionProviderDebug.getConnection();
 				 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS)) 
 		{
 				preparedStatement.setString(1, article.getNomArticle());
@@ -36,6 +37,8 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO
 				preparedStatement.setDate(4, article.getDateFinEncheres());
 				preparedStatement.setInt(5, article.getPrixInitial());
 				preparedStatement.setInt(6, article.getPrixVente());
+				preparedStatement.setInt(7, article.getUtilisateur().getNoUtilisateur());
+				/* preparedStatement.setInt(8, category); */
 
 				// Exécuter l'instruction SQL
 				if (preparedStatement.executeUpdate() > 0) {

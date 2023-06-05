@@ -17,11 +17,11 @@ public class TestDAL
 		
 		ArticleVenduDAOJdbcImplementation articleDAO = new ArticleVenduDAOJdbcImplementation();
 		
-		Date date = new Date( LocalDate.now().toEpochDay() );
+		Date date = new Date( LocalDate.now().toEpochDay() );		
 		
-		ArticleVendu article = new ArticleVendu(
-				"Test Article", "Test Description", date, date, 150, 150, new User());
 		try {
+			ArticleVendu article = new ArticleVendu(
+					"Test Article", "Test Description", date, date, 150, 150, 23);
 			articleDAO.insert(article);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
