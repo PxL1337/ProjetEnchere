@@ -1,17 +1,37 @@
 package fr.eni.projetenchere.bll;
 
-public class EnchereManager 
+import fr.eni.projetenchere.dal.EnchereDAO;
+import fr.eni.projetenchere.dal.jdbc.DAOFactory;
+
+import java.sql.SQLException;
+
+public class EnchereManager
 {
 	private static EnchereManager instance;
-	
-	public static EnchereManager getInstance()
-	{
+	private EnchereDAO enchereDAO;
+
+	/*private EnchereManager() {
+		enchereDAO = DAOFactory.getEnchereDAO();
+	}*/
+
+	public static synchronized EnchereManager getInstance() {
 		if (instance == null) {
 			instance = new EnchereManager();
 		}
-		
 		return instance;
 	}
-	
-	private EnchereManager() {}
+
+	// Lister les enchères en mode déconnecté
+	/**public List<Article> listCurrentAuctions() throws SQLException {
+		return articleDAO.selectAllCurrent();
+	}
+
+	// Lister les enchères en mode connecté
+	public List<Article> listUserAuctions(int userId) throws SQLException {
+		return articleDAO.selectByUserId(ID);
+	}*/
+
+
+
+
 }

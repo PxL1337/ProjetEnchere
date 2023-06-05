@@ -1,17 +1,20 @@
 package fr.eni.projetenchere.bll;
 
-public class RetraitManager 
-{
+import fr.eni.projetenchere.dal.RetraitDAO;
+import fr.eni.projetenchere.dal.jdbc.DAOFactory;
+
+public class RetraitManager {
 	private static RetraitManager instance;
-	
-	public static RetraitManager getInstance()
-	{
+	private RetraitDAO retraitDAO;
+
+	/*private RetraitManager() {
+		retraitDAO = DAOFactory.getRetraitDAO();
+	}*/
+
+	public static synchronized RetraitManager getInstance() {
 		if (instance == null) {
 			instance = new RetraitManager();
 		}
-		
 		return instance;
 	}
-	
-	private RetraitManager() {}
 }

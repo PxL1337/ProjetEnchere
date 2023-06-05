@@ -52,10 +52,11 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			int rowsAffected = preparedStatement.executeUpdate();
 
 			if (rowsAffected > 0) {
-				ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-				if (generatedKeys.next()) {
-					int nouvelId = generatedKeys.getInt(1);
-					System.out.println("Nouvel utilisateur ajouté avec l'identifiant : " + nouvelId);
+				try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys();) {
+					if (generatedKeys.next()) {
+						int nouvelId = generatedKeys.getInt(1);
+						System.out.println("Nouvel utilisateur ajouté avec l'identifiant : " + nouvelId);
+					}
 				}
 			}
 		} 

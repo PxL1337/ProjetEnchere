@@ -1,9 +1,15 @@
 package fr.eni.projetenchere.bll;
 
-public class CategorieManager 
+import fr.eni.projetenchere.dal.CategorieDAO;
+
+public class CategorieManager
 {
 	private static CategorieManager instance;
-	
+	private CategorieDAO categorieDAO;
+	/**private CategorieManager() {
+		categorieDAO = DAOFactory.getCategorieDAO();
+	}*/
+
 	public static CategorieManager getInstance()
 	{
 		if (instance == null) {
@@ -13,5 +19,7 @@ public class CategorieManager
 		return instance;
 	}
 	
-	private CategorieManager() {}
+
+
+
 }

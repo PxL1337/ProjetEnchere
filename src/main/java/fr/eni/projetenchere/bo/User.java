@@ -224,7 +224,6 @@ public class User {
 		this.administrateur = administrateur;
 	}
 
-    // --------hashage du mot de passe----------//
 
 
     public List<Enchere> getListeEncheresUtilisateur() {
