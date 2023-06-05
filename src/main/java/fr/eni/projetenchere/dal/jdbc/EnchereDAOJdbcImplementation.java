@@ -95,7 +95,6 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 
 	@Override
 	public List<Enchere> selectAll() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

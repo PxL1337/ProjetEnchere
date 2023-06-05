@@ -18,7 +18,7 @@ public class ArticleManager
 			instance = new ArticleManager();
 		}
 		
-		return instance;
+		return instance; 
 	}
 
 
