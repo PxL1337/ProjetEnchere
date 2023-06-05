@@ -1,6 +1,7 @@
 package fr.eni.projetenchere.servlet.user;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import fr.eni.projetenchere.bll.UserManager;
 import fr.eni.projetenchere.bo.User;
@@ -21,9 +22,15 @@ public class AfficherProfil extends HttpServlet {
 			User currentUser = (User) request.getSession().getAttribute("utilisateurConnecte");
 			// Maintenant, utilisez cet objet User pour récupérer les informations de l'utilisateur à partir de la base de données
 			UserManager um = UserManager.getInstance();
-			User user = um.selectUserByID(currentUser.getNoUtilisateur());
-
-			request.setAttribute("user", user);
+			User user;
+			try {
+				user = um.selectUserByID(currentUser.getNoUtilisateur());
+				request.setAttribute("user", user);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			request.getRequestDispatcher("/WEB-INF/views/user/ShowUser.jsp").forward(request, response);
 	}
 

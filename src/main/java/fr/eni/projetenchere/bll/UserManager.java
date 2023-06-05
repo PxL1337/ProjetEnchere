@@ -33,7 +33,7 @@ public class UserManager {
 		userDAO = DAOFactory.getUtilisateurDAO();
 	}
 	
-	public void insertUser(User user){
+	public void insertUser(User user) throws SQLException {
 		String hashedPassword = BCrypt.hashpw(user.getMotDePasse(), BCrypt.gensalt());
 		user.setMotDePasse(hashedPassword);
 		userDAO.insert(user);
@@ -43,24 +43,24 @@ public class UserManager {
 		userDAO.update(user);
 	}
 	
-	public void deleteUser(User user){
+	public void deleteUser(User user) throws SQLException {
 	    userDAO.delete(user);
 	}
 	
-	public void updateUserCredit(User user, int newValue) {
+	public void updateUserCredit(User user, int newValue) throws SQLException {
 		userDAO.updateCredit(user, newValue);
 	}
 	
-	public void updateUserIsAdmin(User user, boolean newValue) {
+	public void updateUserIsAdmin(User user, boolean newValue) throws SQLException {
 		userDAO.updateIsAdmin(user, newValue);
 		
 	}
 	
-	public User selectUserByID(int ID) {
+	public User selectUserByID(int ID) throws SQLException {
 		return userDAO.selectByID(ID);
 	}
 	
-	public List<User> selectAllUser() {
+	public List<User> selectAllUser() throws SQLException {
 		return userDAO.selectAll();
 	}
 	
@@ -68,11 +68,11 @@ public class UserManager {
         return userDAO.selectByPseudoOrEmail(pseudoOuEmail);
     }
 	
-	public User selectUserByPseudo(String comparedPseudo){
+	public User selectUserByPseudo(String comparedPseudo) throws SQLException {
 		return userDAO.selectByPseudo(comparedPseudo);
 	}
 	
-	public User selectUserByEmail(String comparedEmail){
+	public User selectUserByEmail(String comparedEmail) throws SQLException {
 		return userDAO.selectByEmail(comparedEmail);
 	}
 
@@ -137,7 +137,7 @@ public class UserManager {
 
 	//Password
 
-	public boolean checkPassword(int userId, String password) throws BusinessException {
+	public boolean checkPassword(int userId, String password) throws BusinessException, SQLException {
 		// Retrieve the user from the database based on the userId
 		User user = selectUserByID(userId);
 
