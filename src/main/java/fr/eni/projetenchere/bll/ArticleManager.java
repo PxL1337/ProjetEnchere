@@ -1,5 +1,6 @@
 package fr.eni.projetenchere.bll;
 
+import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.dal.ArticleDAO;
 import fr.eni.projetenchere.dal.jdbc.DAOFactory;
 import fr.eni.projetenchere.exception.BusinessException;
@@ -42,7 +43,7 @@ public class ArticleManager
 		//TODO: validate article
 	}*/
 
-
+	public ArticleVendu selectArticleByID(int ID) throws SQLException { return articleDAO.selectByID(ID);}
 
 
 
