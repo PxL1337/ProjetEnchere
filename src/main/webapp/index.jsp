@@ -18,8 +18,18 @@
 <!-- Contenu de la page -->
 <div class="container">
   <h1>Bienvenue sur ProjetEnchere!</h1>
-  <p>Bienvenue sur la page d'accueil de notre application d'enchères. Utilisez la barre de navigation pour naviguer dans le site.</p>
 </div>
+
+<div class="col-md-6">
+	<c:forEach items="${encheres }" var="enchere">
+		<h2><a href="#">"${enchere.article.nomArticle }"</a></h2>
+		<p>prix : "${enchere.montantEnchere }"<br/>Fin de l'enchere : "${enchere.article.dateFinEncheres }" <br/>
+		<a href="${pageContext.request.contextPath}/Profile?id=${enchere.encherisseur.noUtilisateur }">Vendeur : "${enchere.encherisseur.pseudo }"</a></p>
+	
+	</c:forEach>
+</div>	
+	
+
 
 <!-- Footer -->
 <jsp:include page="/WEB-INF/views/footer.jsp" />

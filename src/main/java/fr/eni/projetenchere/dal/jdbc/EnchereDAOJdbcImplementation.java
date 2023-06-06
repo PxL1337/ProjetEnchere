@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import fr.eni.projetenchere.bll.ArticleManager;
@@ -108,7 +110,14 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 				encheres.add(enchere);
 				System.out.println("Found enchere : " + enchere.toString());
 			}
-		return encheres;
+			//methode que je ne comprends pas j'ai juste pas trouvé de solutions alternatives donc à tester 
+			Collections.sort(encheres, new Comparator<Enchere>() {
+		            @Override
+		            public int compare(Enchere enchere1, Enchere enchere2) {
+		                return enchere1.getDateEnchere().compareTo(enchere2.getDateEnchere());
+		            }
+		        });
+			return encheres;
 		}
 	}
 	
