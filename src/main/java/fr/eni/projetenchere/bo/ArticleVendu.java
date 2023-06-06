@@ -34,13 +34,9 @@ public class ArticleVendu
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.prixInitial = prixInitial;
-		this.prixVente = prixVente;
-		
-		this.utilisateur = UserManager.getInstance().selectUserByID(userID);
-		this.utilisateur.addArticleToList(this);
-		
+		this.prixVente = prixVente;		
+		this.utilisateur = UserManager.getInstance().selectUserByID(userID);	
 		this.categorie = CategorieManager.getInstance().selectCategorieByID(categoryID);
-		this.categorie.addArticleToList(this);
     }
 
     // INSERT
@@ -163,10 +159,8 @@ public class ArticleVendu
 			.append("\n Prix initial").append(prixInitial)
 			.append((prixVente != 0) ? "Plus haute enchère " + String.valueOf(prixVente) : "Aucune enchère n'a été faite pour l'instant")
 			.append("\n Vendeur : ").append(utilisateur.getPseudo())
-			.append("\n Catégorie : ").append("0"/*
-							 * CategorieManager.getInstance().selectCategoryByID
-							 * (categoryID).getLibelle()
-							 */);
+			.append("\n Catégorie : ")
+			.append(categorie.getLibelle());
 			
 			return sb.toString();
 		}

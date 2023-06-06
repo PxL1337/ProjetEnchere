@@ -16,30 +16,24 @@ public class Enchere {
 
 
     //-------------------- CONSTRUCTOR ZONE --------------------//
+    public Enchere() {}
+    
     public Enchere(Date dateEnchere, int montantEnchere, ArticleVendu article,
-			User encherisseur) {
+			User encherisseur) 
+    {
 		this.dateEnchere = article.getDateDebutEncheres();
 		this.montantEnchere = article.getPrixInitial();
 		this.noArticle = article.getNoArticle();
 		this.article = article;
 		this.encherisseur = encherisseur;
-		encherisseur.addEnchereToList(this);
 	}
-
-
-
-	public Enchere() {
-	}
-
-
-
-
-
+    
     //---------------------------------------METHODE/FUNCTION ZONE---------------------------------------//
-		public void updateMontantEnchereArticle() {
-			if (article == null) return;
-			article.setPrixVente(montantEnchere);
-		}
+    public void updateMontantEnchereArticle() 
+    {
+		if (article == null) return;
+		article.setPrixVente(montantEnchere);
+	}	
 
     //---------------------------------------------GETTER SETTER ZONE-------------------------------------------------------//
 	public Date getDateEnchere() {

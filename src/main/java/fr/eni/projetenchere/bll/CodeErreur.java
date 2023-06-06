@@ -49,6 +49,9 @@ public class CodeErreur {
     public static final int CATEGORIE_LIBELLE_TROP_LONG = 20201;
     public static final int CATEGORIE_LIBELLE_EXISTANT = 200202;
 
-
-
+    // Retrait - 20300 a 20399
+    public static final int RETRAIT_ARTICLE_INVALIDE = 20300;
+    public static final int RETRAIT_RUE_TROP_LONG = 20301;
+    public static final int RETRAIT_CODE_POSTAL_TROP_LONG = 20302;
+    public static final int RETRAIT_VILLE_TROP_LONGUE = 20303;
 }

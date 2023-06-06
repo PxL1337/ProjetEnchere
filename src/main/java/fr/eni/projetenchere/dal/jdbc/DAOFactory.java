@@ -3,6 +3,7 @@ package fr.eni.projetenchere.dal.jdbc;
 import fr.eni.projetenchere.dal.ArticleDAO;
 import fr.eni.projetenchere.dal.CategorieDAO;
 import fr.eni.projetenchere.dal.EnchereDAO;
+import fr.eni.projetenchere.dal.RetraitDAO;
 import fr.eni.projetenchere.dal.UserDAO;
 
 public class DAOFactory
@@ -27,9 +28,9 @@ public class DAOFactory
 		return categorieDAO;
 	}
 
-	/**public static RetraitDAO getRetraitDAO() {
+	public static RetraitDAO getRetraitDAO() {
 		RetraitDAO retraitDAO = new RetraitDAOJdbcImplementation();
 		return retraitDAO;
-	}*/
+	}
 
 }

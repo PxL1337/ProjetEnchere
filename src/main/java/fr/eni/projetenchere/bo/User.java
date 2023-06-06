@@ -1,7 +1,5 @@
 package fr.eni.projetenchere.bo;
 
-import java.util.List;
-
 public class User {
     //-------------------- VARIABLES ZONE --------------------//
     private int noUtilisateur;
@@ -17,14 +15,10 @@ public class User {
     private String motDePasse;
     private int credit = 100;
     private boolean administrateur = false;
-    private List<Enchere> listeEncheresUtilisateur;
-    private List<ArticleVendu> listeArticleUtilisateur;
 
     //-------------------- CONSTRUCTOR ZONE --------------------//
 
-    public User() {
-
-    }
+    public User() {}
 
     /**
      * Constructeur pour recuperation DATABASE
@@ -42,6 +36,7 @@ public class User {
      * @param credit
      * @param administrateur 
      */
+    
     public User(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
                        String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
         this.noUtilisateur = noUtilisateur;
@@ -56,9 +51,7 @@ public class User {
         this.motDePasse = motDePasse;
         this.credit = credit;
         this.administrateur = administrateur;
-    }
-
-	
+    }	
 
     public User(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, 
 			String ville, String motDePasse, int credit, boolean administrateur) {
@@ -88,8 +81,6 @@ public class User {
 		this.codePostal = codePostal;
 	}
 
-
-
 	public User(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) {
 		this.noUtilisateur = noUtilisateur;
@@ -103,6 +94,7 @@ public class User {
 		this.ville = ville;
 		this.motDePasse = motDePasse;
 	}
+	
 	public User(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) {
 		this.pseudo = pseudo;
@@ -114,15 +106,6 @@ public class User {
 		this.codePostal = codePostal;
 		this.ville = ville;
 		this.motDePasse = motDePasse;
-	}
-
-	//---------------------------------------METHODE/FUNCTION ZONE---------------------------------------//
-    public void addEnchereToList(Enchere enchere) {
-		listeEncheresUtilisateur.add(enchere);
-	}
-    
-    public void addArticleToList (ArticleVendu article) {
-    	listeArticleUtilisateur.add(article);
 	}
 
     //---------------------------------------------GETTER SETTER ZONE-------------------------------------------------------//
@@ -220,24 +203,6 @@ public class User {
 
 	public void setAdministrateur(boolean administrateur) {
 		this.administrateur = administrateur;
-	}
-
-
-
-    public List<Enchere> getListeEncheresUtilisateur() {
-		return listeEncheresUtilisateur;
-	}
-
-	public void setListeEncheresUtilisateur(List<Enchere> listeEncheresUtilisateur) {
-		this.listeEncheresUtilisateur = listeEncheresUtilisateur;
-	}
-
-	public List<ArticleVendu> getListeArticleUtilisateur() {
-		return listeArticleUtilisateur;
-	}
-
-	public void setListeArticleUtilisateur(List<ArticleVendu> listeArticleUtilisateur) {
-		this.listeArticleUtilisateur = listeArticleUtilisateur;
 	}
 
 	//---------------------------------------TOSTRING ZONE---------------------------------------//
