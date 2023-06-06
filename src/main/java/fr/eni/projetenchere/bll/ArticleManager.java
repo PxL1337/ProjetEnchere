@@ -77,46 +77,6 @@ public class ArticleManager {
 		return article;
 	}
 
-	/**public void validateArticle(ArticleVendu article) throws BusinessException, SQLException {
-		BusinessException businessException = new BusinessException();
-
-		// Vérifier le nom de l'article
-		if (article.getNomArticle() == null || article.getNomArticle().trim().length() == 0 || article.getNomArticle().length() > 30) {
-			businessException.ajouterErreur(CodeErreur.ARTICLE_NOM_INVALIDE);
-		}
-
-		// Vérifier la description de l'article
-		if (article.getDescription() == null || article.getDescription().trim().length() == 0 || article.getDescription().length() > 300) {
-			businessException.ajouterErreur(CodeErreur.ARTICLE_DESCRIPTION_INVALIDE);
-		}
-
-		// Vérifier le prix initial
-		if (article.getPrixInitial() <= 0) {
-			businessException.ajouterErreur(CodeErreur.ARTICLE_PRIX_INITIAL_INVALIDE);
-		}
-
-		// Vérifier les dates de l'enchère
-		if (article.getDateDebutEncheres().after(article.getDateFinEncheres())) {
-			businessException.ajouterErreur(CodeErreur.ARTICLE_DATES_ENCHERE_INVALIDES);
-		}
-
-		// Vérifier l'ID de l'utilisateur
-		UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
-		if (!utilisateurManager.isThisUserValid(article.getNoUtilisateur())) {
-			businessException.ajouterErreur(CodeErreur.ARTICLE_UTILISATEUR_INVALIDE);
-		}
-
-		// Vérifier l'ID de la catégorie
-		CategorieManager categorieManager = CategorieManager.getInstance();
-		if (!categorieManager.isThisCategorieValid(article.getNoCategorie())) {
-			businessException.ajouterErreur(CodeErreur.ARTICLE_CATEGORIE_INVALIDE);
-		}
-
-		if (businessException.hasErreurs()) {
-			throw businessException;
-		}
-	}*/
-
 	public void validateArticle(ArticleVendu article) throws BusinessException {
 		BusinessException businessException = new BusinessException();
 		if (article.getNomArticle() == null || article.getNomArticle().trim().isEmpty() || article.getNomArticle().length() > 30) {
