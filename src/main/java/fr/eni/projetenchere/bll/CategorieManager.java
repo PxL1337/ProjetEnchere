@@ -24,12 +24,10 @@ public class CategorieManager {
 	}
 
 	public void insert(Categorie categorie) throws BusinessException, SQLException {
-		validateCategorie(categorie);
 		categorieDAO.insert(categorie);
 	}
 
 	public void update(Categorie categorie) throws BusinessException, SQLException {
-		validateCategorie(categorie);
 		categorieDAO.update(categorie);
 	}
 
@@ -67,5 +65,9 @@ public class CategorieManager {
 		if (businessException.hasErreurs()) {
 			throw businessException;
 		}
+	}
+
+	public int getCategorieIDByLibelle(String libelle) throws SQLException {
+		return categorieDAO.selectByLibelle(libelle).getNoCategorie();
 	}
 }

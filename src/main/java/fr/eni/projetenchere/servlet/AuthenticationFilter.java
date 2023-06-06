@@ -1,4 +1,4 @@
-package fr.eni.projetenchere.servlet.user;
+package fr.eni.projetenchere.servlet;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/Profile", "/ModifyUserProfile", "/Deconnexion"})
+@WebFilter(urlPatterns = {"/Profile", "/ModifyUserProfile", "/Deconnexion", "/AddArticle" })
 public class AuthenticationFilter implements Filter {
 
     @Override

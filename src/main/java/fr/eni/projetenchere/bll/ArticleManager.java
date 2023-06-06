@@ -1,11 +1,14 @@
 package fr.eni.projetenchere.bll;
 
+import fr.eni.projetenchere.bll.utils.DateUtils;
 import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.dal.ArticleDAO;
 import fr.eni.projetenchere.dal.jdbc.DAOFactory;
 import fr.eni.projetenchere.exception.BusinessException;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 public class ArticleManager
 {
@@ -63,5 +66,24 @@ public class ArticleManager
 
 	public ArticleVendu selectArticleByID(int ID) throws SQLException {
 		return articleDAO.selectByID(ID);
+	}
+
+	public void createArticle(String nomArticle, String description, String dateDebutEncheresStr, String dateFinEncheresStr, String miseAPrixStr, int idUtilisateur, String categorieLibelle) throws BusinessException, SQLException, ParseException, ParseException {
+		// Recupérer l'id de la catégorie
+		int idCategorie = CategorieManager.getInstance().selectCategorieByID(Integer.parseInt(categorieLibelle)).getNoCategorie();
+		System.out.println("idCategorie = " + idCategorie);
+
+		// Conversion des dates
+		Date dateDebutEncheres = DateUtils.stringToDate(dateDebutEncheresStr);
+		Date dateFinEncheres = DateUtils.stringToDate(dateFinEncheresStr);
+
+		// Conversion de la mise à prix
+		int miseAPrix = Integer.parseInt(miseAPrixStr);
+
+		// Création de l'article
+		ArticleVendu article = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix, miseAPrix, idUtilisateur, idCategorie);
+
+		// Insertion de l'article dans la base de données
+		insert(article);
 	}
 }

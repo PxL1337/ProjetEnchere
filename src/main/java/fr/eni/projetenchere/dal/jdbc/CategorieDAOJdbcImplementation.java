@@ -82,6 +82,7 @@ public class CategorieDAOJdbcImplementation implements CategorieDAO {
     @Override
     public Categorie selectByLibelle(String libelle) throws SQLException {
         Categorie categorie = null;
+        System.out.println(libelle + " dans selectByLibelle");
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CATEGORIE_BY_LIBELLE);) {
             preparedStatement.setString(1, libelle);
@@ -91,6 +92,7 @@ public class CategorieDAOJdbcImplementation implements CategorieDAO {
                 }
             }
         }
+        System.out.println(categorie + " dans selectByLibelle");
         return categorie;
     }
 
