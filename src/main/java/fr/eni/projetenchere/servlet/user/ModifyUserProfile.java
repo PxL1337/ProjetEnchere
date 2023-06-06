@@ -39,8 +39,6 @@ public class ModifyUserProfile extends HttpServlet {
 		String newPassword = request.getParameter("newMdp");
 		String confirmationMdp = request.getParameter("confirmationMdp");
 
-		System.out.println("New password : " + newPassword);
-		System.out.println("Confirmation password : " + confirmationMdp);
 
 		UserManager userManager = UserManager.getInstance();
 

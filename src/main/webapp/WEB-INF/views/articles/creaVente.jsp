@@ -78,21 +78,21 @@
 				<br>
 				<div class="col-sm-12">
 					<div class="form-floating">
-						<input type="number" step="1" value="0" min="0" max="99999" class="form-control" id="articlePrixChoix" name="miseAPrix" required>
+						<input type="number" step="1" value="1" min="1" class="form-control" id="articlePrixChoix" name="miseAPrix" required>
 						<label for="articlePrixChoix">Mise à prix</label>
 					</div>
 				</div>
 				<br>
 				<div class="col-sm-12">
 					<div class="form-floating">
-						<input type="date" class="form-control" id="enchereDateDebut" name="dateDebutEncheres" required>
+						<input type="date" class="form-control" id="enchereDateDebut" name="dateDebutEncheres" value="${dateDebut}" required>
 						<label for="enchereDateDebut">Début de l'enchère</label>
 					</div>
 				</div>
 				<br>
 				<div class="col-lg-12">
 					<div class="form-floating">
-						<input type="date" class="form-control" id="enchereDateFin" name="dateFinEncheres" required>
+						<input type="date" class="form-control" id="enchereDateFin" name="dateFinEncheres" value="${dateFin}" required>
 						<label for="enchereDateFin">Fin de l'enchère</label>
 					</div>
 					<br>
@@ -104,13 +104,13 @@
 					<legend align="left">Retrait</legend>
 					<div class="col-sm-12">
 						<div class="form-floating">
-							<input type="text" class="form-control" id="rue" name="rue" value="${user.rue}">
+							<input type="text" class="form-control" id="rue" name="rue" value="${user.rue}" required>
 							<label for="rue">Rue</label>
 						</div>
 					</div>
 					<div class="col-sm-12">
 						<div class="form-floating">
-							<input type="text" class="form-control" id="codePostal" name="codePostal" value="${user.codePostal}">
+							<input type="text" class="form-control" id="codePostal" name="codePostal" value="${user.codePostal}" required>
 							<label for="codePostal">Code Postal</label>
 						</div>
 					</div>

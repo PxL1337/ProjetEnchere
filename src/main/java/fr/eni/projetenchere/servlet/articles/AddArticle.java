@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 
 import fr.eni.projetenchere.bll.ArticleManager;
@@ -30,27 +31,33 @@ public class AddArticle extends HttpServlet {
         User utilisateurConnecte = (User) session.getAttribute("utilisateurConnecte");
         int idUtilisateur = utilisateurConnecte.getNoUtilisateur();
 
-        // Récupérer les informations de l'utilisateur
+        // Utiliser UserManager pour obtenir les informations de l'utilisateur
         UserManager userManager = UserManager.getInstance();
         User user = null;
         try {
             user = userManager.selectUserByID(idUtilisateur);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
-        // Récupérer les catégories
+        // Utiliser CategorieManager pour obtenir les catégories
         CategorieManager categorieManager = CategorieManager.getInstance();
         List<Categorie> categories = null;
         try {
             categories = categorieManager.selectAllCategorie();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
-        // Stocker les informations de l'utilisateur et les catégories comme attributs de la requête
+        // Obtenir la date du jour et la date du lendemain
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plusDays(1);
+
+        // Stocker les informations de l'utilisateur, les catégories et les dates comme attributs de la requête
         request.setAttribute("user", user);
         request.setAttribute("categories", categories);
+        request.setAttribute("dateDebut", today);
+        request.setAttribute("dateFin", tomorrow);
 
         // Transférer la requête à la JSP
         request.getRequestDispatcher("/WEB-INF/views/articles/creaVente.jsp").forward(request, response);
@@ -80,23 +87,25 @@ public class AddArticle extends HttpServlet {
             articleManager.validateArticle(article);
             articleManager.insert(article);
 
+            // Rediriger vers la page d'accueil en cas de succès
+            response.sendRedirect(request.getContextPath() + "/");
         } catch (BusinessException e) {
-            // Récupérer les informations de l'utilisateur
+            // Utiliser UserManager pour obtenir les informations de l'utilisateur
             UserManager userManager = UserManager.getInstance();
             User user = null;
             try {
                 user = userManager.selectUserByID(idUtilisateur);
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                throw new RuntimeException(ex);
             }
 
-            // Récupérer les catégories
+            // Utiliser CategorieManager pour obtenir les catégories
             CategorieManager categorieManager = CategorieManager.getInstance();
             List<Categorie> categories = null;
             try {
                 categories = categorieManager.selectAllCategorie();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                throw new RuntimeException(ex);
             }
 
             // Stocker les informations de l'utilisateur et les catégories comme attributs de la requête
@@ -112,3 +121,4 @@ public class AddArticle extends HttpServlet {
         }
     }
 }
+
