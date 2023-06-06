@@ -29,9 +29,8 @@ public class ArticleManager {
 		businessException = new BusinessException();
 	}
 
-	public void insert(ArticleVendu article) throws SQLException, BusinessException
+	public void insert(ArticleVendu article) throws SQLException
 	{
-		
 		articleDAO.insert(article);
 	}
 

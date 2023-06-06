@@ -15,14 +15,14 @@ import fr.eni.projetenchere.exception.BusinessException;
 
 public class RetraitDAOJdbcImplementation implements RetraitDAO {
 
-	final String INSERT_RETRAIT = "INSERT INTO RETRAITS (rue, code_postal, ville) VALUES (?, ?, ?)";
+	final String INSERT_RETRAIT = "INSERT INTO RETRAITS (no_article, rue, code_postal, ville) VALUES (?, ?, ?, ?)";
 	
-	final String UPDATE_RETRAIT = "UPDATE RETRAITS SET rue=?, code_postal=?, ville=?) VALUES (?, ?, ?) WHERE no_article=?";
+	final String UPDATE_RETRAIT = "UPDATE RETRAITS SET rue=?, code_postal=?, ville=? WHERE no_article=?";
 	
 	final String SELECT_RETRAIT_BY_ID = "SELECT * FROM RETRAITS WHERE no_article=?";
 	final String SELECT_ALL_RETRAITS = "SELECT * FROM RETRAITS";
 	
-	final String DELETE_RETRAIT = "DELETE FROM RETRATIS WHERE no_article=?";
+	final String DELETE_RETRAIT = "DELETE FROM RETRAITS WHERE no_article=?";
 
 	@Override
 	public void insert(Retrait retrait) throws SQLException 
@@ -31,22 +31,13 @@ public class RetraitDAOJdbcImplementation implements RetraitDAO {
 				PreparedStatement preparedStatement = connection.prepareStatement(
 						INSERT_RETRAIT, PreparedStatement.RETURN_GENERATED_KEYS)) 
 		{
-	            preparedStatement.setString(1, retrait.getRue());
-	            preparedStatement.setString(2, retrait.getCodePostal());
-	            preparedStatement.setString(3, retrait.getVille());
+				preparedStatement.setInt(1, retrait.getNoArticle());
+	            preparedStatement.setString(2, retrait.getRue());
+	            preparedStatement.setString(3, retrait.getCodePostal());
+	            preparedStatement.setString(4, retrait.getVille());
 	            
-				int rowsAffected = preparedStatement.executeUpdate();
+				preparedStatement.executeUpdate();
 
-				// Exécuter l'instruction SQL
-				if (rowsAffected > 0) 
-				{
-					ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-					if (generatedKeys.next())
-					{
-						int nouvelId = generatedKeys.getInt(1);
-						System.out.println("Nouvel utilisateur ajouté avec l'identifiant : " + nouvelId);
-					}
-	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }

@@ -55,8 +55,9 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 				ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 				if (generatedKeys.next()) {
 					int nouvelId = generatedKeys.getInt(1);
+					article.setNoArticle(nouvelId);
 					System.out.println(
-							"Nouvel utilisateur ajouté avec l'identifiant : "
+							"Nouvel article ajouté avec l'identifiant : "
 									+ nouvelId);
 				}
 			}
@@ -128,7 +129,7 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 			while (resultSet.next()) {
 				article = mapAllArticleData(resultSet);
 				articles.add(article);
-				System.out.println("Found user : " + article.toString());
+				System.out.println("Found article : " + article.toString());
 			}
 
 			statement.close();
@@ -159,7 +160,7 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 	}
 	
 	@Override
-	public void updateSellingPrice(ArticleVendu article, int newPrice) throws SQLException 
+	public void updateSellingPrice(ArticleVendu article, int newPrice) throws SQLException
 	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement = connection
