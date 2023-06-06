@@ -39,10 +39,16 @@ public class CodeErreur {
     public static final int ARTICLE_PRIX_INITIAL_INVALIDE = 20104;
     public static final int ARTICLE_UTILISATEUR_INVALIDE = 20105;
     public static final int ARTICLE_CATEGORIE_INVALIDE = 20106;
+    public static final int ARTICLE_NOM_ERREUR = 20107;
+    public static final int ARTICLE_DESCRIPTION_ERREUR = 20108;
+    public static final int ARTICLE_DATE_ERREUR = 20109;
+    public static final int ARTICLE_PRIX_ERREUR = 20110;
 
     // Categorie - 20200 a 20299
     public static final int CATEGORIE_LIBELLE_NULL = 20200;
     public static final int CATEGORIE_LIBELLE_TROP_LONG = 20201;
     public static final int CATEGORIE_LIBELLE_EXISTANT = 200202;
+
+
 
 }

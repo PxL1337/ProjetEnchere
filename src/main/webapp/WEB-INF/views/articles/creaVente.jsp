@@ -1,5 +1,8 @@
+<%@ page import="java.util.List" %>
+<%@ page import="fr.eni.projetenchere.messages.LecteurMessage" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,6 +34,15 @@
 			<img src="${pageContext.request.contextPath}/article/shogun.jpg" class="img-thumbnail" alt="image">
 	</div>	
 	<div class="col-sm-8">
+		<% if(request.getAttribute("listeCodesErreur") != null) { %>
+		<div class="alert alert-danger">
+			<% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
+			<% for(Integer codeErreur : listeCodesErreur) { %>
+			<% String messageErreur = LecteurMessage.getMessage(codeErreur); %>
+			<%= messageErreur %><br/>
+			<% } %>
+		</div>
+		<% } %>
 		<form action="${pageContext.request.contextPath}/AddArticle" method="POST" class="row g-3">
 			<div class="container">
 				<div class="col-sm-12">
@@ -50,9 +62,9 @@
 				<div class="col-sm-12">
 					<select id="categorie" class="form-select" aria-label="articleCategorie" name="categorie" required>
 						<option selected>Selectionner une catégorie</option>
-						<option value="1">Informatique</option>
-						<option value="2">Ameublement</option>
-						<option value="3">Vêtement</option>
+						<c:forEach var="categorie" items="${categories}">
+							<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+						</c:forEach>
 					</select>
 					<label for="categorie"></label>
 				</div>
@@ -92,19 +104,19 @@
 					<legend align="left">Retrait</legend>
 					<div class="col-sm-12">
 						<div class="form-floating">
-							<input type="text" class="form-control" id="rue" name="rue">
+							<input type="text" class="form-control" id="rue" name="rue" value="${user.rue}">
 							<label for="rue">Rue</label>
 						</div>
 					</div>
 					<div class="col-sm-12">
 						<div class="form-floating">
-							<input type="text" class="form-control" id="codePostal" name="codePostal">
+							<input type="text" class="form-control" id="codePostal" name="codePostal" value="${user.codePostal}">
 							<label for="codePostal">Code Postal</label>
 						</div>
 					</div>
 					<div class="col-sm-12">
 						<div class="form-floating">
-							<input type="text" class="form-control" id="ville" name="ville" required>
+							<input type="text" class="form-control" id="ville" name="ville" value="${user.ville}" required>
 							<label for="ville">Ville</label>
 						</div>
 					</div>
