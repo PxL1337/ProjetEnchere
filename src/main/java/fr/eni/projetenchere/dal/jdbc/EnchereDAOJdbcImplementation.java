@@ -10,7 +10,6 @@ import java.util.List;
 
 import fr.eni.projetenchere.bll.ArticleManager;
 import fr.eni.projetenchere.bll.UserManager;
-import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.bo.Enchere;
 import fr.eni.projetenchere.dal.ConnectionProvider;
 import fr.eni.projetenchere.dal.EnchereDAO;
