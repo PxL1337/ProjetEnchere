@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import fr.eni.projetenchere.bll.UserManager;
-import fr.eni.projetenchere.bll.CodeErreur;
 import fr.eni.projetenchere.bo.User;
 import fr.eni.projetenchere.exception.BusinessException;
 import jakarta.servlet.ServletException;
@@ -12,7 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.mindrot.jbcrypt.BCrypt;
+
 
 @WebServlet(name = "modifyUserProfile", value = "/ModifyUserProfile")
 public class ModifyUserProfile extends HttpServlet {
