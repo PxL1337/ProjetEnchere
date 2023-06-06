@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetenchere.bll.ArticleManager;
 import fr.eni.projetenchere.bll.UserManager;
+import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.bo.Enchere;
 import fr.eni.projetenchere.dal.ConnectionProvider;
 import fr.eni.projetenchere.dal.EnchereDAO;
@@ -19,7 +22,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	final String UPDATE_MONTANT_ENCHERE = "UPDATE ENCHERES SET montant_enchere=? WHERE no_article=?";
 	final String DELETE_ENCHERE = "DELETE FROM ENCHERES WHERE no_article=?";
 	final String SELECT_ENCHERE_BY_ID = "SELECT * FROM ENCHERES WHERE no_article=?";
-	
+	final String SELECT_ALL_ENCHERES = "SELECT * FROM ENCHERES";
 	
 	@Override
 	public void insert(Enchere enchere) throws SQLException {
@@ -81,10 +84,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();			
 			if (resultSet.next()) 
 			{
-				enchere.setArticle(ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article")));
-				enchere.setEncherisseur(UserManager.getInstance().selectUserByID(resultSet.getInt("no_article")));
-				enchere.setDateEnchere(resultSet.getDate("date_enchere"));
-				enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
+				enchere = mapAllEnchereData(resultSet);
 				
 			}
 		}
@@ -95,21 +95,33 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 
 	@Override
 	public List<Enchere> selectAll() throws SQLException {
+		List<Enchere> encheres = new ArrayList<Enchere>();
+		try (Connection connection = ConnectionProvider.getConnection();
+				Statement statement = connection.createStatement();) {
+			ResultSet resultSet = statement.executeQuery(SELECT_ALL_ENCHERES);
+
+			Enchere enchere = null;
+			while (resultSet.next()) {
+
+				enchere = mapAllEnchereData(resultSet);
+				encheres.add(enchere);
+				System.out.println("Found enchere : " + enchere.toString());
+			}
 		return null;
+		}
 	}
 	
 	
-	
-	/* private Enchere mapAllEnchereData(ResultSet rs, int ID) throws SQLException {
+	private Enchere mapAllEnchereData(ResultSet resultSet) throws SQLException {
 	 
 	
 		Enchere enchere = new Enchere();
 		
-		enchere.set(rs.getInt("no_utilisateur"));
-		enchere.setNomArticle(rs.getString("no_article"));
-		enchere.setDateDebutEncheres(rs.getDate("date_enchere"));
-		enchere.setDateFinEncheres(rs.getDate("montant_enchere"));
+		enchere.setArticle(ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article")));
+		enchere.setEncherisseur(UserManager.getInstance().selectUserByID(resultSet.getInt("no_article")));
+		enchere.setDateEnchere(resultSet.getDate("date_enchere"));
+		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
 		
 		return enchere;
-	}*/
+	}
 }
