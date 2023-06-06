@@ -49,7 +49,7 @@ public class EnchereManager
 	}
 
 	// Lister les enchères en mode connecté
-	public List<Enchere> listUserAuctions(int userId) throws SQLException {
+	public List<Enchere> selectAllEncheres(int userId) throws SQLException {
 		return enchereDAO.selectAll();
 	}
 }
