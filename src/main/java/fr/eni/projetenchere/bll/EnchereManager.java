@@ -1,6 +1,7 @@
 package fr.eni.projetenchere.bll;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import fr.eni.projetenchere.bo.Enchere;
 import fr.eni.projetenchere.dal.EnchereDAO;
@@ -43,12 +44,12 @@ public class EnchereManager
 	}
 	
 	// Lister les enchères en mode déconnecté
-	/**public List<Article> listCurrentAuctions() throws SQLException {
-		return articleDAO.selectAllCurrent();
+	public Enchere selectEnchereByID(int ID) throws SQLException {
+		return enchereDAO.selectByID(ID);
 	}
 
 	// Lister les enchères en mode connecté
-	public List<Article> listUserAuctions(int userId) throws SQLException {
-		return articleDAO.selectByUserId(ID);
-	}*/
+	public List<Enchere> listUserAuctions(int userId) throws SQLException {
+		return enchereDAO.selectAll();
+	}
 }

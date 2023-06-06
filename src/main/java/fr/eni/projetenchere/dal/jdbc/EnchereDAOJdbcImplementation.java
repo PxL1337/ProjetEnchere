@@ -108,7 +108,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 				encheres.add(enchere);
 				System.out.println("Found enchere : " + enchere.toString());
 			}
-		return null;
+		return encheres;
 		}
 	}
 	
