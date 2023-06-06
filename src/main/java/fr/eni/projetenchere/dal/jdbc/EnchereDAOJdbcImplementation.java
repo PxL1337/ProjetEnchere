@@ -42,10 +42,12 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	}
 
 	@Override
-	public void update(Enchere enchere) throws SQLException {
+	public void updateMontantEnchere(Enchere enchere, int montant) throws SQLException {
 		try (Connection connection = ConnectionProvider.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_MONTANT_ENCHERE);){
-			preparedStatement.setInt(1, enchere.getMontantEnchere());
+				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_MONTANT_ENCHERE);)
+		{
+			preparedStatement.setInt(1, montant);
+			//WHERE
 			preparedStatement.setInt(2, enchere.getNoArticle());
 			
 			preparedStatement.executeUpdate();
@@ -120,6 +122,8 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		enchere.setEncherisseur(UserManager.getInstance().selectUserByID(resultSet.getInt("no_article")));
 		enchere.setDateEnchere(resultSet.getDate("date_enchere"));
 		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
+		
+		// POTENTIELLEMENT RECUPERER ICI AUSSI LES INFOS CONCERNANT L'UTILISATEUR ET L'ARTICLE
 		
 		return enchere;
 	}

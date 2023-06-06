@@ -2,6 +2,7 @@ package fr.eni.projetenchere.dal.jdbc;
 
 import fr.eni.projetenchere.dal.ArticleDAO;
 import fr.eni.projetenchere.dal.CategorieDAO;
+import fr.eni.projetenchere.dal.EnchereDAO;
 import fr.eni.projetenchere.dal.UserDAO;
 
 public class DAOFactory
@@ -16,10 +17,10 @@ public class DAOFactory
 		return articleDAO;
 	}
 
-	/**public static EnchereDAO getEnchereDAO() {
+	public static EnchereDAO getEnchereDAO() {
 		EnchereDAO enchereDAO = new EnchereDAOJdbcImplementation();
 		return enchereDAO;
-	}*/
+	}
 
 	public static CategorieDAO getCategorieDAO() {
 		CategorieDAO categorieDAO = new CategorieDAOJdbcImplementation();
