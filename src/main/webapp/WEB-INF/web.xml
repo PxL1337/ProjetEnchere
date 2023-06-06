@@ -40,5 +40,15 @@
     <session-config>
         <session-timeout>5</session-timeout>
     </session-config>
+    
+    <servlet>
+    	<servlet-name>creaVente.jsp</servlet-name>
+    	<jsp-file>/WEB-INF/views/creaVente.jsp</jsp-file>   
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>creaVente.jsp</servlet-name>
+    	<url-pattern>/views/creationDeVente.jsp</url-pattern>    
+    </servlet-mapping>
+    
 
 </web-app>

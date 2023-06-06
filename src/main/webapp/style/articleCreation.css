@@ -1,0 +1,41 @@
+html,
+body {
+  height: 50%;
+}
+
+    
+#form{
+ width: 350px;
+ height: auto;
+ position: absolute;
+ left: 50%;
+ top: 50%;
+ transform: translate(-50%, -50%);
+ -webkit-transform: translate(-50%, -50%);
+ 
+
+ }
+
+ 
+h1{
+	font-size: 1.2em;
+	font-style: normal;
+	font-weight: bold;
+	
+}
+
+#centre{
+	margin-left: 850px;
+}
+
+legend {
+    /*background-color: #000;*/
+    color: #000000;
+    padding: 3px 6px;
+}
+fieldset {
+    /*background-color: #fff3ca;*/
+    color: #fff;
+    padding: 3px 6px;
+    border: 2px solid #ccc;
+}
