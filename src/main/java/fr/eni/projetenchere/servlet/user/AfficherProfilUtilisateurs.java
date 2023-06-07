@@ -12,26 +12,26 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AfficherProfil
+ * Servlet implementation class AfficherProfilUtilisateurs
  */
-@WebServlet(name = "AfficherProfil", value = "/Profile")
-public class AfficherProfil extends HttpServlet {
+@WebServlet(name = "AfficherProfilUtilisateur", value = "/ProfileUser")
+public class AfficherProfilUtilisateurs extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			User currentUser = (User) request.getSession().getAttribute("utilisateurConnecte");
-			// Maintenant, utilisez cet objet User pour récupérer les informations de l'utilisateur à partir de la base de données
-			UserManager um = UserManager.getInstance();
-			
-			User user = null;
-			try {
-			user = um.selectUserByID(currentUser.getNoUtilisateur());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		String id = request.getParameter("id");
+		UserManager um = UserManager.getInstance();
+		User user = null;
+		try {
+			user = um.selectUserByID(Integer.valueOf(id));
+		} catch (NumberFormatException | SQLException e) {
 			e.printStackTrace();
 		}
-
-		// Récupérer le message de la session, si présent
+		
 		if (request.getSession().getAttribute("message") != null) {
 			String message = (String) request.getSession().getAttribute("message");
 			request.getSession().removeAttribute("message");
@@ -43,7 +43,11 @@ public class AfficherProfil extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/views/user/ShowUser.jsp").forward(request, response);
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+
 }

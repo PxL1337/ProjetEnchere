@@ -95,9 +95,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 	
 	@Override
 	public User selectByID(int ID) throws SQLException
-	{		
-		User user = null;
-		
+	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
 						connection.prepareStatement(SELECT_USER_BY_ID);)
@@ -107,15 +105,14 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next())
 				{
-					user = mapAllUserData(resultSet);
+					User user = mapAllUserData(resultSet);
+					System.out.println( "User found with ID [ " + ID + " ]" + user.toString());
+					return user;
 				}
 			}
-		}
+		}	
 		
-		System.out.println(
-				"User found with ID [ " + ID + " ]"
-		+ user.toString());
-		return user;
+		return null;
 	}
 	
 	@Override
@@ -127,10 +124,8 @@ public class UserDAOJdbcImplementation implements UserDAO {
 				Statement statement = connection.createStatement();)
 		{
 			try (ResultSet resultSet = statement.executeQuery(SELECT_ALL_USERS)) {
-
-				User user = null;
 				while (resultSet.next()) {
-					user = mapAllUserData(resultSet);
+					User user = mapAllUserData(resultSet);
 					users.add(user);
 					System.out.println("Found user : " + user.toString());
 				}
@@ -181,8 +176,6 @@ public class UserDAOJdbcImplementation implements UserDAO {
 	
 	public User selectByPseudo(String comparedPseudo) throws SQLException
 	{
-		User user = null;
-		
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
 						connection.prepareStatement(SELECT_USER_BY_PSEUDO);)
@@ -191,21 +184,18 @@ public class UserDAOJdbcImplementation implements UserDAO {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					user = mapUserDataUptoCity(resultSet);
+					System.out.println(
+							"User found with pseudo [ " + comparedPseudo + " ]" + mapUserDataUptoCity(resultSet).toString());
+					return mapUserDataUptoCity(resultSet);
 				}
 			}
-		}
+		}		
 		
-		System.out.println(
-				"User found with pseudo [ " + comparedPseudo + " ]"
-		+ user.toString());
-		return user;
+		return null;
 	}
 	
 	public User selectByEmail(String comparedEmail) throws SQLException
 	{
-		User user = null;
-		
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
 						connection.prepareStatement(SELECT_USER_BY_EMAIL);)
@@ -214,21 +204,18 @@ public class UserDAOJdbcImplementation implements UserDAO {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					user = mapUserDataUptoCity(resultSet);
+					System.out.println( "User found with email [ " + comparedEmail + " ]"
+							+ mapUserDataUptoCity(resultSet).toString());
+					return mapUserDataUptoCity(resultSet);
 				}
 			}
 		}
 		
-		System.out.println( "User found with email [ " + comparedEmail + " ]"
-		+ user.toString());
-		
-		return user;
+		return null;
 	}
 	
 	@Override
 	public User selectByPseudoOrEmail(String pseudoOuEmail) throws SQLException {
-		User user = null;
-		
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement ps = connection.prepareStatement(SELECT_BY_PSEUDO_OR_EMAIL)) 
 		{
@@ -237,13 +224,11 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			
 			try (ResultSet rs = ps.executeQuery()) 
 			{
-				if (rs.next()) 
-				{ 
-					user = mapAllUserData(rs); 
-				}
+				if (rs.next()) { return mapAllUserData(rs); }
 			}
 		}
-		return user;
+		
+		return null;
 	}
 	
 	public boolean doesThisPseudoAlreadyExists(String comparedPseudo) throws SQLException
