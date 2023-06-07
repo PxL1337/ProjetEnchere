@@ -23,7 +23,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	final String SELECT_ENCHERE_BY_ID = "SELECT * FROM ENCHERES WHERE no_article=?";
 	final String SELECT_ALL_ENCHERES = "SELECT * FROM ENCHERES";
 
-	final String SELECT_ALL_ENCHERES2 = "SELECT TOP 10 E.date_enchere, E.montant_enchere, A.nom_article, A.date_fin_encheres, U.no_utilisateur, U.pseudo " +
+	final String SELECT_ALL_ENCHERES2 = "SELECT E.date_enchere, E.montant_enchere, A.nom_article, A.date_fin_encheres, U.no_utilisateur, U.pseudo " +
 										"FROM ENCHERES E JOIN ARTICLES_VENDUS A ON E.no_article = A.no_article " +
 										"JOIN UTILISATEURS U ON E.no_utilisateur = U.no_utilisateur ORDER BY E.date_enchere";
 	
