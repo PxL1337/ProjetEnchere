@@ -15,9 +15,9 @@
 <body>
 <!-- Barre de navigation -->
 <jsp:include page="/WEB-INF/views/header.jsp" />
-<div class="container mt-2">
+<div class="container mt-2 d-flex justify-content-center">
 	<% if (request.getAttribute("message") != null) { %>
-	<div class="alert alert-success alert-dismissible fade show" role="alert">
+	<div class="alert alert-success d-flex justify-content-between align-items-center custom-alert" role="alert" style="width: max-content; max-width: 100%;">
 		<!--<svg class="bi flex-fill me-0" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>-->
 		<%= request.getAttribute("message") %>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

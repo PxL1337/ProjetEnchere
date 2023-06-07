@@ -25,56 +25,56 @@
 	<form action="${pageContext.request.contextPath}/ModifyUserProfile" method="POST" class="row g-3">
 		<div class="col-12">
 			<div class="form-floating">
-				<input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="Ex : Michoudu78" value="${user.pseudo }">
+				<input type="text" id="pseudo" name="pseudo" class="form-control" maxlength="30" placeholder="Ex : Michoudu78" value="${user.pseudo }">
 				<label for="pseudo">Pseudo</label>
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" id="nom" name="nom" class="form-control" placeholder="Ex : Durand" value="${user.nom }" >
+				<input type="text" id="nom" name="nom" class="form-control" maxlength="30" placeholder="Ex : Durand" value="${user.nom }" >
 				<label for="nom">Nom</label>
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" id="prenom" name="prenom" class="form-control" placeholder="Ex : Bernard" value="${user.prenom }" >
+				<input type="text" id="prenom" name="prenom" class="form-control" maxlength="30" placeholder="Ex : Bernard" value="${user.prenom }" >
 				<label for="prenom">Prénom</label>
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="email" id="email" name="email" class="form-control" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="Ex : xyz@xyz.com" oninvalid="this.setCustomValidity('Veuillez entrer un email valide. Exemple : xyz@xyz.com')" oninput="this.setCustomValidity('')" value="${user.email }" >
+				<input type="email" id="email" name="email" class="form-control" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="Ex : xyz@xyz.com" maxlength="50" oninvalid="this.setCustomValidity('Veuillez entrer un email valide. Exemple : xyz@xyz.com')" oninput="this.setCustomValidity('')" value="${user.email }" >
 				<label for="email">Email</label>
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="tel" id="tel" name="telephone" class="form-control" pattern="[0-9]{10}" placeholder="Ex : 0123456789" title="Veuillez entrer un numéro de téléphone à 10 chiffres." oninvalid="this.setCustomValidity('Veuillez entrer un numéro de téléphone à 10 chiffres.')" oninput="this.setCustomValidity('')" value="${user.telephone }">
+				<input type="tel" id="tel" name="telephone" class="form-control" pattern="[0-9]{10}" placeholder="Ex : 0123456789" maxlength="15" title="Veuillez entrer un numéro de téléphone à 10 chiffres." oninvalid="this.setCustomValidity('Veuillez entrer un numéro de téléphone à 10 chiffres.')" oninput="this.setCustomValidity('')" value="${user.telephone }">
 				<label for="tel">Téléphone</label>
 			</div>
 		</div>
 
 		<div class="col-12">
 			<div class="form-floating">
-				<input type="text" id="rue" name="rue" class="form-control" placeholder="Ex : rue de la paix" value="${user.rue }" >
+				<input type="text" id="rue" name="rue" class="form-control" maxlength="30" placeholder="Ex : rue de la paix" value="${user.rue }" >
 				<label for="rue">Adresse</label>
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" id="codePostal" name="codePostal" class="form-control" placeholder="Ex : 01000" oninvalid="this.setCustomValidity('Veuillez entrer un code postal à 5 chiffres.')" oninput="this.setCustomValidity('')" value="${user.codePostal }" >
+				<input type="text" id="codePostal" name="codePostal" class="form-control" maxlength="5" placeholder="Ex : 01000" oninvalid="this.setCustomValidity('Veuillez entrer un code postal à 5 chiffres.')" oninput="this.setCustomValidity('')" value="${user.codePostal }" >
 				<label for="codePostal">Code Postal</label>
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" id="ville" name="ville" class="form-control" placeholder="Ex : Madrid" value="${user.ville }" >
+				<input type="text" id="ville" name="ville" class="form-control" maxlength="50" placeholder="Ex : Madrid" value="${user.ville }" >
 				<label for="ville">Ville</label>
 			</div>
 		</div>

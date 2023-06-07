@@ -5,6 +5,11 @@ body {
     justify-content: space-between;
 }
 
+.custom-alert {
+    width: 50%;
+}
+
+
 footer {
     height: 60px; /* Mettez la hauteur de votre footer ici */
     text-align: center;

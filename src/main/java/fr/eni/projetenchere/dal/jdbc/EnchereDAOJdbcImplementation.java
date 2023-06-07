@@ -1,10 +1,6 @@
 package fr.eni.projetenchere.dal.jdbc;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,7 +8,9 @@ import java.util.List;
 
 import fr.eni.projetenchere.bll.ArticleManager;
 import fr.eni.projetenchere.bll.UserManager;
+import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.bo.Enchere;
+import fr.eni.projetenchere.bo.User;
 import fr.eni.projetenchere.dal.ConnectionProvider;
 import fr.eni.projetenchere.dal.EnchereDAO;
 
@@ -24,6 +22,10 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	final String DELETE_ENCHERE = "DELETE FROM ENCHERES WHERE no_article=?";
 	final String SELECT_ENCHERE_BY_ID = "SELECT * FROM ENCHERES WHERE no_article=?";
 	final String SELECT_ALL_ENCHERES = "SELECT * FROM ENCHERES";
+
+	final String SELECT_ALL_ENCHERES2 = "SELECT TOP 10 E.date_enchere, E.montant_enchere, A.nom_article, A.date_fin_encheres, U.no_utilisateur, U.pseudo " +
+										"FROM ENCHERES E JOIN ARTICLES_VENDUS A ON E.no_article = A.no_article " +
+										"JOIN UTILISATEURS U ON E.no_utilisateur = U.no_utilisateur ORDER BY E.date_enchere";
 	
 	@Override
 	public void insert(Enchere enchere) throws SQLException 
@@ -115,7 +117,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		return enchere;
 	}
 
-	@Override
+	/**@Override
 	public List<Enchere> selectAll() throws SQLException {
 		List<Enchere> encheres = new ArrayList<Enchere>();
 		try (Connection connection = ConnectionProvider.getConnection();
@@ -138,9 +140,27 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		        });
 			return encheres;
 		}
-	}	
+	}	*/
+
+	@Override
+	public List<Enchere> selectAll() throws SQLException {
+		List<Enchere> encheres = new ArrayList<Enchere>();
+		try (Connection connection = ConnectionProvider.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ENCHERES2);) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			Enchere enchere = null;
+			while (resultSet.next()) {
+				enchere = mapAllEnchereData(resultSet);
+				encheres.add(enchere);
+				System.out.println("Found enchere : " + enchere.toString());
+			}
+			// Removing sort function as the SQL query is already sorting the data
+			return encheres;
+		}
+	}
 	
-	private Enchere mapAllEnchereData(ResultSet resultSet) throws SQLException 
+	/**private Enchere mapAllEnchereData(ResultSet resultSet) throws SQLException
 	{
 		Enchere enchere = new Enchere();
 		
@@ -154,6 +174,28 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		enchere.setArticle(ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article")));
 		enchere.setEncherisseur(UserManager.getInstance().selectUserByID(resultSet.getInt("no_utilisateur")));
 		
+		return enchere;
+	}*/
+
+	private Enchere mapAllEnchereData(ResultSet resultSet) throws SQLException {
+		// Creating new objects based on the result set
+		ArticleVendu article = new ArticleVendu();
+		article.setNomArticle(resultSet.getString("nom_article"));
+		article.setDateFinEncheres(resultSet.getDate("date_fin_encheres"));
+
+		User encherisseur = new User();
+		encherisseur.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
+		encherisseur.setPseudo(resultSet.getString("pseudo"));
+
+		Enchere enchere = new Enchere();
+		// Convert the Timestamp to Date
+		Timestamp timestamp = resultSet.getTimestamp("date_enchere");
+		Date date = new Date(timestamp.getTime());
+		enchere.setDateEnchere(date);
+		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
+		enchere.setArticle(article);
+		enchere.setEncherisseur(encherisseur);
+
 		return enchere;
 	}
 }

@@ -16,18 +16,14 @@
 <body>
 <!-- Barre de navigation -->
 <jsp:include page="/WEB-INF/views/header.jsp" />
-
-<div class="container mt-2">
-    <% if(request.getAttribute("listeCodesErreur") != null) { %>
-    <div class="alert alert-danger">
-        <% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
-        <% for(Integer codeErreur : listeCodesErreur) { %>
-        <% String messageErreur = LecteurMessage.getMessage(codeErreur); %>
-        <%= messageErreur %><br/>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <% } %>
-    </div>
-    <% } %>
+<div class="container mt-2 d-flex justify-content-center">
+    <c:if test="${sessionScope.message != null}">
+        <div class="alert alert-success d-flex justify-content-between align-items-center custom-alert" style="width: max-content; max-width: 100%;">
+            <div>${sessionScope.message}</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <c:remove var="message" scope="session"/>
+    </c:if>
 </div>
 
 <!-- Contenu de la page -->

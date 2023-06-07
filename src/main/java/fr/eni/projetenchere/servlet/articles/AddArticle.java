@@ -5,7 +5,9 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.eni.projetenchere.bll.ArticleManager;
 import fr.eni.projetenchere.bll.CategorieManager;
@@ -80,6 +82,18 @@ public class AddArticle extends HttpServlet {
         String rue = request.getParameter("rue");
         String codePostal = request.getParameter("codePostal");
         String ville = request.getParameter("ville");
+
+        // Stocker les champs du formulaire dans une Map
+        Map<String, String> formulaire = new HashMap<>();
+        formulaire.put("nomArticle", nomArticle);
+        formulaire.put("description", description);
+        formulaire.put("categorie", request.getParameter("categorie"));
+        formulaire.put("miseAPrix", request.getParameter("miseAPrix"));
+        formulaire.put("dateDebutEncheres", request.getParameter("dateDebutEncheres"));
+        formulaire.put("dateFinEncheres", request.getParameter("dateFinEncheres"));
+        formulaire.put("rue", rue);
+        formulaire.put("codePostal", codePostal);
+        formulaire.put("ville", ville);
 
         // Récupérer l'ID de l'utilisateur à partir de la session
         HttpSession session = request.getSession();
@@ -159,7 +173,7 @@ public class AddArticle extends HttpServlet {
 		}
 
         System.out.println("Context Path: " + request.getContextPath());
-        request.getSession().setAttribute("message", "L'article et le retrait ont été créés avec succès.");
+        request.getSession().setAttribute("message", "L'enchère a été créée avec succès");
         response.sendRedirect(request.getContextPath() + "/");
     }
 
