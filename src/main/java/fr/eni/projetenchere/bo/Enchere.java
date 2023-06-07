@@ -1,7 +1,11 @@
 package fr.eni.projetenchere.bo;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+
+import fr.eni.projetenchere.bll.ArticleManager;
+import fr.eni.projetenchere.bll.UserManager;
 
 
 public class Enchere {
@@ -10,29 +14,37 @@ public class Enchere {
     private Date dateEnchere;
     private int montantEnchere;
     private int noArticle;
-    private int no_encherisseur;	
+    private int no_encherisseur;
 
+    private ArticleVendu article;
+    private User encherisseur;
 
     //-------------------- CONSTRUCTOR ZONE --------------------//
     public Enchere() {}
     
     public Enchere(int enchereID, Date dateEnchere, int montantEnchere, int articleID,
-    		int encherisseur) 
+    		int encherisseurID) throws SQLException 
     {
     	this.no_Enchere = enchereID;
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
 		this.noArticle = articleID;
-		this.no_encherisseur = encherisseur;
+		this.no_encherisseur = encherisseurID;
+		
+		article = ArticleManager.getInstance().selectArticleByID(articleID);
+		encherisseur = UserManager.getInstance().selectUserByID(encherisseurID);
 	}
     
     public Enchere(Date dateEnchere, int montantEnchere, int articleID,
-    		int encherisseur) 
+    		int encherisseurID) throws SQLException 
     {
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
 		this.noArticle = articleID;
-		this.no_encherisseur = encherisseur;
+		this.no_encherisseur = encherisseurID;
+		
+		article = ArticleManager.getInstance().selectArticleByID(articleID);
+		encherisseur = UserManager.getInstance().selectUserByID(encherisseurID);
 	}
 
     //---------------------------------------------GETTER SETTER ZONE-------------------------------------------------------//
