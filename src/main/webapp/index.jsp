@@ -46,7 +46,15 @@
                             <ul class="list-group">
                                 <li class="list-group-item"><strong>Prix :</strong> ${enchere.montantEnchere}</li>
                                 <li class="list-group-item"><strong>Fin de l'enchère :</strong> ${enchere.article.dateFinEncheres}</li>
-                                <li class="list-group-item"><strong>Vendeur :</strong> <a href="${pageContext.request.contextPath}/ProfileUser?id=${enchere.encherisseur.noUtilisateur}" class="btn btn-outline-primary">${enchere.encherisseur.pseudo}</a></li>
+                                <c:choose>
+                                	<c:when test="${empty utilisateurConnecte }">
+                                		 <li class="list-group-item"><strong>Vendeur : </strong> ${enchere.encherisseur.pseudo}</li>
+                                	</c:when>
+                                	<c:otherwise>
+                                	 	<li class="list-group-item"><strong>Vendeur : </strong><a href="${pageContext.request.contextPath}/ProfileUser?id=${enchere.encherisseur.noUtilisateur}" class="btn btn-outline-primary">${enchere.encherisseur.pseudo}</a></li>
+                                	</c:otherwise>
+                                </c:choose>
+                                
                             </ul>
                         </div>
                     </div>
