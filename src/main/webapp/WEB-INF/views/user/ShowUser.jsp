@@ -36,7 +36,8 @@
 			<p class="card-text">Email : ${user.email }</p>
 			<p class="card-text">Telephone : ${user.telephone }</p>
 			<p class="card-text">Adresse : ${user.rue }, ${user.codePostal }, ${user.ville }</p>
-			<c:if test="${user.noUtilisateur eq session.utilisateurConnecte.noUtilisateur || empty param.id }">
+			
+			<c:if test="${user.noUtilisateur eq utilisateurConnecte.noUtilisateur}">
 			<div class="mt-4 d-flex justify-content-between">
 				<div>
 					<a href="${pageContext.request.contextPath}/ModifyUserProfile" class="btn btn-primary">Modifier Profil</a>
