@@ -36,7 +36,7 @@
 			<p class="card-text">Email : ${user.email }</p>
 			<p class="card-text">Telephone : ${user.telephone }</p>
 			<p class="card-text">Adresse : ${user.rue }, ${user.codePostal }, ${user.ville }</p>
-
+			<c:if test="${user.noUtilisateur eq session.utilisateurConnecte.noUtilisateur || empty param.id }">
 			<div class="mt-4 d-flex justify-content-between">
 				<div>
 					<a href="${pageContext.request.contextPath}/ModifyUserProfile" class="btn btn-primary">Modifier Profil</a>
@@ -44,6 +44,7 @@
 				</div>
 				<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer Mon Compte</a>
 			</div>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -55,7 +56,7 @@
 
 <!-- JS Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>pa
 <script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
