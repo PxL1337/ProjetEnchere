@@ -6,99 +6,86 @@ import java.text.SimpleDateFormat;
 
 public class Enchere {
     //-------------------- VARIABLES ZONE --------------------//
+	private int no_Enchere;
     private Date dateEnchere;
     private int montantEnchere;
     private int noArticle;
-
-    private ArticleVendu article;
-    private User encherisseur;
-	
+    private int no_encherisseur;	
 
 
     //-------------------- CONSTRUCTOR ZONE --------------------//
     public Enchere() {}
     
-    public Enchere(Date dateEnchere, int montantEnchere, ArticleVendu article,
-			User encherisseur) 
+    public Enchere(int enchereID, Date dateEnchere, int montantEnchere, int articleID,
+    		int encherisseur) 
     {
-		this.dateEnchere = article.getDateDebutEncheres();
-		this.montantEnchere = article.getPrixInitial();
-		this.noArticle = article.getNoArticle();
-		this.article = article;
-		this.encherisseur = encherisseur;
+    	this.no_Enchere = enchereID;
+		this.dateEnchere = dateEnchere;
+		this.montantEnchere = montantEnchere;
+		this.noArticle = articleID;
+		this.no_encherisseur = encherisseur;
 	}
     
-    //---------------------------------------METHODE/FUNCTION ZONE---------------------------------------//
-    public void updateMontantEnchereArticle() 
+    public Enchere(Date dateEnchere, int montantEnchere, int articleID,
+    		int encherisseur) 
     {
-		if (article == null) return;
-		article.setPrixVente(montantEnchere);
-	}	
-
-    //---------------------------------------------GETTER SETTER ZONE-------------------------------------------------------//
-	public Date getDateEnchere() {
-		return dateEnchere;
+		this.dateEnchere = dateEnchere;
+		this.montantEnchere = montantEnchere;
+		this.noArticle = articleID;
+		this.no_encherisseur = encherisseur;
 	}
 
+    //---------------------------------------------GETTER SETTER ZONE-------------------------------------------------------//
+    public int getNo_Enchere() {
+		return no_Enchere;
+	}
 
+	public void setNo_Enchere(int no_Enchere) {
+		this.no_Enchere = no_Enchere;
+	}
+    
+    
+    public Date getDateEnchere() {
+		return dateEnchere;
+	}
 
 	public void setDateEnchere(Date dateEnchere) {
 		this.dateEnchere = dateEnchere;
 	}
 
-
-
 	public int getMontantEnchere() {
 		return montantEnchere;
 	}
-
-
 
 	public void setMontantEnchere(int montantEnchere) {
 		this.montantEnchere = montantEnchere;
 	}
 
-
-
 	public int getNoArticle() {
 		return noArticle;
 	}
-
-
 
 	public void setNoArticle(int noArticle) {
 		this.noArticle = noArticle;
 	}
 
-
-
-	public ArticleVendu getArticle() {
-		return article;
+	public int getNoEncherisseur() {
+		return no_encherisseur;
 	}
 
-
-
-	public void setArticle(ArticleVendu article) {
-		this.article = article;
-	}
-
-
-
-	public User getEncherisseur() {
-		return encherisseur;
-	}
-
-
-
-	public void setEncherisseur(User encherisseur) {
-		this.encherisseur = encherisseur;
+	public void setNoEncherisseur(int noEncherisseur) {
+		this.no_encherisseur = noEncherisseur;
 	}
 
     //---------------------------------------TO STRING ZONE---------------------------------------//
 	@Override
 	public String toString() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		return "Enchere du " + dateFormat.format(dateEnchere) + "";
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		return "Enchere n° " + getNo_Enchere()
+				+ " du " + dateFormat.format(getDateEnchere())
+				+ " au prix de " + getMontantEnchere()
+				+ " associée à l'article n° " + getNoArticle()
+				+ " de l'utilisateur n° " + getNoEncherisseur();
 	}
     // --------------------------------------------------------------------------------------------------------------//
 }

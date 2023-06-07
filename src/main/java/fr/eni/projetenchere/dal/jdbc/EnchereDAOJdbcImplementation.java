@@ -19,24 +19,43 @@ import fr.eni.projetenchere.dal.EnchereDAO;
 public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	
 	
-	final String INSERT_ENCHERE = "INSERT INTO ENCHERES(no_utilisateur, no_article, date_enchere, montant_enchere) VALUES( ?, ?, ?, ?)";
+	final String INSERT_ENCHERE = "INSERT INTO ENCHERES(date_enchere, montant_enchere, no_article, no_utilisateur) VALUES(?, ?, ?, ?)";
 	final String UPDATE_MONTANT_ENCHERE = "UPDATE ENCHERES SET montant_enchere=? WHERE no_article=?";
 	final String DELETE_ENCHERE = "DELETE FROM ENCHERES WHERE no_article=?";
 	final String SELECT_ENCHERE_BY_ID = "SELECT * FROM ENCHERES WHERE no_article=?";
 	final String SELECT_ALL_ENCHERES = "SELECT * FROM ENCHERES";
 	
 	@Override
-	public void insert(Enchere enchere) throws SQLException {
+	public void insert(Enchere enchere) throws SQLException 
+	{
 		try (Connection connection = ConnectionProvider.getConnection();
-				 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ENCHERE)) 
+				 PreparedStatement preparedStatement = 
+						 connection.prepareStatement(INSERT_ENCHERE, PreparedStatement.RETURN_GENERATED_KEYS)) 
 		{
-				preparedStatement.setInt(1, enchere.getEncherisseur().getNoUtilisateur());
-				preparedStatement.setInt(2, enchere.getNoArticle());
-				preparedStatement.setDate(3, enchere.getDateEnchere());
-				preparedStatement.setInt(4, enchere.getMontantEnchere());
+				preparedStatement.setDate(1, enchere.getDateEnchere());
+				preparedStatement.setInt(2, enchere.getMontantEnchere());
+				preparedStatement.setInt(3, enchere.getNoArticle());
+				preparedStatement.setInt(4, enchere.getNoEncherisseur());
 				
-
-				preparedStatement.executeUpdate();
+				int rowsAffected = preparedStatement.executeUpdate();
+				
+				if(rowsAffected > 0) 
+				{
+					try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys();)
+					{
+						if (generatedKeys.next())
+						{
+							int nouvelId = generatedKeys.getInt(1);
+							System.out.println("Nouvel Id : " + nouvelId);
+							
+							enchere.setNo_Enchere(nouvelId);
+							System.out.println("Nouvelle enchere cree avec l'identifiant : " + nouvelId);
+						}							
+					}
+					finally{
+						System.out.println(enchere.toString() + " in insertion");
+					}
+				}
 			} 
 			catch (Exception e) {
 				e.printStackTrace();
@@ -122,17 +141,16 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	}
 	
 	
-	private Enchere mapAllEnchereData(ResultSet resultSet) throws SQLException {
-	 
-	
+	private Enchere mapAllEnchereData(ResultSet resultSet) throws SQLException 
+	{
 		Enchere enchere = new Enchere();
 		
-		enchere.setArticle(ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article")));
-		enchere.setEncherisseur(UserManager.getInstance().selectUserByID(resultSet.getInt("no_article")));
 		enchere.setDateEnchere(resultSet.getDate("date_enchere"));
 		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
-		
-		// POTENTIELLEMENT RECUPERER ICI AUSSI LES INFOS CONCERNANT L'UTILISATEUR ET L'ARTICLE
+		enchere.setNoArticle(
+				ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article")).getNoArticle());
+		enchere.setNoEncherisseur(
+				UserManager.getInstance().selectUserByID(resultSet.getInt("no_utilisateur")).getNoUtilisateur());
 		
 		return enchere;
 	}

@@ -9,10 +9,12 @@ import java.util.List;
 
 import fr.eni.projetenchere.bll.ArticleManager;
 import fr.eni.projetenchere.bll.CategorieManager;
+import fr.eni.projetenchere.bll.EnchereManager;
 import fr.eni.projetenchere.bll.RetraitManager;
 import fr.eni.projetenchere.bll.UserManager;
 import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.bo.Categorie;
+import fr.eni.projetenchere.bo.Enchere;
 import fr.eni.projetenchere.bo.Retrait;
 import fr.eni.projetenchere.bo.User;
 import fr.eni.projetenchere.exception.BusinessException;
@@ -138,6 +140,21 @@ public class AddArticle extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        
+        Enchere enchere = new Enchere();
+        EnchereManager enchereManager = EnchereManager.getInstance();       
+        
+        try {
+        	enchere.setDateEnchere(Date.valueOf(dateDebutEncheres));
+            enchere.setMontantEnchere(miseAPrix);
+            enchere.setNoArticle(article.getNoArticle());
+            enchere.setNoEncherisseur(utilisateurConnecte.getNoUtilisateur());
+            
+			enchereManager.insertEnchere(enchere);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         System.out.println("Context Path: " + request.getContextPath());
         request.getSession().setAttribute("message", "L'article et le retrait ont été créés avec succès.");

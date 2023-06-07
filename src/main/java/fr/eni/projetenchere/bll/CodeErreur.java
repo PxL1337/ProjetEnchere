@@ -54,4 +54,9 @@ public class CodeErreur {
     public static final int RETRAIT_RUE_TROP_LONG = 20301;
     public static final int RETRAIT_CODE_POSTAL_TROP_LONG = 20302;
     public static final int RETRAIT_VILLE_TROP_LONGUE = 20303;
+    
+    // ENCHERE - 20400 a 20499
+    public static final int ENCHERE_DATE_INVALIDE = 20400;
+    public static final int ENCHERE_NO_ARTICLE_INVALIDE = 20401;
+    public static final int ENCHERE_NO_UTILISATEUR_INVALIDE = 20402;
 }

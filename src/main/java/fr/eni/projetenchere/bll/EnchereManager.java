@@ -30,7 +30,7 @@ public class EnchereManager
 	
 	public void insertEnchere(Enchere enchere) throws SQLException
 	{
-		enchereDAO.insert(enchere);
+		if (!isEnchereInvalid(enchere)) { enchereDAO.insert(enchere); }
 	}
 	
 	public void updateEnchereMontant(Enchere enchere, int montant) throws SQLException
@@ -51,5 +51,25 @@ public class EnchereManager
 	// Lister les enchères en mode connecté
 	public List<Enchere> selectAllEncheres() throws SQLException {
 		return enchereDAO.selectAll();
+	}
+	
+	public boolean isEnchereInvalid(Enchere enchere)
+	{
+		if (enchere.getDateEnchere() == null)
+		{
+			businessException.ajouterErreur(CodeErreur.ENCHERE_DATE_INVALIDE);
+		}
+		
+		if (enchere.getNoArticle() == 0)
+		{
+			businessException.ajouterErreur(CodeErreur.ENCHERE_NO_ARTICLE_INVALIDE);
+		}
+		
+		if (enchere.getNoEncherisseur() == 0)
+		{
+			businessException.ajouterErreur(CodeErreur.ENCHERE_NO_UTILISATEUR_INVALIDE);
+		}
+		
+		return businessException.hasErreurs();
 	}
 }
