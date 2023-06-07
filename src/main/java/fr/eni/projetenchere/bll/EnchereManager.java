@@ -53,6 +53,11 @@ public class EnchereManager
 		return enchereDAO.selectAll();
 	}
 	
+	public List<Enchere> selectAllEncheresFiltredByName(String nameFilter) throws SQLException
+	{
+		return enchereDAO.selectAllFiltredByName(nameFilter);
+	}
+	
 	public boolean isEnchereInvalid(Enchere enchere)
 	{
 		if (enchere.getDateEnchere() == null)

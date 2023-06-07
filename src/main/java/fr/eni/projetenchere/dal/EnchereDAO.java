@@ -15,4 +15,6 @@ public interface EnchereDAO {
 	// Read section
 	public Enchere selectByID(int ID) throws SQLException;
 	public List<Enchere> selectAll() throws SQLException;
+	
+	public List<Enchere> selectAllFiltredByName(String nameFilter) throws SQLException;
 }

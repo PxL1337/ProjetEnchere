@@ -124,9 +124,8 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 			 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ENCHERES);) {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
-			Enchere enchere = null;
 			while (resultSet.next()) {
-				enchere = mapAllEnchereListe(resultSet);
+				Enchere enchere = mapAllEnchereListe(resultSet);
 				encheres.add(enchere);
 				System.out.println("Found enchere : " + enchere.toString());
 			}
@@ -135,6 +134,29 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		}
 	}
 
+	@Override
+	public List<Enchere> selectAllFiltredByName(String nameFilter) throws SQLException 
+	{
+		List<Enchere> encheres = new ArrayList<Enchere>();
+		try (Connection connection = ConnectionProvider.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(
+					 "SELECT E.no_enchere, E.date_enchere, E.montant_enchere, A.no_article, A.nom_article, A.date_fin_encheres, U.no_utilisateur, U.pseudo " +
+						"FROM ENCHERES E JOIN ARTICLES_VENDUS A ON A.no_article = E.no_article " +
+						"JOIN UTILISATEURS U ON E.no_utilisateur = U.no_utilisateur "
+						+ "WHERE A.nom_article "
+						+ "LIKE " + "'%" + nameFilter + "%' "
+						+ "ORDER BY E.date_enchere");) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				Enchere enchere = mapAllEnchereListe(resultSet);
+				encheres.add(enchere);
+				System.out.println("Found enchere : " + enchere.toString());
+			}
+		}
+			// Removing sort function as the SQL query is already sorting the data
+			return encheres;
+	}
 
 	private Enchere mapAllEnchereListe(ResultSet resultSet) throws SQLException {
 		// Creating new objects based on the result set
@@ -175,5 +197,4 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 
 		return enchere;
 	}
-
 }

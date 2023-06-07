@@ -129,10 +129,10 @@
     </div>
     <div class="px-3 py-2 border-bottom mb-3">
         <div class="container d-flex flex-wrap justify-content-center">
-            <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-                <input type="search" class="form-control" placeholder="Recherche..." aria-label="Search">
+        
+            <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search" action="${pageContext.request.contextPath}/recherche" method ="POST">
+                <input type="search" name="filter" class="form-control" placeholder="Recherche..." aria-label="Search">
             </form>
-
 
             <% if (session.getAttribute("utilisateurConnecte") == null) { %>
 
