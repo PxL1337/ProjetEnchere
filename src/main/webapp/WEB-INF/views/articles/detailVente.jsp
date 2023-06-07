@@ -42,7 +42,7 @@
 			<div class="mb-2">
 				<h4 style="display: inline-block; margin-right: 50px;">Meilleure offre:</h4>
 				<h6 style="display: inline-block; margin: 0;">${enchere.montantEnchere }</h6>
-				<h6 style="display: inline-block; margin: 0;"> par Bob</h6>
+				<h6 style="display: inline-block; margin: 0;"> ${enchere.encherisseur }</h6>
 			</div>
 			<div class="mb-2">
 				<h4 style="display: inline-block; margin-right: 90px;">Mise à prix:</h4>
