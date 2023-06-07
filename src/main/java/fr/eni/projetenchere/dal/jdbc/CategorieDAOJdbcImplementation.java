@@ -66,34 +66,34 @@ public class CategorieDAOJdbcImplementation implements CategorieDAO {
 
     @Override
     public Categorie selectByID(int id) throws SQLException {
-        Categorie categorie = null;
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CATEGORIE_BY_ID);) {
             preparedStatement.setInt(1, id);
             try (ResultSet rs = preparedStatement.executeQuery();) {
                 if (rs.next()) {
-                    categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+                	Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+                	return categorie;
                 }
             }
         }
-        return categorie;
+        return null;
     }
 
     @Override
     public Categorie selectByLibelle(String libelle) throws SQLException {
-        Categorie categorie = null;
         System.out.println(libelle + " dans selectByLibelle");
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CATEGORIE_BY_LIBELLE);) {
             preparedStatement.setString(1, libelle);
             try (ResultSet rs = preparedStatement.executeQuery();) {
                 if (rs.next()) {
-                    categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+                	Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+                	return categorie;
                 }
             }
         }
-        System.out.println(categorie + " dans selectByLibelle");
-        return categorie;
+        
+        return null;
     }
 
     @Override

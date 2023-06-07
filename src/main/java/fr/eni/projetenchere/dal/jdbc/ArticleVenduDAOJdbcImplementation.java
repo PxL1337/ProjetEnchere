@@ -99,9 +99,8 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 	}
 
 	@Override
-	public ArticleVendu selectByID(int ID) throws SQLException {
-		ArticleVendu article = null;
-
+	public ArticleVendu selectByID(int ID) throws SQLException 
+	{
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(SELECT_ARTICLE_BY_ID);) {
@@ -109,14 +108,14 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					article = mapAllArticleData(resultSet);
+					ArticleVendu article = mapAllArticleData(resultSet);					
+					System.out.println("User found with ID [ " + ID + " ]" + article.toString());					
+					return article;
 				}
 			}
 		}
-
-		System.out.println(
-				"User found with ID [ " + ID + " ]" + article.toString());
-		return article;
+		
+		return null;
 	}
 
 	@Override
@@ -127,15 +126,11 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 				Statement statement = connection.createStatement();) {
 			ResultSet resultSet = statement.executeQuery(SELECT_ALL_ARTICLES);
 
-			ArticleVendu article = null;
 			while (resultSet.next()) {
-				article = mapAllArticleData(resultSet);
+				ArticleVendu article = mapAllArticleData(resultSet);
 				articles.add(article);
 				System.out.println("Found article : " + article.toString());
 			}
-
-			statement.close();
-			connection.close();
 		}
 
 		return articles;
@@ -143,8 +138,6 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 
 	public ArticleVendu selectByName(String comparedPseudo)
 			throws SQLException {
-		ArticleVendu article = null;
-
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement(SELECT_ARTICLE_BY_NAME);) {
@@ -152,14 +145,16 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					article = mapAllArticleData(resultSet);
+					ArticleVendu article = mapAllArticleData(resultSet);
+					System.out.println("User found with pseudo [ " + comparedPseudo + " ]"
+							+ article.toString());
+					return article;
 				}
 			}
 		}
 
-		System.out.println("User found with pseudo [ " + comparedPseudo + " ]"
-				+ article.toString());
-		return article;
+		
+		return null;
 	}
 	
 	@Override
