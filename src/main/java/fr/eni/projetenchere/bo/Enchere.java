@@ -31,8 +31,8 @@ public class Enchere {
 		this.noArticle = articleID;
 		this.no_encherisseur = encherisseurID;
 		
-		article = ArticleManager.getInstance().selectArticleByID(articleID);
-		encherisseur = UserManager.getInstance().selectUserByID(encherisseurID);
+		setArticle(ArticleManager.getInstance().selectArticleByID(articleID));
+		setEncherisseur(UserManager.getInstance().selectUserByID(encherisseurID));
 	}
     
     public Enchere(Date dateEnchere, int montantEnchere, int articleID,
@@ -43,8 +43,8 @@ public class Enchere {
 		this.noArticle = articleID;
 		this.no_encherisseur = encherisseurID;
 		
-		article = ArticleManager.getInstance().selectArticleByID(articleID);
-		encherisseur = UserManager.getInstance().selectUserByID(encherisseurID);
+		setArticle(ArticleManager.getInstance().selectArticleByID(articleID));
+		setEncherisseur(UserManager.getInstance().selectUserByID(encherisseurID));
 	}
 
     //---------------------------------------------GETTER SETTER ZONE-------------------------------------------------------//
@@ -100,4 +100,20 @@ public class Enchere {
 				+ " de l'utilisateur n° " + getNoEncherisseur();
 	}
     // --------------------------------------------------------------------------------------------------------------//
+
+	public User getEncherisseur() {
+		return encherisseur;
+	}
+
+	public void setEncherisseur(User encherisseur) {
+		this.encherisseur = encherisseur;
+	}
+
+	public ArticleVendu getArticle() {
+		return article;
+	}
+
+	public void setArticle(ArticleVendu article) {
+		this.article = article;
+	}
 }

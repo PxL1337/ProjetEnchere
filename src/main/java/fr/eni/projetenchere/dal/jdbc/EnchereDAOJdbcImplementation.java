@@ -138,8 +138,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		        });
 			return encheres;
 		}
-	}
-	
+	}	
 	
 	private Enchere mapAllEnchereData(ResultSet resultSet) throws SQLException 
 	{
@@ -151,6 +150,9 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 				ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article")).getNoArticle());
 		enchere.setNoEncherisseur(
 				UserManager.getInstance().selectUserByID(resultSet.getInt("no_utilisateur")).getNoUtilisateur());
+		
+		enchere.setArticle(ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article")));
+		enchere.setEncherisseur(UserManager.getInstance().selectUserByID(resultSet.getInt("no_utilisateur")));
 		
 		return enchere;
 	}
