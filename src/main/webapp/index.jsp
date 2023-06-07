@@ -31,15 +31,38 @@
   <h1>Bienvenue sur ProjetEnchere!</h1>
 </div>
 
-<div class="col-md-6">
-	<c:forEach items="${encheres }" var="enchere">
-		<h2><a href="#">"${enchere.article.nomArticle }"</a></h2>
-		<p>prix : "${enchere.montantEnchere }"<br/>Fin de l'enchere : "${enchere.article.dateFinEncheres }" <br/>Vendeur : 
-	  <a href="${pageContext.request.contextPath}/ProfileUser?id=${enchere.encherisseur.noUtilisateur }">"${enchere.encherisseur.pseudo }"</a></p>
-
-	</c:forEach>
+<div class="container">
+    <div class="row">
+        <c:forEach items="${encheres}" var="enchere" varStatus="status">
+        <div class="col-md-4">
+            <div class="card mb-3" style="border-radius: 15px; overflow: hidden;">
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                        <img src="${pageContext.request.contextPath}/images/articles/article.png" class="card-img img-thumbnail ms-2" alt="Image de l'article" style="height: 100px; object-fit: contain;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#" class="btn btn-outline-secondary">${enchere.article.nomArticle}</a></h5>
+                            <ul class="list-group">
+                                <li class="list-group-item"><strong>Prix :</strong> ${enchere.montantEnchere}</li>
+                                <li class="list-group-item"><strong>Fin de l'enchère :</strong> ${enchere.article.dateFinEncheres}</li>
+                                <li class="list-group-item"><strong>Vendeur :</strong> <a href="${pageContext.request.contextPath}/ProfileUser?id=${enchere.encherisseur.noUtilisateur}" class="btn btn-outline-primary">${enchere.encherisseur.pseudo}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- À chaque troisième élément, fermer la rangée et en commencer une nouvelle -->
+        <c:if test="${status.index % 3 == 2}">
+    </div>
+    <div class="row">
+        </c:if>
+        </c:forEach>
+    </div>
 </div>
-	
+
+
 
 
 <!-- Footer -->
