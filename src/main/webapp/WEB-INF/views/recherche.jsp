@@ -73,6 +73,16 @@
 </div>
 
 
+<div class="form-floating mb-3">
+					<select id="categorie" class="form-select" aria-label="articleCategorie" name="categorie" value="">
+						<option value="" disabled selected hidden>Selectionner une catégorie</option>
+							<c:forEach var="categorie" items="${categories}">
+								<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+							</c:forEach>
+					</select>
+					<label for="categorie">Categorie</label>
+			</div>
+
 <!-- Footer -->
 <jsp:include page="/WEB-INF/views/footer.jsp" />
 

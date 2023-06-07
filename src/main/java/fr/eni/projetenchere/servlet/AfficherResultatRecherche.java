@@ -9,9 +9,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import fr.eni.projetenchere.bll.CategorieManager;
 import fr.eni.projetenchere.bll.EnchereManager;
+import fr.eni.projetenchere.bo.Categorie;
 import fr.eni.projetenchere.bo.Enchere;
-import fr.eni.projetenchere.dal.jdbc.EnchereDAOJdbcImplementation;
 
 /**
  * Servlet implementation class AfficherResultatRecherche
@@ -30,7 +31,18 @@ public class AfficherResultatRecherche extends HttpServlet {
 			EnchereManager enchereManager = EnchereManager.getInstance();
 			List<Enchere> encheres = enchereManager.selectAllEncheresFiltredByName(filter);
 			request.setAttribute("encheres", encheres);
-			System.out.println("ENCHERES DANS REQUETE" + request.getAttribute("encheres"));
+			
+			CategorieManager categorieManager = CategorieManager.getInstance();
+		    List<Categorie> categories = null;
+		    try {
+		    	categories = categorieManager.selectAllCategorie();
+		    } catch (SQLException e) {
+		            throw new RuntimeException(e);
+		    }
+		    request.getSession().setAttribute("categories", categories);
+		    
+		    System.out.println("CATEGORIES TROUVEES" + request.getSession().getAttribute("categories"));
+			
 			request.getRequestDispatcher("/WEB-INF/views/recherche.jsp").forward(request, response);			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

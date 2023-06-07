@@ -1,4 +1,5 @@
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="check2" viewBox="0 0 16 16">
         <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
@@ -130,9 +131,20 @@
     <div class="px-3 py-2 border-bottom mb-3">
         <div class="container d-flex flex-wrap justify-content-center">
         
+        <!-- BOUTON DE RECHERCHE -->
             <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search" action="${pageContext.request.contextPath}/recherche" method ="POST">
-                <input type="search" name="filter" class="form-control" placeholder="Recherche..." aria-label="Search">
+                <input type="search" name="filter" class="form-control" placeholder="Rechercher un article..." aria-label="Search">
             </form>
+            
+            <div class="form-floating mb-3">
+					<select id="categorie" class="form-select" aria-label="articleCategorie" name="categorie" value="">
+						<option value="" disabled selected hidden>Selectionner une catégorie</option>
+							<c:forEach var="categorie" items="${categories}">
+								<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+							</c:forEach>
+					</select>
+					<label for="categorie">Categorie</label>
+			</div>
 
             <% if (session.getAttribute("utilisateurConnecte") == null) { %>
 
