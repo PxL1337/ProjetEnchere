@@ -1,5 +1,8 @@
 package fr.eni.projetenchere.servlet.articles;
 
+import fr.eni.projetenchere.bll.*;
+import fr.eni.projetenchere.bo.*;
+import fr.eni.projetenchere.exception.BusinessException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -7,11 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-
-import fr.eni.projetenchere.bll.ArticleManager;
-import fr.eni.projetenchere.bll.EnchereManager;
-import fr.eni.projetenchere.bo.ArticleVendu;
-import fr.eni.projetenchere.bo.Enchere;
 
 @WebServlet(name = "DetailVente", value = "/detailvente")
 /**
@@ -24,101 +22,41 @@ public class DetailVente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");
-		EnchereManager em = EnchereManager.getInstance();
-		Enchere enchere = em.selectEnchereByID(Integer.parseInt(id));
-		
-		try {
-			String dateEnchere = enchere.g
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		RetraitManager rm = RetraitManager.getInstance();
-		Retrait retrait = null;
-		
-		try {
-			retrait = am.selectArticleByID(currentRetrait.getNoRetrait());
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		ArticleManager am = ArticleManager.getInstance();
-		ArticleVendu article = null;
-		
-		try {
-			article = am.selectArticleByID(currentArticle.getNoArticle());
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		User currentUser = (User) request.getSession().getAttribute("utilisateurConnecte");
-		// Maintenant, utilisez cet objet User pour récupérer les informations de l'utilisateur à partir de la base de données
-		
-			
-		User user = null;
-		try {
-		user = um.selectUserByID(currentUser.getNoUtilisateur());
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+		int enchereID = Integer.parseInt(request.getParameter("id"));
 
-	// Récupérer le message de la session, si présent
-	if (request.getSession().getAttribute("message") != null) {
-		String message = (String) request.getSession().getAttribute("message");
-		request.getSession().removeAttribute("message");
-		// Ajouter le message à la requête pour qu'il puisse être utilisé dans la JSP
-		request.setAttribute("message", message);
-	}
+		System.out.println("id de l'enchère = " + enchereID);
 
-		request.setAttribute("user", user);
-		request.getRequestDispatcher("/WEB-INF/views/user/ShowUser.jsp").forward(request, response);
-}
+		try {
+			// Récupérer l'enchère
+			Enchere enchere = EnchereManager.getInstance().selectEnchereByID(enchereID);
+			System.out.println("enchère = " + enchere);
+
+			// Récupérer l'article associé à l'enchère
+			ArticleVendu article = ArticleManager.getInstance().selectArticleByID(enchere.getNoArticle());
+
+			// Récupérer la catégorie associée à l'article
+			Categorie categorie = CategorieManager.getInstance().selectCategorieByID(article.getNoCategorie());
+
+			try {
+				Retrait retrait = RetraitManager.getInstance().selectRetraitByID(article.getNoArticle());
+			} catch (BusinessException e) {
+				throw new RuntimeException(e);
+			}
+
+			// Récupérer l'utilisateur associé à l'enchère
+			User user = UserManager.getInstance().selectUserByID(enchere.getNoArticle());
+
+			// Passer l'enchère, l'article, la catégorie et l'utilisateur à la JSP
+			request.setAttribute("enchere", enchere);
+			request.setAttribute("article", article);
+			request.setAttribute("categorie", categorie);
+			request.setAttribute("user", user);
+
+			request.getRequestDispatcher("/WEB-INF/views/enchere/detail.jsp").forward(request, response);
+		} catch (SQLException e) {
+			throw new ServletException(e);
+		}
+	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
