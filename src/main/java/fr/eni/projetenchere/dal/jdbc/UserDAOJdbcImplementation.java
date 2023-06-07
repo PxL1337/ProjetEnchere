@@ -55,7 +55,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 				try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys();) {
 					if (generatedKeys.next()) {
 						int nouvelId = generatedKeys.getInt(1);
-						System.out.println("Nouvel utilisateur ajouté avec l'identifiant : " + nouvelId);
+
 					}
 				}
 			}
@@ -125,15 +125,15 @@ public class UserDAOJdbcImplementation implements UserDAO {
 		
 		try (Connection connection = ConnectionProvider.getConnection();
 				Statement statement = connection.createStatement();)
-		{					
-			ResultSet resultSet = statement.executeQuery(SELECT_ALL_USERS);
-			
-			User user = null;
-			while (resultSet.next()) 
-			{
-				user = mapAllUserData(resultSet);				
-				users.add(user);
-				System.out.println("Found user : " + user.toString());
+		{
+			try (ResultSet resultSet = statement.executeQuery(SELECT_ALL_USERS)) {
+
+				User user = null;
+				while (resultSet.next()) {
+					user = mapAllUserData(resultSet);
+					users.add(user);
+					System.out.println("Found user : " + user.toString());
+				}
 			}
 
 		}
@@ -188,11 +188,11 @@ public class UserDAOJdbcImplementation implements UserDAO {
 						connection.prepareStatement(SELECT_USER_BY_PSEUDO);)
 		{
 			preparedStatement.setString(1, comparedPseudo);
-			
-			ResultSet resultSet = preparedStatement.executeQuery();			
-			if (resultSet.next()) 
-			{
-				user = mapUserDataUptoCity(resultSet);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					user = mapUserDataUptoCity(resultSet);
+				}
 			}
 		}
 		
@@ -211,12 +211,12 @@ public class UserDAOJdbcImplementation implements UserDAO {
 						connection.prepareStatement(SELECT_USER_BY_EMAIL);)
 		{
 			preparedStatement.setString(1, comparedEmail);
-			
-			ResultSet resultSet = preparedStatement.executeQuery();			
-			if (resultSet.next()) 
-			{
-				user = mapUserDataUptoCity(resultSet);
-			}			
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					user = mapUserDataUptoCity(resultSet);
+				}
+			}
 		}
 		
 		System.out.println( "User found with email [ " + comparedEmail + " ]"
@@ -253,13 +253,13 @@ public class UserDAOJdbcImplementation implements UserDAO {
 						connection.prepareStatement(CHECK_USER_PSEUDO);	)
 		{					
 			preparedStatement.setString(1, comparedPseudo);
-			
-			ResultSet resultSet = preparedStatement.executeQuery();
-			
-			if (resultSet.isBeforeFirst()) 
-			{
-				System.out.println("Le pseudo spécifié [" + comparedPseudo + "] existe déjà.");
-				return true; 
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				if (resultSet.isBeforeFirst()) {
+					System.out.println("Le pseudo spécifié [" + comparedPseudo + "] existe déjà.");
+					return true;
+				}
 			}
 		} 
 		
@@ -273,14 +273,14 @@ public class UserDAOJdbcImplementation implements UserDAO {
 				PreparedStatement preparedStatement = 
 						connection.prepareStatement(CHECK_USER_EMAIL);)
 		{		
-			preparedStatement.setString(1, comparedEmail);			
-			ResultSet resultSet = preparedStatement.executeQuery();
-			
-			if (resultSet.isBeforeFirst()) 
-			{
-				System.out.println("L'email spécifié [" + comparedEmail + "] existe déjà");
-				return true; 
-			}			
+			preparedStatement.setString(1, comparedEmail);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				if (resultSet.isBeforeFirst()) {
+					System.out.println("L'email spécifié [" + comparedEmail + "] existe déjà");
+					return true;
+				}
+			}
 		} 
 		
 		System.out.println("L'email spécifié [" + comparedEmail + "] n'est pas présent dans la BDD.");

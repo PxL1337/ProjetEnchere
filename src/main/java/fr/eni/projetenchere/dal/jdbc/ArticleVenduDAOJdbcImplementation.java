@@ -19,7 +19,7 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 	final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
 	final String SELECT_ALL_ARTICLES = "SELECT * FROM VueArticles";
-	final String SELECT_ARTICLE_BY_ID = "SELECT * FROM VueArticles WHERE no_article=?";
+	final String SELECT_ARTICLE_BY_ID = "SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
 	final String SELECT_ARTICLE_BY_NAME = "SELECT * FROM VueArticles WHERE nom_article=?";
 	// + UTILISER LA VUE POUR LES AUTRES SELECT
 
@@ -52,16 +52,17 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 
 			// Exécuter l'instruction SQL
 			if (rowsAffected > 0) {
-				ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-				if (generatedKeys.next()) {
-					int nouvelId = generatedKeys.getInt(1);
-					article.setNoArticle(nouvelId);
-					System.out.println(
-							"Nouvel article ajouté avec l'identifiant : "
-									+ nouvelId);
+				try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys();) {
+					if (generatedKeys.next()) {
+						int nouvelId = generatedKeys.getInt(1);
+						article.setNoArticle(nouvelId);
+						System.out.println(
+								"Nouvel article ajouté avec l'identifiant : "
+										+ nouvelId);
+					}
 				}
 			}
-		} catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -106,9 +107,10 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 						.prepareStatement(SELECT_ARTICLE_BY_ID);) {
 			preparedStatement.setInt(1, ID);
 
-			ResultSet resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				article = mapAllArticleData(resultSet);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					article = mapAllArticleData(resultSet);
+				}
 			}
 		}
 
@@ -148,9 +150,10 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 						.prepareStatement(SELECT_ARTICLE_BY_NAME);) {
 			preparedStatement.setString(1, comparedPseudo);
 
-			ResultSet resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				article = mapAllArticleData(resultSet);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					article = mapAllArticleData(resultSet);
+				}
 			}
 		}
 
@@ -184,10 +187,12 @@ public class ArticleVenduDAOJdbcImplementation implements ArticleDAO {
 		{
 			//WHERE
 			preparedStatement.setInt(1, ID);
-			
-			ResultSet resultSet = preparedStatement.executeQuery();
-			ArticleVendu article = ArticleManager.getInstance().selectArticleByID(resultSet.getInt(ID));
-			
+
+			ArticleVendu article;
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				article = ArticleManager.getInstance().selectArticleByID(resultSet.getInt(ID));
+			}
+
 			if ( IsNameLengthValid(article.getNomArticle()) 
 				&& IsDescriptionLengthValid(article.getDescription())
 				&& IsInitialPriceValid(article.getPrixInitial())

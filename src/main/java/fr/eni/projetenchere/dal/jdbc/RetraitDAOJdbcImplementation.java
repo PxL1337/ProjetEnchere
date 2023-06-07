@@ -89,9 +89,10 @@ public class RetraitDAOJdbcImplementation implements RetraitDAO {
 			//WHERE
 			preparedStatement.setInt(1, ID);
 
-			ResultSet resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				retrait = mapAllRetraitData(resultSet);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					retrait = mapAllRetraitData(resultSet);
+				}
 			}
 		}
 
@@ -107,13 +108,14 @@ public class RetraitDAOJdbcImplementation implements RetraitDAO {
 		try (Connection connection = ConnectionProvider.getConnection();
 				Statement statement = connection.createStatement();) 
 		{
-			ResultSet resultSet = statement.executeQuery(SELECT_ALL_RETRAITS);
+			try (ResultSet resultSet = statement.executeQuery(SELECT_ALL_RETRAITS)) {
 
-			Retrait retrait = null;
-			while (resultSet.next()) {
-				retrait = mapAllRetraitData(resultSet);
-				retraits.add(retrait);
-				System.out.println("Found user : " + retrait.toString());
+				Retrait retrait = null;
+				while (resultSet.next()) {
+					retrait = mapAllRetraitData(resultSet);
+					retraits.add(retrait);
+					System.out.println("Found user : " + retrait.toString());
+				}
 			}
 		}
 

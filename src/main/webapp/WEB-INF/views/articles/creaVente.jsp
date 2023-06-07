@@ -50,11 +50,11 @@
 		<div class="col-md-6">
 			<form action="${pageContext.request.contextPath}/AddArticle" method="POST">
 				<div class="form-floating mb-3">
-					<input type="text" class="form-control" id="articleName" name="nomArticle" placeholder="Ex : xyz@xyz.com" value="${article.nomArticle}" required>
+					<input type="text" class="form-control" id="articleName" name="nomArticle" placeholder="Ex : xyz@xyz.com" maxlength="30" value="${article.nomArticle}" required>
 					<label for="articleName">Article</label>
 				</div>
 				<div class="form-floating mb-3">
-					<textarea class="form-control no-resize" id="articleDescription" name="description" rows="3" style="height: 100px; resize: none" required>${article.description}</textarea>
+					<textarea class="form-control no-resize" id="articleDescription" maxlength="300" name="description" rows="3" style="height: 100px; resize: none" required>${article.description}</textarea>
 					<label for="articleDescription">Description</label>
 				</div>
 				<div class="form-floating mb-3">
@@ -85,7 +85,7 @@
 				<fieldset>
 					<legend>Retrait</legend>
 					<div class="form-floating mb-3">
-						<input type="text" class="form-control" id="rue" name="rue" value="${not empty retrait ? retrait.rue : user.rue}" required>
+						<input type="text" class="form-control" id="rue" name="rue" maxlength="30" value="${not empty retrait ? retrait.rue : user.rue}" required>
 						<label for="rue">Adresse</label>
 					</div>
 					<div class="form-floating mb-3">
@@ -93,7 +93,7 @@
 						<label for="codePostal">Code Postal</label>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="text" class="form-control" id="ville" name="ville" value="${not empty retrait ? retrait.ville : user.ville}" required>
+						<input type="text" class="form-control" id="ville" name="ville" maxlength="30" value="${not empty retrait ? retrait.ville : user.ville}" required>
 						<label for="ville">Ville</label>
 					</div>
 				</fieldset>

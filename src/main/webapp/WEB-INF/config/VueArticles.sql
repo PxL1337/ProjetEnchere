@@ -7,6 +7,7 @@ SELECT
     AV.date_fin_encheres,
     AV.prix_initial,
     AV.prix_vente,
+    U.no_utilisateur AS no_utilisateur,
     U.pseudo AS pseudo_utilisateur,
     U.email AS email_utilisateur,
     C.libelle AS libelle_categorie

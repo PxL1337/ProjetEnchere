@@ -66,6 +66,8 @@ public class AddArticle extends HttpServlet {
         // Transférer la requête à la JSP
         request.getRequestDispatcher("/WEB-INF/views/articles/creaVente.jsp").forward(request, response);
     }
+
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Recuperer les donnees du formulaire
