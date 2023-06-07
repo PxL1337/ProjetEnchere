@@ -87,7 +87,7 @@ public class ArticleManager {
 		if (article.getDateDebutEncheres().after(article.getDateFinEncheres())) {
 			businessException.ajouterErreur(CodeErreur.ARTICLE_DATE_ERREUR);
 		}
-		if (article.getPrixInitial() <= 0) {
+		if (article.getPrixInitial() <= 0 && article.getPrixVente() >= article.getPrixInitial()) {
 			businessException.ajouterErreur(CodeErreur.ARTICLE_PRIX_ERREUR);
 		}
 		if (businessException.hasErreurs()) {

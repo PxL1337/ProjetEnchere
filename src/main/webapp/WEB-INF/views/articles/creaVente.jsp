@@ -23,6 +23,25 @@
 	<h1 class="mb-4">Nouvelle Vente</h1>
 </div>
 
+<c:if test="${sessionScope.message != null}">
+	<div class="alert alert-success">
+			${sessionScope.message}
+	</div>
+	<c:remove var="message" scope="session"/>
+</c:if>
+<div class="container mt-2">
+<% if(request.getAttribute("listeCodesErreur") != null) { %>
+<div class="alert alert-danger">
+	<% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
+	<% for(Integer codeErreur : listeCodesErreur) { %>
+	<% String messageErreur = LecteurMessage.getMessage(codeErreur); %>
+	<%= messageErreur %><br/>
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	<% } %>
+</div>
+<% } %>
+</div>
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 mb-5">
@@ -31,15 +50,15 @@
 		<div class="col-md-6">
 			<form action="${pageContext.request.contextPath}/AddArticle" method="POST">
 				<div class="form-floating mb-3">
-					<input type="text" class="form-control" id="articleName" name="nomArticle" placeholder="Ex : xyz@xyz.com" required>
+					<input type="text" class="form-control" id="articleName" name="nomArticle" placeholder="Ex : xyz@xyz.com" value="${article.nomArticle}" required>
 					<label for="articleName">Article</label>
 				</div>
 				<div class="form-floating mb-3">
-					<textarea class="form-control no-resize" id="articleDescription" name="description" rows="3" style="height: 100px; resize: none" required></textarea>
+					<textarea class="form-control no-resize" id="articleDescription" name="description" rows="3" style="height: 100px; resize: none" required>${article.description}</textarea>
 					<label for="articleDescription">Description</label>
 				</div>
 				<div class="form-floating mb-3">
-					<select id="categorie" class="form-select" aria-label="articleCategorie" name="categorie" required>
+					<select id="categorie" class="form-select" aria-label="articleCategorie" name="categorie" value="${article.categorie}" required>
 						<option value="" disabled selected hidden>Selectionner une catégorie</option>
 						<c:forEach var="categorie" items="${categories}">
 							<option value="${categorie.noCategorie}">${categorie.libelle}</option>
@@ -52,7 +71,7 @@
 					<label for="articlePhoto">Photo de l'article</label>
 				</div>
 				<div class="form-floating mb-3">
-					<input type="number" step="1" value="1" min="1" class="form-control" id="articlePrixChoix" name="miseAPrix" required>
+					<input type="number" step="1" min="1" class="form-control" id="articlePrixChoix" name="miseAPrix" required>
 					<label for="articlePrixChoix">Mise à prix</label>
 				</div>
 				<div class="form-floating mb-3">
@@ -66,15 +85,15 @@
 				<fieldset>
 					<legend>Retrait</legend>
 					<div class="form-floating mb-3">
-						<input type="text" class="form-control" id="rue" name="rue" value="${user.rue}" required>
-						<label for="rue">Rue</label>
+						<input type="text" class="form-control" id="rue" name="rue" value="${not empty retrait ? retrait.rue : user.rue}" required>
+						<label for="rue">Adresse</label>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="text" class="form-control" id="codePostal" name="codePostal" value="${user.codePostal}" required>
+						<input type="text" class="form-control" id="codePostal" name="codePostal" value="${not empty retrait ? retrait.codePostal : user.codePostal}" required>
 						<label for="codePostal">Code Postal</label>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="text" class="form-control" id="ville" name="ville" value="${user.ville}" required>
+						<input type="text" class="form-control" id="ville" name="ville" value="${not empty retrait ? retrait.ville : user.ville}" required>
 						<label for="ville">Ville</label>
 					</div>
 				</fieldset>

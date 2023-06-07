@@ -1,3 +1,5 @@
+<%@ page import="fr.eni.projetenchere.messages.LecteurMessage" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
@@ -14,6 +16,19 @@
 <body>
 <!-- Barre de navigation -->
 <jsp:include page="/WEB-INF/views/header.jsp" />
+
+<div class="container mt-2">
+    <% if(request.getAttribute("listeCodesErreur") != null) { %>
+    <div class="alert alert-danger">
+        <% List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur"); %>
+        <% for(Integer codeErreur : listeCodesErreur) { %>
+        <% String messageErreur = LecteurMessage.getMessage(codeErreur); %>
+        <%= messageErreur %><br/>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <% } %>
+    </div>
+    <% } %>
+</div>
 
 <!-- Contenu de la page -->
 <div class="container">

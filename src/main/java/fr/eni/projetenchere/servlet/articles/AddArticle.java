@@ -96,6 +96,7 @@ public class AddArticle extends HttpServlet {
         article.setNomArticle(nomArticle);
         article.setDescription(description);
         article.setCategorie(categorie);
+        article.setPrixInitial(miseAPrix);
         article.setPrixVente(miseAPrix);
         article.setDateDebutEncheres(Date.valueOf(dateDebutEncheres));
         article.setDateFinEncheres(Date.valueOf(dateFinEncheres));
@@ -110,6 +111,7 @@ public class AddArticle extends HttpServlet {
             request.setAttribute("article", article);
             request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
             request.getRequestDispatcher("/WEB-INF/views/articles/creaVente.jsp").forward(request, response);
+            return;
         }
 
         // Ajouter l'article à la base de données
@@ -132,11 +134,13 @@ public class AddArticle extends HttpServlet {
             request.setAttribute("retrait", retrait);
             request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
             request.getRequestDispatcher("/WEB-INF/views/articles/creaVente.jsp").forward(request, response);
+            return;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        // Rediriger vers la page d'accueil en cas de succès
+        System.out.println("Context Path: " + request.getContextPath());
+        request.getSession().setAttribute("message", "L'article et le retrait ont été créés avec succès.");
         response.sendRedirect(request.getContextPath() + "/");
     }
 
