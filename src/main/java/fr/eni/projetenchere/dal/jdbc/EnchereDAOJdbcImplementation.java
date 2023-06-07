@@ -18,8 +18,8 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	
 	
 	final String INSERT_ENCHERE = "INSERT INTO ENCHERES(date_enchere, montant_enchere, no_article, no_utilisateur) VALUES(?, ?, ?, ?)";
-	final String UPDATE_MONTANT_ENCHERE = "UPDATE ENCHERES SET montant_enchere=? WHERE no_article=?";
-	final String DELETE_ENCHERE = "DELETE FROM ENCHERES WHERE no_article=?";
+	final String UPDATE_MONTANT_ENCHERE = "UPDATE ENCHERES SET montant_enchere=? WHERE no_enchere=?";
+	final String DELETE_ENCHERE = "DELETE FROM ENCHERES WHERE no_enchere=?";
 	final String SELECT_ENCHERE_BY_ID = "SELECT * FROM ENCHERES WHERE no_enchere=?";
 
 	final String SELECT_ALL_ENCHERES = "SELECT E.no_enchere, E.date_enchere, E.montant_enchere, A.no_article, A.nom_article, A.date_fin_encheres, U.no_utilisateur, U.pseudo " +
