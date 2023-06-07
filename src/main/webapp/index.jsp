@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title"><a href="${pageContext.request.contextPath}/detailvente?id=${enchere.noEnchere}" class="btn btn-outline-secondary">${enchere.article.nomArticle}</a></h5>
+                            <h5 class="card-title"><a href="${pageContext.request.contextPath}/detailvente?id=${enchere.no_Enchere}" class="btn btn-outline-secondary">${enchere.article.nomArticle}</a></h5>
                             <ul class="list-group">
                                 <li class="list-group-item"><strong>Prix :</strong> ${enchere.montantEnchere}</li>
                                 <li class="list-group-item"><strong>Fin de l'enchère :</strong> ${enchere.article.dateFinEncheres}</li>

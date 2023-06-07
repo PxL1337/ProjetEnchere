@@ -37,22 +37,27 @@ public class DetailVente extends HttpServlet {
 			// Récupérer la catégorie associée à l'article
 			Categorie categorie = CategorieManager.getInstance().selectCategorieByID(article.getNoCategorie());
 
+			Retrait retrait;
 			try {
-				Retrait retrait = RetraitManager.getInstance().selectRetraitByID(article.getNoArticle());
+				retrait = RetraitManager.getInstance().selectRetraitByID(article.getNoArticle());
 			} catch (BusinessException e) {
 				throw new RuntimeException(e);
 			}
 
+
 			// Récupérer l'utilisateur associé à l'enchère
-			User user = UserManager.getInstance().selectUserByID(enchere.getNoArticle());
+			User user = UserManager.getInstance().selectUserByID(enchere.getNoEncherisseur());
 
 			// Passer l'enchère, l'article, la catégorie et l'utilisateur à la JSP
 			request.setAttribute("enchere", enchere);
 			request.setAttribute("article", article);
 			request.setAttribute("categorie", categorie);
+			request.setAttribute("retrait", retrait);
 			request.setAttribute("user", user);
 
-			request.getRequestDispatcher("/WEB-INF/views/enchere/detail.jsp").forward(request, response);
+			System.out.println("USer = " + user.getPseudo());
+
+			request.getRequestDispatcher("/WEB-INF/views/articles/detailVente.jsp").forward(request, response);
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}

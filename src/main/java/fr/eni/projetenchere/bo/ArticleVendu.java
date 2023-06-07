@@ -21,6 +21,8 @@ public class ArticleVendu
     private User utilisateur;
     private Categorie categorie;
 
+	private int no_categorie;
+
     //-------------------- CONSTRUCTOR ZONE --------------------//
     public ArticleVendu() {}
     
@@ -142,6 +144,10 @@ public class ArticleVendu
 		public void setCategorie(Categorie categorie) {
 			this.categorie = categorie;
 		}
+
+	public int getNoCategorie() {
+		return this.no_categorie;
+	}
     
 
     //---------------------------------------TO STRING ZONE---------------------------------------//

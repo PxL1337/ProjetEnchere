@@ -63,7 +63,7 @@
 			</div>
 			<div class="mb-2">
 				<h4 style="display: inline-block; margin-right: 120px;">Vendeur:</h4>
-				<h6 style="display: inline-block; margin: 0;">${article.utilisateur }</h6>
+				<h6 style="display: inline-block; margin: 0;">${user.pseudo }</h6>
 			</div>
 			
 			<div class="mb-2">

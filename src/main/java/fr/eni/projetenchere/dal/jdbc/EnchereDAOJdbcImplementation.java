@@ -20,12 +20,11 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	final String INSERT_ENCHERE = "INSERT INTO ENCHERES(date_enchere, montant_enchere, no_article, no_utilisateur) VALUES(?, ?, ?, ?)";
 	final String UPDATE_MONTANT_ENCHERE = "UPDATE ENCHERES SET montant_enchere=? WHERE no_article=?";
 	final String DELETE_ENCHERE = "DELETE FROM ENCHERES WHERE no_article=?";
-	final String SELECT_ENCHERE_BY_ID = "SELECT * FROM ENCHERES WHERE no_article=?";
-	final String SELECT_ALL_ENCHERES = "SELECT * FROM ENCHERES";
+	final String SELECT_ENCHERE_BY_ID = "SELECT * FROM ENCHERES WHERE no_enchere=?";
 
-	final String SELECT_ALL_ENCHERES2 = "SELECT E.date_enchere, E.montant_enchere, A.nom_article, A.date_fin_encheres, U.no_utilisateur, U.pseudo " +
-										"FROM ENCHERES E JOIN ARTICLES_VENDUS A ON E.no_article = A.no_article " +
-										"JOIN UTILISATEURS U ON E.no_utilisateur = U.no_utilisateur ORDER BY E.date_enchere";
+	final String SELECT_ALL_ENCHERES = "SELECT E.no_enchere, E.date_enchere, E.montant_enchere, A.no_article, A.nom_article, A.date_fin_encheres, U.no_utilisateur, U.pseudo " +
+			"FROM ENCHERES E JOIN ARTICLES_VENDUS A ON A.no_article = E.no_article " +
+			"JOIN UTILISATEURS U ON E.no_utilisateur = U.no_utilisateur ORDER BY E.date_enchere";
 	
 	@Override
 	public void insert(Enchere enchere) throws SQLException 
@@ -97,61 +96,37 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 
 	@Override
 	public Enchere selectByID(int ID) throws SQLException {
-		Enchere enchere = null;
 		
 		try (Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement preparedStatement =
 						connection.prepareStatement(SELECT_ENCHERE_BY_ID);)
 		{
 			preparedStatement.setInt(1, ID);
-			
-			ResultSet resultSet = preparedStatement.executeQuery();			
-			if (resultSet.next()) 
-			{
-				enchere = mapAllEnchereData(resultSet);
-				
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+
+					Enchere enchere = mapAllEnchereData(resultSet);
+					System.out.println("Enchere found with ID [ " + ID + " ]" + enchere.toString());
+					return enchere;
+				}
 			}
 		}
 		
-		System.out.println("Enchere found with ID [ " + ID + " ]" + enchere.toString());
-		return enchere;
+
+		return null;
 	}
-
-	/**@Override
-	public List<Enchere> selectAll() throws SQLException {
-		List<Enchere> encheres = new ArrayList<Enchere>();
-		try (Connection connection = ConnectionProvider.getConnection();
-				Statement statement = connection.createStatement();) {
-			ResultSet resultSet = statement.executeQuery(SELECT_ALL_ENCHERES);
-
-			Enchere enchere = null;
-			while (resultSet.next()) {
-
-				enchere = mapAllEnchereData(resultSet);
-				encheres.add(enchere);
-				System.out.println("Found enchere : " + enchere.toString());
-			}
-			//methode que je ne comprends pas j'ai juste pas trouvé de solutions alternatives donc à tester 
-			Collections.sort(encheres, new Comparator<Enchere>() {
-		            @Override
-		            public int compare(Enchere enchere1, Enchere enchere2) {
-		                return enchere1.getDateEnchere().compareTo(enchere2.getDateEnchere());
-		            }
-		        });
-			return encheres;
-		}
-	}	*/
 
 	@Override
 	public List<Enchere> selectAll() throws SQLException {
 		List<Enchere> encheres = new ArrayList<Enchere>();
 		try (Connection connection = ConnectionProvider.getConnection();
-			 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ENCHERES2);) {
+			 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ENCHERES);) {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			Enchere enchere = null;
 			while (resultSet.next()) {
-				enchere = mapAllEnchereData(resultSet);
+				enchere = mapAllEnchereListe(resultSet);
 				encheres.add(enchere);
 				System.out.println("Found enchere : " + enchere.toString());
 			}
@@ -159,27 +134,12 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 			return encheres;
 		}
 	}
-	
-	/**private Enchere mapAllEnchereData(ResultSet resultSet) throws SQLException
-	{
-		Enchere enchere = new Enchere();
-		
-		enchere.setDateEnchere(resultSet.getDate("date_enchere"));
-		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
-		enchere.setNoArticle(
-				ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article")).getNoArticle());
-		enchere.setNoEncherisseur(
-				UserManager.getInstance().selectUserByID(resultSet.getInt("no_utilisateur")).getNoUtilisateur());
-		
-		enchere.setArticle(ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article")));
-		enchere.setEncherisseur(UserManager.getInstance().selectUserByID(resultSet.getInt("no_utilisateur")));
-		
-		return enchere;
-	}*/
 
-	private Enchere mapAllEnchereData(ResultSet resultSet) throws SQLException {
+
+	private Enchere mapAllEnchereListe(ResultSet resultSet) throws SQLException {
 		// Creating new objects based on the result set
 		ArticleVendu article = new ArticleVendu();
+		article.setNoArticle(resultSet.getInt("no_article"));  // Add this line
 		article.setNomArticle(resultSet.getString("nom_article"));
 		article.setDateFinEncheres(resultSet.getDate("date_fin_encheres"));
 
@@ -188,6 +148,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		encherisseur.setPseudo(resultSet.getString("pseudo"));
 
 		Enchere enchere = new Enchere();
+		enchere.setNo_Enchere(resultSet.getInt("no_enchere"));  // Add this line
 		// Convert the Timestamp to Date
 		Timestamp timestamp = resultSet.getTimestamp("date_enchere");
 		Date date = new Date(timestamp.getTime());
@@ -195,7 +156,24 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
 		enchere.setArticle(article);
 		enchere.setEncherisseur(encherisseur);
+		enchere.setNoArticle(resultSet.getInt("no_article"));
+		enchere.setNoEncherisseur(resultSet.getInt("no_utilisateur"));
 
 		return enchere;
 	}
+
+	private Enchere mapAllEnchereData(ResultSet resultSet) throws SQLException {
+		Enchere enchere = new Enchere();
+		enchere.setNo_Enchere(resultSet.getInt("no_enchere"));  // Add this line
+		// Convert the Timestamp to Date
+		Timestamp timestamp = resultSet.getTimestamp("date_enchere");
+		Date date = new Date(timestamp.getTime());
+		enchere.setDateEnchere(date);
+		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
+		enchere.setNoArticle(resultSet.getInt("no_article"));
+		enchere.setNoEncherisseur(resultSet.getInt("no_utilisateur"));
+
+		return enchere;
+	}
+
 }
