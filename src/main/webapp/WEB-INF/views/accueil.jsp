@@ -13,7 +13,7 @@
 </head>
 <body>
 <!-- Barre de navigation -->
-<jsp:include page="/WEB-INF/views/headerConnecte.jsp" />
+<jsp:include page="/WEB-INF/views/header.jsp" />
 
 <!-- Contenu de la page -->
 <div class="container">

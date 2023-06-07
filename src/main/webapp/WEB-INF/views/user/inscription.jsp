@@ -60,7 +60,7 @@
 
         <div class="col-12">
             <div class="form-floating">
-                <input type="text" id="rue" name="rue" class="form-control" placeholder="Ex : rue de la paix" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getRue() : "" %>" required>
+                <input type="text" id="rue" name="rue" class="form-control" max="30" placeholder="Ex : rue de la paix" oninvalid="this.setCustomValidity('Veuillez entrer un code postal à 5 chiffres.')" oninput="this.setCustomValidity('')" value="<%= request.getAttribute("utilisateur") != null ? ((User)request.getAttribute("utilisateur")).getRue() : "" %>" required>
                 <label for="rue">Adresse</label>
             </div>
         </div>

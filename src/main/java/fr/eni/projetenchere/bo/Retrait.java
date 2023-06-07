@@ -44,9 +44,8 @@ public class Retrait {
 	{
 		if (!isAddressValid(rue)) {
 			businessException.ajouterErreur(CodeErreur.RETRAIT_RUE_TROP_LONG);
-			return;
+			throw businessException;
 		}
-		
 		this.rue = rue;
 	}
 
@@ -77,10 +76,9 @@ public class Retrait {
 		
 		this.ville = ville;
 	}
-	
-	private boolean isAddressValid(String address)
-	{
-		return address.length() <= 30;
+
+	private boolean isAddressValid(String address) {
+		return address != null && !address.isEmpty() && address.length() <= 30;
 	}
 	
 	private boolean isZipCodeValid(String zipCode)

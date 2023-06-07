@@ -89,7 +89,7 @@
 						<label for="rue">Adresse</label>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="text" class="form-control" id="codePostal" name="codePostal" value="${not empty retrait ? retrait.codePostal : user.codePostal}" required>
+						<input type="text" class="form-control" id="codePostal" name="codePostal" pattern="^[0-9]{5}$" value="${not empty retrait ? retrait.codePostal : user.codePostal}" oninvalid="this.setCustomValidity('Veuillez entrer un code postal à 5 chiffres.')" oninput="this.setCustomValidity('')" required>
 						<label for="codePostal">Code Postal</label>
 					</div>
 					<div class="form-floating mb-3">
