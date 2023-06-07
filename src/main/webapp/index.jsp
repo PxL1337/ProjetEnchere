@@ -25,9 +25,9 @@
 		<h2><a href="#">"${enchere.article.nomArticle }"</a></h2>
 		<p>prix : "${enchere.montantEnchere }"<br/>Fin de l'enchere : "${enchere.article.dateFinEncheres }" <br/>
 		<a href="${pageContext.request.contextPath}/Profile?id=${enchere.encherisseur.noUtilisateur }">Vendeur : "${enchere.encherisseur.pseudo }"</a></p>
-	
+
 	</c:forEach>
-</div>	
+</div>
 	
 
 

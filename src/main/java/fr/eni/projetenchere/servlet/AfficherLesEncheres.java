@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class AfficherLesEncheres
  */
-@WebServlet(name = "pageAccueil", value = "/")
+@WebServlet(name = "pageAccueil", value = "/accueil")
 public class AfficherLesEncheres extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
