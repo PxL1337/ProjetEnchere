@@ -132,8 +132,8 @@
         <div class="container d-flex flex-wrap justify-content-center">
         
         <!-- BOUTON DE RECHERCHE -->
-            <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search" action="${pageContext.request.contextPath}/recherche" method ="POST">
-                <input type="search" name="filter" class="form-control" placeholder="Rechercher un article..." aria-label="Search">
+            <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search" >
+                <input type="text" name="filter" class="form-control" placeholder="Rechercher un article..." aria-label="Search">
             </form>
             
             <div class="form-floating mb-3">
