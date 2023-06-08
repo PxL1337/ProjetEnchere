@@ -1,6 +1,7 @@
 package fr.eni.projetenchere.bll;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetenchere.bo.Enchere;
@@ -56,6 +57,26 @@ public class EnchereManager
 	public List<Enchere> selectAllEncheresFiltredByName(String nameFilter) throws SQLException
 	{
 		return enchereDAO.selectAllFiltredByName(nameFilter);
+	}
+	
+	public List<Enchere> selectAllEncheresFiltredByCategory(int categoryID) throws SQLException
+	{
+		return enchereDAO.selectAllFiltredByCategory(categoryID);
+	}
+	
+	public List<Enchere> getEncheresByNameFromCateforyFilter(String nameFilter, List<Enchere> filteredList)
+	{
+		List<Enchere> filteredByName = new ArrayList<Enchere>();
+		
+		for (int i = 0; i < filteredList.size(); i++) 
+		{
+			String articleName = filteredList.get(i).getArticle().getNomArticle();			
+			if (!articleName.matches(nameFilter)) { continue; }
+			
+			filteredByName.add(filteredList.get(i));
+		}
+		
+		return filteredByName;
 	}
 	
 	public boolean isEnchereInvalid(Enchere enchere)

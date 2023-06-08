@@ -27,10 +27,22 @@
     </c:if>
 </div>
 
-<!-- Bouton de retour à l'affichage de toutes les encheres -->
-<form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" action="${pageContext.request.contextPath}/accueil" method ="POST">
-	<button type="submit" name="filterContent" class="btn btn-primary">Annuler le filtre</button>
-</form>
+<div class="container">
+	  <div class="row align-items-center">
+	    <div class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
+	      <form action="${pageContext.request.contextPath}/accueil" method="POST">
+	        <div class="d-flex align-items-center">
+	          <p class="me-2 mb-0 custom-text">
+	          
+	          Recherche actuelle : 
+	          <c:if test="${not empty filter}"> "${filter}" </c:if>
+	          ${not empty filter && not empty categorie ? " | " : ""}${not empty categorie ? categorie : ""}</p>
+	          <button type="submit" name="filterContent" class="btn btn-primary">Annuler le filtre</button>
+	        </div>
+	      </form>
+	    </div>
+	  </div>
+</div>
 
 <!-- AFFICHAGE DU RESULTAT DE LA REQUETE -->
 <div class="container">
@@ -71,17 +83,6 @@
         </c:forEach>
     </div>
 </div>
-
-
-<div class="form-floating mb-3">
-					<select id="categorie" class="form-select" aria-label="articleCategorie" name="categorie" value="">
-						<option value="" disabled selected hidden>Selectionner une catégorie</option>
-							<c:forEach var="categorie" items="${categories}">
-								<option value="${categorie.noCategorie}">${categorie.libelle}</option>
-							</c:forEach>
-					</select>
-					<label for="categorie">Categorie</label>
-			</div>
 
 <!-- Footer -->
 <jsp:include page="/WEB-INF/views/footer.jsp" />

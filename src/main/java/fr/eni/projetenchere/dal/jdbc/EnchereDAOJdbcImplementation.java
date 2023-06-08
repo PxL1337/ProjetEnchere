@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import fr.eni.projetenchere.bll.ArticleManager;
+import fr.eni.projetenchere.bll.CategorieManager;
 import fr.eni.projetenchere.bll.UserManager;
 import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.bo.Enchere;
@@ -25,6 +26,13 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	final String SELECT_ALL_ENCHERES = "SELECT E.no_enchere, E.date_enchere, E.montant_enchere, A.no_article, A.nom_article, A.date_fin_encheres, U.no_utilisateur, U.pseudo " +
 			"FROM ENCHERES E JOIN ARTICLES_VENDUS A ON A.no_article = E.no_article " +
 			"JOIN UTILISATEURS U ON E.no_utilisateur = U.no_utilisateur ORDER BY E.date_enchere";
+	
+	final String SELECT_ALL_ENCHERES_BY_CATEGORIE = "SELECT e.*, av.no_categorie, av.nom_article, av.date_fin_encheres, av.no_utilisateur, u.no_utilisateur, u.pseudo "
+			+ "FROM ENCHERES e "
+			+ "JOIN ARTICLES_VENDUS av ON e.no_article = av.no_article "
+			+ "JOIN UTILISATEURS u ON av.no_utilisateur = u.no_utilisateur "
+			+ "WHERE av.no_categorie =? "
+			+ "ORDER BY e.date_enchere";
 	
 	@Override
 	public void insert(Enchere enchere) throws SQLException 
@@ -158,6 +166,28 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 			return encheres;
 	}
 
+	@Override
+	public List<Enchere> selectAllFiltredByCategory(int categoryID) throws SQLException {
+		List<Enchere> encheres = new ArrayList<Enchere>();
+		try (Connection connection = ConnectionProvider.getConnection();
+			 PreparedStatement preparedStatement = 
+					 connection.prepareStatement(SELECT_ALL_ENCHERES_BY_CATEGORIE);)
+		{
+			//WHERE
+			preparedStatement.setInt(1, categoryID);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				Enchere enchere = mapAllEnchereFiltredByCategory(resultSet);
+				encheres.add(enchere);
+				System.out.println("Found enchere : " + enchere.toString());
+			}
+		}
+		// Removing sort function as the SQL query is already sorting the data
+		return encheres;
+	}
+	
 	private Enchere mapAllEnchereListe(ResultSet resultSet) throws SQLException {
 		// Creating new objects based on the result set
 		ArticleVendu article = new ArticleVendu();
@@ -179,6 +209,34 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		enchere.setArticle(article);
 		enchere.setEncherisseur(encherisseur);
 		enchere.setNoArticle(resultSet.getInt("no_article"));
+		enchere.setNoEncherisseur(resultSet.getInt("no_utilisateur"));
+
+		return enchere;
+	}
+	
+	private Enchere mapAllEnchereFiltredByCategory(ResultSet resultSet) throws SQLException {
+		// Creating new objects based on the result set
+		ArticleVendu article = new ArticleVendu();
+		article.setNoArticle(resultSet.getInt("no_article"));
+		article.setNomArticle(resultSet.getString("nom_article"));
+		article.setDateFinEncheres(resultSet.getDate("date_fin_encheres"));
+		article.setCategorie(
+				CategorieManager.getInstance().selectCategorieByID(resultSet.getInt("no_categorie")));
+		
+		User encherisseur = new User();
+		encherisseur.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
+		encherisseur.setPseudo(resultSet.getString("pseudo"));		 
+
+		Enchere enchere = new Enchere();
+		enchere.setNo_Enchere(resultSet.getInt("no_enchere"));  // Add this line
+		// Convert the Timestamp to Date
+		Timestamp timestamp = resultSet.getTimestamp("date_enchere");
+		Date date = new Date(timestamp.getTime());
+		enchere.setDateEnchere(date);
+		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
+		enchere.setArticle(article);
+		enchere.setNoArticle(resultSet.getInt("no_article"));		
+		enchere.setEncherisseur(encherisseur);
 		enchere.setNoEncherisseur(resultSet.getInt("no_utilisateur"));
 
 		return enchere;

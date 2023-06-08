@@ -131,21 +131,26 @@
     <div class="px-3 py-2 border-bottom mb-3">
         <div class="container d-flex flex-wrap justify-content-center">
         
-        <!-- BOUTON DE RECHERCHE -->
-            <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search" >
-                <input type="text" name="filter" class="form-control" placeholder="Rechercher un article..." aria-label="Search">
-            </form>
-            
+<!-- SECTION RECHERCHE -->
+
+<!-- FILTRE PAR NOM -->
+<form method="POST" action="${pageContext.request.contextPath}/recherche">
+  		<input type="text" name="filter" class="form-control" placeholder="Rechercher un article..." aria-label="Search">
+  		
+<!-- FILTRE PAR CATEGORIE -->
             <div class="form-floating mb-3">
 					<select id="categorie" class="form-select" aria-label="articleCategorie" name="categorie" value="">
-						<option value="" disabled selected hidden>Selectionner une catégorie</option>
+						<option value="" disabled selected hidden>Filtrer par catégorie</option>
 							<c:forEach var="categorie" items="${categories}">
 								<option value="${categorie.noCategorie}">${categorie.libelle}</option>
 							</c:forEach>
 					</select>
 					<label for="categorie">Categorie</label>
 			</div>
-
+			
+<!-- BOUTON APPLIQUER RECHERCHE -->
+  		<button type="submit" name="filterContent" class="btn btn-primary">Appliquer recherche</button>
+</form>
             <% if (session.getAttribute("utilisateurConnecte") == null) { %>
 
             <!-- Boutons Connexion et Inscription -->
