@@ -36,19 +36,24 @@
 			<p class="card-text">Email : ${user.email }</p>
 			<p class="card-text">Telephone : ${user.telephone }</p>
 			<p class="card-text">Adresse : ${user.rue }, ${user.codePostal }, ${user.ville }</p>
-			
-			<c:if test="${user.noUtilisateur eq utilisateurConnecte.noUtilisateur}">
-			<div class="mt-4 d-flex justify-content-between">
-				<div>
-					<a href="${pageContext.request.contextPath}/ModifyUserProfile" class="btn btn-primary">Modifier Profil</a>
-					<button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/';">Retour</button>
+			<c:choose>
+					<c:when test="${user.noUtilisateur eq utilisateurConnecte.noUtilisateur}">
+				<div class="mt-4 d-flex justify-content-between">
+					<div>
+						<a href="${pageContext.request.contextPath}/ModifyUserProfile" class="btn btn-primary">Modifier Profil</a>
+						<button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/';">Retour</button>
+					</div>
+					<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer Mon Compte</a>
 				</div>
-				<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer Mon Compte</a>
-			</div>
-			</c:if>
+				</c:when>
+				<c:otherwise>
+					<button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/';">Retour</button>
+				</c:otherwise>
+			</c:choose>
+			
 		</div>
 	</div>
-</div>
+</div> 
 
 <!-- Footer -->
 <jsp:include page="/WEB-INF/views/footer.jsp" />
