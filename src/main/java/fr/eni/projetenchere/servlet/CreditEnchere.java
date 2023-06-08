@@ -52,8 +52,9 @@ public class CreditEnchere extends HttpServlet {
 			User utilisateurConnecte = (User) request.getSession().getAttribute("utilisateurConnecte");
 			boolean propositionValide = enchereManager.validerPropositionCredit(enchere, utilisateurConnecte , proposition);
 			if (propositionValide) {
-
-				if (enchere.getMontantEnchere() > ArticleManager.getInstance().selectArticleByID(enchere.getArticle().getNoArticle()).getPrixInitial()) {
+				System.out.println("Encher.getmontant : " + enchere.getMontantEnchere());
+				System.out.println("Article.getPrixInitial : " + ArticleManager.getInstance().selectArticleByID(enchere.getNoArticle()).getPrixInitial());
+				if (enchere.getMontantEnchere() > ArticleManager.getInstance().selectArticleByID(enchere.getNoArticle()).getPrixInitial()) {
 					UserManager.getInstance().updateUserCredit(utilisateurConnecte, utilisateurConnecte.getCredit() - proposition);
 				}
 
