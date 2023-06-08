@@ -18,4 +18,6 @@ public interface EnchereDAO {
 	
 	public List<Enchere> selectAllFiltredByName(String nameFilter) throws SQLException;
 	public List<Enchere> selectAllFiltredByCategory(int categoryID) throws SQLException;
+
+    public void updateNoProprietaire(Enchere enchere, int noProprietaire) throws SQLException;
 }

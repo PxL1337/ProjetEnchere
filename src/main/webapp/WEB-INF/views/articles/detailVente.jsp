@@ -67,9 +67,14 @@
 			</div>
 			
 			<div class="mb-2">
-				<form action="EnchereServlet" method="post">
+
+				<form action="${pageContext.request.contextPath}/creditenchere?id=${param.id}" method="post">
 					<h4 style="display: inline-block; margin-right: 42px;"><label for="articlePrixChoix">Ma proposition:</label></h4>
-					<input type="number" step="1" value="1" min="1" class="form-control-sm" id="articlePrixChoix" name="proposition" required>	
+					<input type="number" step="1" value="1" min="1" class="form-control-sm" id="articlePrixChoix" name="proposition" required>
+
+					<!-- Le champ caché pour transmettre l'ID -->
+
+
 					<button class="btn btn-primary"  type="submit">Enchérir</button>
 				</form>
 					

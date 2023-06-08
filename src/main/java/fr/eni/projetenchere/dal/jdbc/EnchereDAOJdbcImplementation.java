@@ -16,6 +16,8 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	
 	final String INSERT_ENCHERE = "INSERT INTO ENCHERES(date_enchere, montant_enchere, no_article, no_utilisateur) VALUES(?, ?, ?, ?)";
 	final String UPDATE_MONTANT_ENCHERE = "UPDATE ENCHERES SET montant_enchere=? WHERE no_enchere=?";
+
+	final String UPDATE_NO_PROPRIETAIRE = "UPDATE ENCHERES SET no_utilisateur=? WHERE no_enchere=?";
 	final String DELETE_ENCHERE = "DELETE FROM ENCHERES WHERE no_enchere=?";
 	final String SELECT_ENCHERE_BY_ID = "SELECT * FROM ENCHERES WHERE no_enchere=?";
 
@@ -74,7 +76,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		{
 			preparedStatement.setInt(1, montant);
 			//WHERE
-			preparedStatement.setInt(2, enchere.getNoArticle());
+			preparedStatement.setInt(2, enchere.getNo_Enchere());
 			
 			preparedStatement.executeUpdate();
 		}
@@ -183,7 +185,25 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		// Removing sort function as the SQL query is already sorting the data
 		return encheres;
 	}
-	
+
+	@Override
+	public void updateNoProprietaire(Enchere enchere, int EncherisseurID) {
+
+		try (Connection connection = ConnectionProvider.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_NO_PROPRIETAIRE);)
+		{
+			preparedStatement.setInt(1, enchere.getNoProprietaire());
+			//WHERE
+			preparedStatement.setInt(2, enchere.getNo_Enchere());
+
+			preparedStatement.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	private Enchere mapAllEnchereListe(ResultSet resultSet) throws SQLException {
 		// Creating new objects based on the result set
 		ArticleVendu article = new ArticleVendu();

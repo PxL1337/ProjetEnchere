@@ -22,7 +22,9 @@ public class DetailVente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int enchereID = Integer.parseInt(request.getParameter("id"));
+
+
+		int enchereID = request.getParameter("id") == null ? (int) request.getSession().getAttribute("derniereEnchereID") : Integer.parseInt(request.getParameter("id"));
 
 		System.out.println("id de l'enchère = " + enchereID);
 

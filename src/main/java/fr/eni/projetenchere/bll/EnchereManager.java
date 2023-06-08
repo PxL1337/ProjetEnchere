@@ -50,6 +50,11 @@ public class EnchereManager
 	    return true; // La proposition est valide
 	}
 
+	public void updateEnchereNoProprietaire(Enchere enchere, int noProprietaire) throws SQLException
+	{
+		enchereDAO.updateNoProprietaire(enchere, noProprietaire);
+	}
+
 	public void deleteEnchere(Enchere enchere) throws SQLException
 	{
 		enchereDAO.delete(enchere);
