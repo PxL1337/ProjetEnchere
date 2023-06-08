@@ -1,6 +1,7 @@
 package fr.eni.projetenchere.servlet.articles;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -61,7 +62,7 @@ public class UpdateArticle extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int enchereID = Integer.parseInt(request.getParameter("id")); 	
+		int enchereID  = Integer.parseInt(request.getParameter("id"));
 			
 		String nomArticle = request.getParameter("nomArticle");
 	        String description = request.getParameter("description");
@@ -82,8 +83,8 @@ public class UpdateArticle extends HttpServlet {
 				enchere = EnchereManager.getInstance().selectEnchereByID(enchereID);
 				enchere.getArticle().setNomArticle(nomArticle);
 				enchere.getArticle().setDescription(description);
-			//	enchere.getArticle().setDateDebutEncheres(dateDebutEncheres);
-			//	enchere.getArticle().setDateFinEncheres(dateFinEncheres);
+				enchere.getArticle().setDateDebutEncheres(Date.valueOf(dateDebutEncheres));
+				enchere.getArticle().setDateFinEncheres(Date.valueOf(dateFinEncheres));
 				enchere.getEncherisseur().setRue(rue);
 				enchere.getEncherisseur().setCodePostal(codePostal);
 				enchere.getEncherisseur().setVille(ville);

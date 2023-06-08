@@ -25,7 +25,7 @@ public class CreditEnchere extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/**protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String propositionStr = request.getParameter("proposition");
 		int proposition = Integer.parseInt(propositionStr);
 		int enchereID = Integer.parseInt(request.getParameter("enchereID"));
@@ -40,8 +40,7 @@ public class CreditEnchere extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-	}
-	
+	}*/
 	
 	
 
