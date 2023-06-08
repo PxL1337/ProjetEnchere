@@ -1,5 +1,6 @@
 package fr.eni.projetenchere.servlet;
 
+import fr.eni.projetenchere.bll.ArticleManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -51,9 +52,13 @@ public class CreditEnchere extends HttpServlet {
 			User utilisateurConnecte = (User) request.getSession().getAttribute("utilisateurConnecte");
 			boolean propositionValide = enchereManager.validerPropositionCredit(enchere, utilisateurConnecte , proposition);
 			if (propositionValide) {
-				UserManager.getInstance().updateUserCredit(enchere.getProprietaire(), enchere.getProprietaire().getCredit() + enchere.getMontantEnchere());
 
-				UserManager.getInstance().updateUserCredit(utilisateurConnecte, utilisateurConnecte.getCredit() - proposition);
+				if (enchere.getMontantEnchere() > ArticleManager.getInstance().selectArticleByID(enchere.getArticle().getNoArticle()).getPrixInitial()) {
+					UserManager.getInstance().updateUserCredit(utilisateurConnecte, utilisateurConnecte.getCredit() - proposition);
+				}
+
+
+
 				enchereManager.updateEnchereMontant(enchere, proposition);
 
 				System.out.println("IDutilisateurConnecte : " + utilisateurConnecte.getNoUtilisateur());
