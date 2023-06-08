@@ -73,12 +73,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
-                            Tableau de bord
-                        </a>
-                    </li>
-                    <li>
                         <a href="${pageContext.request.contextPath}/accueil" class="nav-link text-white">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
                             Enchères
@@ -91,12 +85,6 @@
                         <a href="${pageContext.request.contextPath}/" class="nav-link text-success">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
                             Accueil
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link text-white">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
-                            Tableau de bord
                         </a>
                     </li>
                     <li>
@@ -115,12 +103,6 @@
                         <a href="${pageContext.request.contextPath}/Profile" class="nav-link text-white">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
                             Mon Profil
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/testDatabase" class="nav-link text-white">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#database-gear"/></svg>
-                            DB Test
                         </a>
                     </li>
                 </ul>
