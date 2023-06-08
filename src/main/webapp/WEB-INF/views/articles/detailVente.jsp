@@ -70,7 +70,6 @@
 				<form action="EnchereServlet" method="post">
 					<h4 style="display: inline-block; margin-right: 42px;"><label for="articlePrixChoix">Ma proposition:</label></h4>
 					<input type="number" step="1" value="1" min="1" class="form-control-sm" id="articlePrixChoix" name="proposition" required>	
-					<input type="hidden" name="idEnchere" value="">
 					<button class="btn btn-primary"  type="submit">Enchérir</button>
 				</form>
 					

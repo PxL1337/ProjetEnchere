@@ -25,24 +25,23 @@ public class CreditEnchere extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	/**protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String propositionStr = request.getParameter("proposition");
 		int proposition = Integer.parseInt(propositionStr);
-		int enchereID = Integer.parseInt(request.getParameter("enchereID"));
+		int enchereID = Integer.parseInt(request.getParameter("id"));
 		
 			// Récupérer l'enchère
-			Enchere enchere = EnchereManager.getInstance().selectEnchereByID(enchereID);
-			User encherisseur = UserManager.getInstance().selectUserByID(enchereID);
+			
 			try {
-				boolean propositionValide = EnchereManager.validerPropositionCredit(enchere, encherisseur , proposition);
-			} catch (Exception e) {
+				Enchere enchere = EnchereManager.getInstance().selectEnchereByID(enchereID);
+				User encherisseur = UserManager.getInstance().selectUserByID(enchereID);
+				boolean propositionValide = EnchereManager.getInstance().validerPropositionCredit(enchere, encherisseur , proposition);
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-	}*/
-	
-	
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
