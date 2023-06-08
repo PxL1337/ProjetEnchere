@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import fr.eni.projetenchere.bll.CodeErreur;
 import fr.eni.projetenchere.bll.EnchereManager;
 import fr.eni.projetenchere.bll.UserManager;
 import fr.eni.projetenchere.bo.Enchere;
@@ -29,13 +30,23 @@ public class CreditEnchere extends HttpServlet {
 		String propositionStr = request.getParameter("proposition");
 		int proposition = Integer.parseInt(propositionStr);
 		int enchereID = Integer.parseInt(request.getParameter("id"));
-		
+		EnchereManager enchereManager = EnchereManager.getInstance();
 			// Récupérer l'enchère
 			
 			try {
-				Enchere enchere = EnchereManager.getInstance().selectEnchereByID(enchereID);
+				Enchere enchere = enchereManager.selectEnchereByID(enchereID);
 				User encherisseur = UserManager.getInstance().selectUserByID(enchereID);
-				boolean propositionValide = EnchereManager.getInstance().validerPropositionCredit(enchere, encherisseur , proposition);
+				boolean propositionValide = enchereManager.validerPropositionCredit(enchere, encherisseur , proposition);
+				if (propositionValide) {
+					UserManager.getInstance().updateUserCredit(encherisseur, encherisseur.getCredit() - proposition);
+					enchereManager.updateEnchereMontant(enchere, proposition);
+					enchereManager.updateNoProprietaire(encherisseur.getNoUtilisateur());
+				}else {
+					BusinessException be = new BusinessException();
+					be.ajouterErreur(CodeErreur.ENCHERE_TRANSACTION_INVALIDE);
+					throw be;
+					request.getRequestDispatcher("/detailvente").forward(request, response);
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

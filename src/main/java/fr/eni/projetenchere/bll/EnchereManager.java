@@ -42,7 +42,9 @@ public class EnchereManager
 	
 	public boolean validerPropositionCredit(Enchere enchere, User encherisseur, int proposition) {
 	    // Vérifier si l'enchérisseur a suffisamment de crédit
-	    if (encherisseur.getCredit() <  proposition || proposition <= enchere.getMontantEnchere()) {
+        if (encherisseur.getCredit() - proposition < 0 
+                || encherisseur.getCredit() <  proposition 
+                || proposition <= enchere.getMontantEnchere()) {
 	        return false; // Le crédit de l'enchérisseur est insuffisant
 	    }	    
 	    return true; // La proposition est valide

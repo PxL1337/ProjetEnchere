@@ -59,4 +59,5 @@ public class CodeErreur {
     public static final int ENCHERE_DATE_INVALIDE = 20400;
     public static final int ENCHERE_NO_ARTICLE_INVALIDE = 20401;
     public static final int ENCHERE_NO_UTILISATEUR_INVALIDE = 20402;
+    public static final int ENCHERE_TRANSACTION_INVALIDE = 20403;
 }
