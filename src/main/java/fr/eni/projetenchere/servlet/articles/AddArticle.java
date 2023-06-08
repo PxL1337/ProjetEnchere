@@ -128,6 +128,7 @@ public class AddArticle extends HttpServlet {
         } catch (BusinessException e) {
             request.setAttribute("article", article);
             request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+            request.setAttribute("formulaire", formulaire);
             request.getRequestDispatcher("/WEB-INF/views/articles/creaVente.jsp").forward(request, response);
             return;
         }

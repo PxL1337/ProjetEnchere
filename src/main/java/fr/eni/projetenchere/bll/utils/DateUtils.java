@@ -1,9 +1,13 @@
 package fr.eni.projetenchere.bll.utils;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class DateUtils {
 
@@ -31,5 +35,14 @@ public class DateUtils {
     public static String timestampToString(Timestamp timestamp) {
         return DATETIME_FORMAT.format(timestamp);
     }
+
+
+    public static LocalDateTime getDateTimeFromRequest(HttpServletRequest request, String dateParameter, String hourParameter, String minuteParameter, String secondParameter) {
+        return LocalDate.parse(request.getParameter(dateParameter))
+                .atTime(Integer.parseInt(request.getParameter(hourParameter)),
+                        Integer.parseInt(request.getParameter(minuteParameter)),
+                        Integer.parseInt(request.getParameter(secondParameter)));
+    }
+
 }
 

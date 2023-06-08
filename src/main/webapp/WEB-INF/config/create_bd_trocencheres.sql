@@ -89,5 +89,14 @@ ALTER TABLE ARTICLES_VENDUS
     ADD CONSTRAINT ventes_utilisateur_fk FOREIGN KEY ( no_utilisateur )
         REFERENCES utilisateurs ( no_utilisateur )
 ON DELETE NO ACTION 
-    ON UPDATE no action 
+    ON UPDATE no action
+
+
+CREATE INDEX idx_encheres_no_utilisateur ON ENCHERES (no_utilisateur);
+
+CREATE INDEX idx_encheres_no_article ON ENCHERES (no_article);
+
+CREATE INDEX idx_articles_vendus_date_fin_encheres ON ARTICLES_VENDUS (date_fin_encheres);
+
+CREATE INDEX idx_utilisateurs_pseudo ON UTILISATEURS (pseudo);
 
