@@ -106,7 +106,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 				if (resultSet.next())
 				{
 					User user = mapAllUserData(resultSet);
-					System.out.println( "User found with ID [ " + ID + " ]" + user.toString());
+					//System.out.println( "User found with ID [ " + ID + " ]" + user.toString());
 					return user;
 				}
 			}

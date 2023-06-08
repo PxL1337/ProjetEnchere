@@ -26,12 +26,12 @@ public class DetailVente extends HttpServlet {
 
 		int enchereID = request.getParameter("id") == null ? (int) request.getSession().getAttribute("derniereEnchereID") : Integer.parseInt(request.getParameter("id"));
 
-		System.out.println("id de l'enchère = " + enchereID);
+		//System.out.println("id de l'enchère = " + enchereID);
 
 		try {
 			// Récupérer l'enchère
 			Enchere enchere = EnchereManager.getInstance().selectEnchereByID(enchereID);
-			System.out.println("enchère = " + enchere);
+			//System.out.println("enchère = " + enchere);
 
 			// Récupérer l'article associé à l'enchère
 			ArticleVendu article = ArticleManager.getInstance().selectArticleByID(enchere.getNoArticle());
@@ -57,7 +57,7 @@ public class DetailVente extends HttpServlet {
 			request.setAttribute("retrait", retrait);
 			request.setAttribute("user", user);
 
-			System.out.println("USer = " + user.getPseudo());
+			//System.out.println("USer = " + user.getPseudo());
 
 			request.getRequestDispatcher("/WEB-INF/views/articles/detailVente.jsp").forward(request, response);
 		} catch (SQLException e) {

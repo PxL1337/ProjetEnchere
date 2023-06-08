@@ -191,9 +191,10 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	public void updateNoProprietaire(Enchere enchere, int EncherisseurID) {
 
 		try (Connection connection = ConnectionProvider.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_NO_PROPRIETAIRE);)
+				PreparedStatement preparedStatement = connection.prepareStatement("UPDATE ENCHERES SET no_utilisateur=? WHERE no_enchere=?");)
 		{
-			preparedStatement.setInt(1, enchere.getNoProprietaire());
+			System.out.println("No proprietaire : " + EncherisseurID);
+			preparedStatement.setInt(1, EncherisseurID);
 			//WHERE
 			preparedStatement.setInt(2, enchere.getNo_Enchere());
 

@@ -36,12 +36,12 @@ public class CreditEnchere extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = request.getRequestURL().toString();
-		System.out.println("url : " + url);
+		//System.out.println("url : " + url);
 		String propositionStr = request.getParameter("proposition");
 		int proposition = Integer.parseInt(propositionStr);
-		System.out.println("proposition : " + proposition);
+		//System.out.println("proposition : " + proposition);
 		int enchereID = Integer.parseInt(request.getParameter("id"));
-		System.out.println("enchereID : " + enchereID);
+		//System.out.println("enchereID : " + enchereID);
 		EnchereManager enchereManager = EnchereManager.getInstance();
 		// Récupérer l'enchère
 
@@ -55,6 +55,12 @@ public class CreditEnchere extends HttpServlet {
 
 				UserManager.getInstance().updateUserCredit(utilisateurConnecte, utilisateurConnecte.getCredit() - proposition);
 				enchereManager.updateEnchereMontant(enchere, proposition);
+
+				System.out.println("IDutilisateurConnecte : " + utilisateurConnecte.getNoUtilisateur());
+				System.out.println("IDproprietaire : " + enchere.getProprietaire().getNoUtilisateur());
+				System.out.println("IDenchere : " + enchere.getNo_Enchere());
+
+
 				enchereManager.updateEnchereNoProprietaire(enchere, utilisateurConnecte.getNoUtilisateur());
 				request.getSession().setAttribute("derniereEnchereID", enchereID);
 				response.sendRedirect(request.getContextPath() + "/detailvente" + "?id=" + enchereID);
