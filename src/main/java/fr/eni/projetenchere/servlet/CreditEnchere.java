@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import fr.eni.projetenchere.bll.EnchereManager;
+import fr.eni.projetenchere.bll.UserManager;
 import fr.eni.projetenchere.bo.Enchere;
+import fr.eni.projetenchere.bo.User;
 import fr.eni.projetenchere.exception.BusinessException;
 
 @WebServlet(name = "DetailVente", value = "/detailvente")
@@ -30,7 +32,13 @@ public class CreditEnchere extends HttpServlet {
 		
 			// Récupérer l'enchère
 			Enchere enchere = EnchereManager.getInstance().selectEnchereByID(enchereID);
-			boolean propositionValide = EnchereManager.validerPropositionCredit(enchere, encherisseur, proposition);
+			User encherisseur = UserManager.getInstance().selectUserByID(enchereID);
+			try {
+				boolean propositionValide = EnchereManager.validerPropositionCredit(enchere, encherisseur , proposition);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 	}
 	

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetenchere.bo.Enchere;
+import fr.eni.projetenchere.bo.User;
 import fr.eni.projetenchere.dal.EnchereDAO;
 import fr.eni.projetenchere.dal.jdbc.DAOFactory;
 import fr.eni.projetenchere.exception.BusinessException;
@@ -39,6 +40,14 @@ public class EnchereManager
 		enchereDAO.updateMontantEnchere(enchere, montant);
 	}
 	
+	public boolean validerPropositionCredit(Enchere enchere, User encherisseur, int proposition) {
+	    // Vérifier si l'enchérisseur a suffisamment de crédit
+	    if (encherisseur.getCredit() <  proposition || proposition <= enchere.getMontantEnchere()) {
+	        return false; // Le crédit de l'enchérisseur est insuffisant
+	    }	    
+	    return true; // La proposition est valide
+	}
+
 	public void deleteEnchere(Enchere enchere) throws SQLException
 	{
 		enchereDAO.delete(enchere);

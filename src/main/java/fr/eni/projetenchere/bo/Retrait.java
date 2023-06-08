@@ -18,9 +18,9 @@ public class Retrait {
 	
 	public Retrait() {}
 	
-	 public Retrait(int noArticle, String rue, String codePostal, String ville, int articleID) throws BusinessException 
+	 public Retrait(int noArticle, String rue, String codePostal, String ville) throws BusinessException 
 	 {
-		 	setNoArticle(articleID);		 	
+	 	setNoArticle(noArticle);		 	
 			setRue(rue);
 			setCodePostal(codePostal);
 			setVille(ville);
