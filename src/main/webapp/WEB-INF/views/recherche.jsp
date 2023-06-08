@@ -27,22 +27,24 @@
     </c:if>
 </div>
 
-<div class="container">
-	  <div class="row align-items-center">
-	    <div class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
-	      <form action="${pageContext.request.contextPath}/accueil" method="POST">
-	        <div class="d-flex align-items-center">
-	          <p class="me-2 mb-0 custom-text">
-	          
-	          Recherche actuelle : 
-	          <c:if test="${not empty filter}"> "${filter}" </c:if>
-	          ${not empty filter && not empty categorie ? " | " : ""}${not empty categorie ? categorie : ""}</p>
-	          <button type="submit" name="filterContent" class="btn btn-primary">Annuler le filtre</button>
-	        </div>
-	      </form>
-	    </div>
-	  </div>
-</div>
+<c:if test="${not empty filter || not empty categorie}">
+	<div class="container">
+		  <div class="row align-items-center">
+		    <div class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
+		      <form action="${pageContext.request.contextPath}/accueil" method="POST">
+		        <div class="d-flex align-items-center">
+		          <p class="me-2 mb-0 custom-text">
+		          
+		          Recherche actuelle : 
+		          <c:if test="${not empty filter}"> "${filter}" </c:if>
+		          ${not empty filter && not empty categorie ? " | " : ""}${not empty categorie ? categorie : ""}</p>
+		          <button type="submit" name="filterContent" class="btn btn-primary">Annuler le filtre</button>
+		        </div>
+		      </form>
+		    </div>
+		  </div>
+	</div>
+</c:if>
 
 <!-- AFFICHAGE DU RESULTAT DE LA REQUETE -->
 <div class="container">

@@ -37,7 +37,7 @@ public class AfficherResultatRecherche extends HttpServlet {
 			if (categorieFromAPost != null && !categorieFromAPost.isEmpty() ) {
 				request.setAttribute(
 						"categorie", 
-						CategorieManager.getInstance().selectCategorieByID(Integer.parseInt(categorieFromAPost)));
+						CategorieManager.getInstance().selectCategorieByID(Integer.parseInt(categorieFromAPost)).getLibelle());
 			}
 			request.setAttribute("filter", filterFromAPost);
 			
