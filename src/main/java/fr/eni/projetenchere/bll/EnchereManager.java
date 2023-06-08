@@ -100,7 +100,7 @@ public class EnchereManager
 			businessException.ajouterErreur(CodeErreur.ENCHERE_NO_ARTICLE_INVALIDE);
 		}
 		
-		if (enchere.getNoEncherisseur() == 0)
+		if (enchere.getNoProprietaire() == 0)
 		{
 			businessException.ajouterErreur(CodeErreur.ENCHERE_NO_UTILISATEUR_INVALIDE);
 		}

@@ -46,7 +46,7 @@ public class DetailVente extends HttpServlet {
 
 
 			// Récupérer l'utilisateur associé à l'enchère
-			User user = UserManager.getInstance().selectUserByID(enchere.getNoEncherisseur());
+			User user = UserManager.getInstance().selectUserByID(enchere.getNoProprietaire());
 
 			// Passer l'enchère, l'article, la catégorie et l'utilisateur à la JSP
 			request.setAttribute("enchere", enchere);

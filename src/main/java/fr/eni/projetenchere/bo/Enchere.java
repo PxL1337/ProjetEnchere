@@ -14,37 +14,37 @@ public class Enchere {
     private Date dateEnchere;
     private int montantEnchere;
     private int noArticle;
-    private int no_encherisseur;
+    private int no_utilisateur;
 
     private ArticleVendu article;
-    private User encherisseur;
+    private User proprietaire;
 
     //-------------------- CONSTRUCTOR ZONE --------------------//
     public Enchere() {}
     
     public Enchere(int enchereID, Date dateEnchere, int montantEnchere, int articleID,
-    		int encherisseurID) throws SQLException 
+    		int proprietaireID) throws SQLException
     {
     	this.no_Enchere = enchereID;
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
 		this.noArticle = articleID;
-		this.no_encherisseur = encherisseurID;
+		this.no_utilisateur = proprietaireID;
 		
 		setArticle(ArticleManager.getInstance().selectArticleByID(articleID));
-		setEncherisseur(UserManager.getInstance().selectUserByID(encherisseurID));
+		setProprietaire(UserManager.getInstance().selectUserByID(proprietaireID));
 	}
     
     public Enchere(Date dateEnchere, int montantEnchere, int articleID,
-    		int encherisseurID) throws SQLException 
+    		int proprietaireID) throws SQLException
     {
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
 		this.noArticle = articleID;
-		this.no_encherisseur = encherisseurID;
+		this.no_utilisateur = proprietaireID;
 		
 		setArticle(ArticleManager.getInstance().selectArticleByID(articleID));
-		setEncherisseur(UserManager.getInstance().selectUserByID(encherisseurID));
+		setProprietaire(UserManager.getInstance().selectUserByID(proprietaireID));
 	}
 
     //---------------------------------------------GETTER SETTER ZONE-------------------------------------------------------//
@@ -81,12 +81,12 @@ public class Enchere {
 		this.noArticle = noArticle;
 	}
 
-	public int getNoEncherisseur() {
-		return no_encherisseur;
+	public int getNoProprietaire() {
+		return no_utilisateur;
 	}
 
-	public void setNoEncherisseur(int noEncherisseur) {
-		this.no_encherisseur = noEncherisseur;
+	public void setNoProprietaire(int id) {
+		this.no_utilisateur = id;
 	}
 
     //---------------------------------------TO STRING ZONE---------------------------------------//
@@ -97,16 +97,16 @@ public class Enchere {
 				+ " du " + dateFormat.format(getDateEnchere())
 				+ " au prix de " + getMontantEnchere()
 				+ " associée à l'article n° " + getNoArticle()
-				+ " de l'utilisateur n° " + getNoEncherisseur();
+				+ " de l'utilisateur n° " + getNoProprietaire();
 	}
     // --------------------------------------------------------------------------------------------------------------//
 
-	public User getEncherisseur() {
-		return encherisseur;
+	public User getProprietaire() {
+		return proprietaire;
 	}
 
-	public void setEncherisseur(User encherisseur) {
-		this.encherisseur = encherisseur;
+	public void setProprietaire(User proprietaire) {
+		this.proprietaire = proprietaire;
 	}
 
 	public ArticleVendu getArticle() {

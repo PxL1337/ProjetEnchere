@@ -38,15 +38,16 @@ public class UpdateArticle extends HttpServlet {
 		String referer = request.getHeader("Referer");
 		try {
 			enchere = EnchereManager.getInstance().selectEnchereByID(enchereID);
-			if (enchere.getEncherisseur() != (User) request.getSession().getAttribute("utilisateurConnecte")) {
+			if (enchere.getProprietaire() == (User) request.getSession().getAttribute("utilisateurConnecte")) {
 				BusinessException be = new BusinessException();
 				be.ajouterErreur(CodeErreur.ARTICLE_UTILISATEUR_INVALIDE);
 				if (referer != null && !referer.isEmpty()) {
 		            response.sendRedirect(referer);
 		        } else {
-		            response.sendRedirect("/index.jsp");
+		            response.sendRedirect("/accueil");
 		        }
 				throw be;
+
 			}else {
 				request.getRequestDispatcher("/WEB-INF/views/articles/ModifierVente.jsp").forward(request, response);
 			}
@@ -85,13 +86,13 @@ public class UpdateArticle extends HttpServlet {
 				enchere.getArticle().setDescription(description);
 				enchere.getArticle().setDateDebutEncheres(Date.valueOf(dateDebutEncheres));
 				enchere.getArticle().setDateFinEncheres(Date.valueOf(dateFinEncheres));
-				enchere.getEncherisseur().setRue(rue);
-				enchere.getEncherisseur().setCodePostal(codePostal);
-				enchere.getEncherisseur().setVille(ville);
+				enchere.getProprietaire().setRue(rue);
+				enchere.getProprietaire().setCodePostal(codePostal);
+				enchere.getProprietaire().setVille(ville);
 				
 				
 				article = enchere.getArticle();
-				user = enchere.getEncherisseur();
+				user = enchere.getProprietaire();
 				retrait = new Retrait(article.getNoArticle(),rue,codePostal,ville);
 				
 				EnchereManager.getInstance().updateEnchereMontant(enchere, miseAPrix);

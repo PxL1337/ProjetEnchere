@@ -2,13 +2,9 @@ package fr.eni.projetenchere.dal.jdbc;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import fr.eni.projetenchere.bll.ArticleManager;
 import fr.eni.projetenchere.bll.CategorieManager;
-import fr.eni.projetenchere.bll.UserManager;
 import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.bo.Enchere;
 import fr.eni.projetenchere.bo.User;
@@ -44,7 +40,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 				preparedStatement.setDate(1, enchere.getDateEnchere());
 				preparedStatement.setInt(2, enchere.getMontantEnchere());
 				preparedStatement.setInt(3, enchere.getNoArticle());
-				preparedStatement.setInt(4, enchere.getNoEncherisseur());
+				preparedStatement.setInt(4, enchere.getNoProprietaire());
 				
 				int rowsAffected = preparedStatement.executeUpdate();
 				
@@ -195,9 +191,9 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		article.setNomArticle(resultSet.getString("nom_article"));
 		article.setDateFinEncheres(resultSet.getDate("date_fin_encheres"));
 
-		User encherisseur = new User();
-		encherisseur.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
-		encherisseur.setPseudo(resultSet.getString("pseudo"));
+		User proprietaire = new User();
+		proprietaire.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
+		proprietaire.setPseudo(resultSet.getString("pseudo"));
 
 		Enchere enchere = new Enchere();
 		enchere.setNo_Enchere(resultSet.getInt("no_enchere"));  // Add this line
@@ -207,9 +203,9 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		enchere.setDateEnchere(date);
 		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
 		enchere.setArticle(article);
-		enchere.setEncherisseur(encherisseur);
+		enchere.setProprietaire(proprietaire);
 		enchere.setNoArticle(resultSet.getInt("no_article"));
-		enchere.setNoEncherisseur(resultSet.getInt("no_utilisateur"));
+		enchere.setNoProprietaire(resultSet.getInt("no_utilisateur"));
 
 		return enchere;
 	}
@@ -223,9 +219,9 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		article.setCategorie(
 				CategorieManager.getInstance().selectCategorieByID(resultSet.getInt("no_categorie")));
 		
-		User encherisseur = new User();
-		encherisseur.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
-		encherisseur.setPseudo(resultSet.getString("pseudo"));		 
+		User proprietaire = new User();
+		proprietaire.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
+		proprietaire.setPseudo(resultSet.getString("pseudo"));
 
 		Enchere enchere = new Enchere();
 		enchere.setNo_Enchere(resultSet.getInt("no_enchere"));  // Add this line
@@ -236,8 +232,8 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
 		enchere.setArticle(article);
 		enchere.setNoArticle(resultSet.getInt("no_article"));		
-		enchere.setEncherisseur(encherisseur);
-		enchere.setNoEncherisseur(resultSet.getInt("no_utilisateur"));
+		enchere.setProprietaire(proprietaire);
+		enchere.setNoProprietaire(resultSet.getInt("no_utilisateur"));
 
 		return enchere;
 	}
@@ -251,7 +247,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		enchere.setDateEnchere(date);
 		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
 		enchere.setNoArticle(resultSet.getInt("no_article"));
-		enchere.setNoEncherisseur(resultSet.getInt("no_utilisateur"));
+		enchere.setNoProprietaire(resultSet.getInt("no_utilisateur"));
 
 		return enchere;
 	}

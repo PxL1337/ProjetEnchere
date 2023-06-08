@@ -3,7 +3,6 @@ package fr.eni.projetenchere.servlet.articles;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -165,7 +164,7 @@ public class AddArticle extends HttpServlet {
         	enchere.setDateEnchere(Date.valueOf(dateDebutEncheres));
             enchere.setMontantEnchere(miseAPrix);
             enchere.setNoArticle(article.getNoArticle());
-            enchere.setNoEncherisseur(utilisateurConnecte.getNoUtilisateur());
+            enchere.setNoProprietaire(utilisateurConnecte.getNoUtilisateur());
             
 			enchereManager.insertEnchere(enchere);
 		} catch (SQLException e) {
