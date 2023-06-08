@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetenchere.bll.CategorieManager;
+import fr.eni.projetenchere.bll.UserManager;
 import fr.eni.projetenchere.bo.ArticleVendu;
 import fr.eni.projetenchere.bo.Enchere;
 import fr.eni.projetenchere.bo.User;
@@ -268,6 +269,9 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
 		enchere.setNoArticle(resultSet.getInt("no_article"));
 		enchere.setNoProprietaire(resultSet.getInt("no_utilisateur"));
+
+		User proprietaire = UserManager.getInstance().selectUserByID(resultSet.getInt("no_utilisateur"));
+		enchere.setProprietaire(proprietaire);
 
 		return enchere;
 	}
