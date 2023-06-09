@@ -64,18 +64,12 @@
                     <img src="${pageContext.request.contextPath}/images/Logos/Plan-B.gif" alt="Mon GIF personnalisé" width="80" height="80">
                 </a>
                 <% if (session.getAttribute("utilisateurConnecte") == null) { %>
-                <!-- Menu Non Cconnecé -->
+                <!-- Menu Non Connecté -->
                 <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                     <li>
                         <a href="${pageContext.request.contextPath}/" class="nav-link text-success">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
                             Accueil
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/accueil" class="nav-link text-white">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
-                            Enchères
                         </a>
                     </li>
                 </ul>
@@ -94,12 +88,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/accueil" class="nav-link text-white">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
-                            Enchères
-                        </a>
-                    </li>
-                    <li>
                         <a href="${pageContext.request.contextPath}/Profile" class="nav-link text-white">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
                             Mon Profil
@@ -112,37 +100,49 @@
     </div>
     <div class="px-3 py-2 border-bottom mb-3">
         <div class="container d-flex flex-wrap justify-content-center">
-        
-<!-- SECTION RECHERCHE -->
 
-<!-- FILTRE PAR NOM -->
-<form method="POST" action="${pageContext.request.contextPath}/recherche">
-  		<input type="text" name="filter" class="form-control" placeholder="Rechercher un article..." aria-label="Search">
-  		
-<!-- FILTRE PAR CATEGORIE -->
-            <div class="form-floating mb-3">
-					<select id="categorie" class="form-select" aria-label="articleCategorie" name="categorie" value="">
-						<option value="" disabled selected hidden>Filtrer par catégorie</option>
-							<c:forEach var="categorie" items="${categories}">
-								<option value="${categorie.noCategorie}">${categorie.libelle}</option>
-							</c:forEach>
-					</select>
-					<label for="categorie">Categorie</label>
-			</div>
-			
-<!-- BOUTON APPLIQUER RECHERCHE -->
-  		<button type="submit" name="filterContent" class="btn btn-primary">Appliquer recherche</button>
-</form>
-            <% if (session.getAttribute("utilisateurConnecte") == null) { %>
+            <!-- SECTION RECHERCHE -->
+            <div class="col-lg-6">
+                <form method="POST" action="${pageContext.request.contextPath}/recherche">
+                    <div class="row">
+                        <!-- FILTRE PAR NOM -->
+                        <div class="col">
+                            <input type="text" name="filter" class="form-control" placeholder="Rechercher un article..." aria-label="Search">
+                        </div>
 
-            <!-- Boutons Connexion et Inscription -->
-            <a href="${pageContext.request.contextPath}/login"><button type="button" class="btn btn-light text-dark me-2">Connexion</button></a>
-            <a href="${pageContext.request.contextPath}/inscription"><button type="button" class="btn btn-primary">Inscription</button></a>
-            <% } else { %>
-            <!-- Bouton Déconnexion -->
-            <a href="${pageContext.request.contextPath}/Deconnexion"><button type="button" class="btn btn-danger">Déconnexion</button></a>
-            <% } %>
+                        <!-- FILTRE PAR CATEGORIE -->
+                        <div class="col">
+                            <div class="form-floating">
+                                <select id="categorie" class="form-select" aria-label="articleCategorie" name="categorie">
+                                    <option value="" disabled selected hidden>Filtrer par catégorie</option>
+                                    <c:forEach var="categorie" items="${categories}">
+                                        <option value="${categorie.noCategorie}">${categorie.libelle}</option>
+                                    </c:forEach>
+                                </select>
+                                <label for="categorie">Categorie</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <!-- BOUTON APPLIQUER RECHERCHE -->
+                        <div class="col">
+                            <button type="submit" name="filterContent" class="btn btn-primary w-50">Appliquer recherche</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-6 text-end">
+                <% if (session.getAttribute("utilisateurConnecte") == null) { %>
+
+                <!-- Boutons Connexion et Inscription -->
+                <a href="${pageContext.request.contextPath}/login"><button type="button" class="btn btn-light text-dark me-2">Connexion</button></a>
+                <a href="${pageContext.request.contextPath}/inscription"><button type="button" class="btn btn-primary">Inscription</button></a>
+                <% } else { %>
+                <!-- Bouton Déconnexion -->
+                <a href="${pageContext.request.contextPath}/Deconnexion"><button type="button" class="btn btn-danger">Déconnexion</button></a>
+                <% } %>
+            </div>
         </div>
     </div>
-
 </header>

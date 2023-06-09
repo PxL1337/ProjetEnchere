@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Création de la vente</title>
+	<title>Détail de la vente</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- CSS Bootstrap -->
@@ -14,7 +14,6 @@
 	<link href="${pageContext.request.contextPath}/style/headers.css" rel="stylesheet">
 </head>
 <body>
-
 <!-- Barre de navigation -->
 <jsp:include page="/WEB-INF/views/header.jsp" />
 
@@ -26,58 +25,68 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 mb-5">
-			<img src="${pageContext.request.contextPath}/images/articles/article.png" class="img-thumbnail" alt="image">
+			<!-- Empty div for spacing -->
+			<div style="height: 60px;"></div>
+			<div class="card">
+				<img src="${pageContext.request.contextPath}/images/articles/article.png" class="card-img-top" alt="image">
+			</div>
 		</div>
-		<div class="col-md-6">				
+		<div class="col-md-6">
 			<h2>${article.nomArticle }</h2>
-			<div class="mb-3 d-flex align-items-center">
-	<h4 style="display: inline-block; margin-right: 90px;">Description:</h4>
-	<h6 style="display: inline-block; margin: 0;">${article.description }</h6>
-</div>
+			<div class="card">
+				<div class="card-body">
+					<div class="mb-3">
+						<h4>Description:</h4>
+						<p>${article.description }</p>
+					</div>
 
-			<div class="mb-2">
-				<h4 style="display: inline-block; margin-right: 105px;">Catégorie:</h4>
-				<h6 style="display: inline-block; margin: 0;">${article.categorie.libelle }</h6>
-			</div>		
-			<div class="mb-2">
-				<h4 style="display: inline-block; margin-right: 50px;">Meilleure offre:</h4>
-				<h6 style="display: inline-block; margin: 0;">${enchere.montantEnchere }</h6>
-				<h6 style="display: inline-block; margin: 0;"> ${enchere.proprietaire.pseudo }</h6>
-			</div>
-			<div class="mb-2">
-				<h4 style="display: inline-block; margin-right: 90px;">Mise à prix:</h4>
-				<h6 style="display: inline-block; margin: 0;">${article.prixInitial }</h6>
-			</div>
-			<div class="mb-2">
-				<h4 style="display: inline-block; margin-right: 38px;">Fin de l'enchère:</h4>
-				<h6 style="display: inline-block; margin: 0;">${article.dateFinEncheres }</h6>
-			</div>
-			
-			
-			
-			<div class="mb-2">
-				<h4 style="display: inline-block; margin-right: 138px;">Retrait:</h4>
-				<h6 style="display: inline-block; margin: 0;">${retrait.rue }</h6>
-				<h6 style="display: inline-block; margin: 0;">${retrait.codePostal }</h6>
-				<h6 style="display: inline-block; margin: 0;">${retrait.ville }</h6>
-			</div>
-			<div class="mb-2">
-				<h4 style="display: inline-block; margin-right: 120px;">Vendeur:</h4>
-				<h6 style="display: inline-block; margin: 0;">${user.pseudo }</h6>
-			</div>
-			
-			<div class="mb-2">
+					<div class="mb-3">
+						<h4>Catégorie:</h4>
+						<p>${article.categorie.libelle }</p>
+					</div>
 
-				<form action="${pageContext.request.contextPath}/creditenchere?id=${param.id}" method="post">
-					<h4 style="display: inline-block; margin-right: 42px;"><label for="articlePrixChoix">Ma proposition:</label></h4>
-					<input type="number" step="1" value="1" min="1" class="form-control-sm" id="articlePrixChoix" name="proposition" required>
+					<div class="mb-3">
+						<h4>Meilleure offre:</h4>
+						<div class="d-flex justify-content-between align-items-center">
+							<p>${enchere.montantEnchere }</p>
+							<div class="card p-2">
+								<p class="mb-0">${enchere.proprietaire.pseudo }</p>
+							</div>
+						</div>
+					</div>
 
-					<!-- Le champ caché pour transmettre l'ID -->
+					<div class="mb-3">
+						<h4>Mise à prix:</h4>
+						<p>${article.prixInitial }</p>
+					</div>
 
+					<div class="mb-3">
+						<h4>Fin de l'enchère:</h4>
+						<p>${article.dateFinEncheres }</p>
+					</div>
 
-					<button class="btn btn-primary"  type="submit">Enchérir</button>
-				</form>
-					
+					<div class="mb-3">
+						<h4>Retrait:</h4>
+						<p>${retrait.rue }, ${retrait.codePostal }, ${retrait.ville }</p>
+					</div>
+
+					<div class="mb-3">
+						<h4>Vendeur:</h4>
+						<p>${user.pseudo }</p>
+					</div>
+
+					<div class="mb-3">
+						<h4>Ma proposition:</h4>
+						<form action="${pageContext.request.contextPath}/creditenchere?id=${param.id}" method="post">
+							<div class="input-group mb-3">
+								<input type="number" step="1" value="1" min="1" class="form-control" id="articlePrixChoix" name="proposition" required style="margin-right: 10px;">
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="submit">Enchérir</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -89,6 +98,5 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.min.js"></script>
-
 </body>
 </html>
