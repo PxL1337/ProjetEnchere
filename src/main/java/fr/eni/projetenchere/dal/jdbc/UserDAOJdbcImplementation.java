@@ -241,7 +241,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-				if (resultSet.isBeforeFirst()) {
+				if (resultSet.next()) {
 					System.out.println("Le pseudo spécifié [" + comparedPseudo + "] existe déjà.");
 					return true;
 				}
@@ -261,7 +261,7 @@ public class UserDAOJdbcImplementation implements UserDAO {
 			preparedStatement.setString(1, comparedEmail);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-				if (resultSet.isBeforeFirst()) {
+				if (resultSet.next()) {
 					System.out.println("L'email spécifié [" + comparedEmail + "] existe déjà");
 					return true;
 				}
