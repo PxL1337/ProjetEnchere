@@ -31,6 +31,9 @@ import java.util.List;
         return this.listeCodesErreur;
     }
     
-    
+    public void clearErrors()
+    {
+    	listeCodesErreur.clear();
+    }
 
 }

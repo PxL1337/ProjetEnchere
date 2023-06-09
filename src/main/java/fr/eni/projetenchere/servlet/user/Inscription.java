@@ -60,6 +60,7 @@ public class Inscription extends HttpServlet {
             request.setAttribute("utilisateur", user);
             request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
             request.getRequestDispatcher("/WEB-INF/views/user/inscription.jsp").forward(request, response);
+            e.clearErrors();
         } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("erreur", "Une erreur est survenue lors de l'inscription. Veuillez réessayer plus tard.");

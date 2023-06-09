@@ -108,7 +108,7 @@ public class UserManager {
 	public static boolean validatePrenom(String prenom) {
 		String prenomPattern = "^[a-zA-Z]+$";
 		return prenom.matches(prenomPattern);
-		}
+	}
 	
 	//email
 	public boolean checkEmailAvailability(String email) throws SQLException{		
@@ -131,6 +131,7 @@ public class UserManager {
 
 	//motDePasse	
 	public static boolean validateMotDePasse(String motDePasse) throws SQLException{
+		System.out.println("MOT DE PASSE RENSEIGNÉ : " + motDePasse);
 		return motDePasse.length() >=6 && motDePasse.matches(".*[A-Z].*");		
 	}
 	
@@ -180,6 +181,8 @@ public class UserManager {
 			businessException.ajouterErreur(CodeErreur.MDP_INVALIDE);
 		}
 
+		System.out.println( "Mot de passe de confirmation : " + passwordConfirmation);
+		
 		if (!user.getMotDePasse().equals(passwordConfirmation)) {
 			businessException.ajouterErreur(CodeErreur.CONFIRMATION_MDP_INCORRECTE);
 		}
