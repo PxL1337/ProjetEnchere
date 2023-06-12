@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.projetenchere.bll.ArticleManager;
 import fr.eni.projetenchere.bll.CategorieManager;
 import fr.eni.projetenchere.bll.UserManager;
 import fr.eni.projetenchere.bo.ArticleVendu;
@@ -208,7 +209,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 
 	private Enchere mapAllEnchereListe(ResultSet resultSet) throws SQLException {
 		// Creating new objects based on the result set
-		ArticleVendu article = new ArticleVendu();
+		ArticleVendu article = ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article"));
 		article.setNoArticle(resultSet.getInt("no_article"));  // Add this line
 		article.setNomArticle(resultSet.getString("nom_article"));
 		article.setDateFinEncheres(resultSet.getDate("date_fin_encheres"));
@@ -234,7 +235,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	
 	private Enchere mapAllEnchereFiltredByCategory(ResultSet resultSet) throws SQLException {
 		// Creating new objects based on the result set
-		ArticleVendu article = new ArticleVendu();
+		ArticleVendu article = ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article"));
 		article.setNoArticle(resultSet.getInt("no_article"));
 		article.setNomArticle(resultSet.getString("nom_article"));
 		article.setDateFinEncheres(resultSet.getDate("date_fin_encheres"));
@@ -268,7 +269,10 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		Date date = new Date(timestamp.getTime());
 		enchere.setDateEnchere(date);
 		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
+		
+		ArticleVendu article = ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article"));
 		enchere.setNoArticle(resultSet.getInt("no_article"));
+		enchere.setArticle(article);
 		enchere.setNoProprietaire(resultSet.getInt("no_utilisateur"));
 
 		User proprietaire = UserManager.getInstance().selectUserByID(resultSet.getInt("no_utilisateur"));

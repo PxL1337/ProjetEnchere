@@ -72,7 +72,7 @@
 
 					<div class="mb-3">
 						<h4>Vendeur:</h4>
-						<p>${user.pseudo }</p>
+						<p>${article.utilisateur.pseudo }</p>
 					</div>
 
 					<div class="mb-3">

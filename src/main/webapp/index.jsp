@@ -51,7 +51,7 @@
                                 		 <li class="list-group-item"><strong>Vendeur : </strong> ${enchere.proprietaire.pseudo}</li>
                                 	</c:when>
                                 	<c:otherwise>
-                                	 	<li class="list-group-item"><strong>Vendeur : </strong><a href="${pageContext.request.contextPath}/ProfileUser?id=${enchere.proprietaire.noUtilisateur}" class="btn btn-outline-primary">${enchere.proprietaire.pseudo}</a></li>
+                                	 	<li class="list-group-item"><strong>Vendeur : </strong><a href="${pageContext.request.contextPath}/ProfileUser?id=${enchere.proprietaire.noUtilisateur}" class="btn btn-outline-primary">${enchere.article.utilisateur.pseudo}</a></li>
                                 	</c:otherwise>
                                 </c:choose>
                                 
