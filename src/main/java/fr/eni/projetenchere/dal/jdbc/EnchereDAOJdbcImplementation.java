@@ -25,7 +25,7 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 
 	final String SELECT_ALL_ENCHERES = "SELECT E.no_enchere, E.date_enchere, E.montant_enchere, A.no_article, A.nom_article, A.date_fin_encheres, U.no_utilisateur, U.pseudo " +
 			"FROM ENCHERES E JOIN ARTICLES_VENDUS A ON A.no_article = E.no_article " +
-			"JOIN UTILISATEURS U ON E.no_utilisateur = U.no_utilisateur ORDER BY E.date_enchere";
+			"JOIN UTILISATEURS U ON A.no_utilisateur = U.no_utilisateur ORDER BY E.date_enchere";
 	
 	final String SELECT_ALL_ENCHERES_BY_CATEGORIE = "SELECT e.*, av.no_categorie, av.nom_article, av.date_fin_encheres, av.no_utilisateur, u.no_utilisateur, u.pseudo "
 			+ "FROM ENCHERES e "
@@ -208,15 +208,31 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 	}
 
 	private Enchere mapAllEnchereListe(ResultSet resultSet) throws SQLException {
-		// Creating new objects based on the result set
-		ArticleVendu article = ArticleManager.getInstance().selectArticleByID(resultSet.getInt("no_article"));
-		article.setNoArticle(resultSet.getInt("no_article"));  // Add this line
-		article.setNomArticle(resultSet.getString("nom_article"));
-		article.setDateFinEncheres(resultSet.getDate("date_fin_encheres"));
+		// Creating new objects based on the result set		
+		ArticleVendu article = new ArticleVendu(
+				resultSet.getInt("no_article"), 
+				resultSet.getString("nom_article"), 
+				resultSet.getDate("date_fin_encheres"));
+		/*
+		 * ArticleVendu article =
+		 * ArticleManager.getInstance().selectArticleByID(resultSet.getInt(
+		 * "no_article"));
+		 */
+		/*
+		 * article.setNoArticle(resultSet.getInt("no_article")); // Add this
+		 * line article.setNomArticle(resultSet.getString("nom_article"));
+		 * article.setDateFinEncheres(resultSet.getDate("date_fin_encheres"));
+		 */
+		
+		System.out.println("ARTICLE DE L'ENCHERE : " + article.getNomArticle());
 
-		User proprietaire = new User();
-		proprietaire.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
-		proprietaire.setPseudo(resultSet.getString("pseudo"));
+		User proprietaireArticle = new User();
+		proprietaireArticle.setNoUtilisateur(resultSet.getInt("no_utilisateur"));
+		proprietaireArticle.setPseudo(resultSet.getString("pseudo"));
+		
+		System.out.println("PROPRIETAIRE ARTICLE : " + proprietaireArticle);
+		
+		article.setUtilisateur(proprietaireArticle);
 
 		Enchere enchere = new Enchere();
 		enchere.setNo_Enchere(resultSet.getInt("no_enchere"));  // Add this line
@@ -225,10 +241,14 @@ public class EnchereDAOJdbcImplementation implements EnchereDAO {
 		Date date = new Date(timestamp.getTime());
 		enchere.setDateEnchere(date);
 		enchere.setMontantEnchere(resultSet.getInt("montant_enchere"));
+		
 		enchere.setArticle(article);
-		enchere.setProprietaire(proprietaire);
 		enchere.setNoArticle(resultSet.getInt("no_article"));
+		
+		enchere.setProprietaire(proprietaireArticle);
 		enchere.setNoProprietaire(resultSet.getInt("no_utilisateur"));
+		
+		System.out.println("MAPPING POUR L'AFFICHAGE DE TOUTES LES ENCHERES : " + enchere.toString());
 
 		return enchere;
 	}

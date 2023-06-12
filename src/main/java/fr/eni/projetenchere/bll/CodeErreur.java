@@ -2,6 +2,8 @@ package fr.eni.projetenchere.bll;
 
 public class CodeErreur {
 
+	public static final String ERROR_URL_PATTERN = "&error=";
+	
     // User
 	public static final int PSEUDO_INVALIDE = 20000;
     public static final int NOM_INVALIDE = 20001;
@@ -30,6 +32,7 @@ public class CodeErreur {
     public static final int ENCHERE_INFERIEUR_PRIX_DE_VENTE = 20026;
     public static final int MDP_INCORRECT = 20027;
     public static final int CONFIRMATION_MDP_INCORRECTE = 20028;
+    public static final int SUPPRESSION_COMPTE_IMPOSSIBLE = 20029;
 
     // ARTICLES - 20100 a 20199
     public static final int ARTICLE_INVALIDE = 20100;
@@ -59,5 +62,6 @@ public class CodeErreur {
     public static final int ENCHERE_DATE_INVALIDE = 20400;
     public static final int ENCHERE_NO_ARTICLE_INVALIDE = 20401;
     public static final int ENCHERE_NO_UTILISATEUR_INVALIDE = 20402;
-    public static final int ENCHERE_TRANSACTION_INVALIDE = 20403;
+    public static final int ENCHERE_PROPOSITION_INFERIEURE_OU_EGALE = 20403;
+    public static final int ENCHERE_UTILISATEUR_FOND_INSUFFISANT = 20404;
 }

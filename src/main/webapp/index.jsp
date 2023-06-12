@@ -48,10 +48,12 @@
                                 <li class="list-group-item"><strong>Fin de l'enchère :</strong> ${enchere.article.dateFinEncheres}</li>
                                 <c:choose>
                                 	<c:when test="${empty utilisateurConnecte }">
-                                		 <li class="list-group-item"><strong>Vendeur : </strong> ${enchere.proprietaire.pseudo}</li>
+                                <!-- QUAND DECONNECTE : BOUTON ACCES VENDEUR NON-CLIQUABLE -->
+                                		 <li class="list-group-item"><strong>Vendeur : </strong> ${enchere.article.utilisateur.pseudo}</li>
                                 	</c:when>
                                 	<c:otherwise>
-                                	 	<li class="list-group-item"><strong>Vendeur : </strong><a href="${pageContext.request.contextPath}/ProfileUser?id=${enchere.proprietaire.noUtilisateur}" class="btn btn-outline-primary">${enchere.article.utilisateur.pseudo}</a></li>
+                                <!-- QUAND CONNECTE : BOUTON ACCES VENDEUR CLIQUABLE -->
+                                	 	<li class="list-group-item"><strong>Vendeur : </strong><a href="${pageContext.request.contextPath}/ProfileUser?id=${enchere.article.utilisateur.noUtilisateur}" class="btn btn-outline-primary">${enchere.article.utilisateur.pseudo}</a></li>
                                 	</c:otherwise>
                                 </c:choose>
                                 

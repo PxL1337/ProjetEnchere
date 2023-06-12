@@ -36,8 +36,6 @@ public class CreditEnchere extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = request.getRequestURL().toString();
-		//System.out.println("url : " + url);
 		String propositionStr = request.getParameter("proposition");
 		int proposition = Integer.parseInt(propositionStr);
 		//System.out.println("proposition : " + proposition);
@@ -47,6 +45,8 @@ public class CreditEnchere extends HttpServlet {
 		// Récupérer l'enchère
 
 
+		BusinessException be = new BusinessException();
+		
 		try {
 			Enchere enchere = enchereManager.selectEnchereByID(enchereID);
 			User utilisateurConnecte = (User) request.getSession().getAttribute("utilisateurConnecte");
@@ -70,16 +70,36 @@ public class CreditEnchere extends HttpServlet {
 				enchereManager.updateEnchereNoProprietaire(enchere, utilisateurConnecte.getNoUtilisateur());
 				request.getSession().setAttribute("derniereEnchereID", enchereID);
 				response.sendRedirect(request.getContextPath() + "/detailvente" + "?id=" + enchereID);
-			}else {
-				BusinessException be = new BusinessException();
-				be.ajouterErreur(CodeErreur.ENCHERE_TRANSACTION_INVALIDE);
+				
+				return;
+			}
+			
+			if(proposition <= enchere.getMontantEnchere())
+			{
+				be.ajouterErreur(CodeErreur.ENCHERE_PROPOSITION_INFERIEURE_OU_EGALE);
+				request.setAttribute("listeCodesErreur", be.getListeCodesErreur());
 				throw be;
 			}
+			
+			if(utilisateurConnecte.getCredit() < enchere.getMontantEnchere())
+			{				
+				be.ajouterErreur(CodeErreur.ENCHERE_UTILISATEUR_FOND_INSUFFISANT);
+				request.setAttribute("listeCodesErreur", be.getListeCodesErreur());
+				throw be;
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (BusinessException e) {
-			response.sendRedirect(request.getContextPath() + "/detailvente" + "?id=" + enchereID);
+			
+			String errorCode = be.getListeCodesErreur().toString();
+			errorCode = errorCode.replace("[", "").replace("]", "");
+			
+			System.out.println("Code erreur : " + errorCode);
+			
+			response.sendRedirect(request.getContextPath() + "/detailvente?id=" + enchereID + "&error=" + errorCode);
+			be.clearErrors();
 		}
 	}
 

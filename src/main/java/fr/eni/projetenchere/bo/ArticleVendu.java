@@ -54,6 +54,14 @@ public class ArticleVendu
 		this.utilisateur = UserManager.getInstance().selectUserByID(userID);		
 		this.categorie = CategorieManager.getInstance().selectCategorieByID(categoryID);		 
 	}
+    
+    // AFFICHAGE ENCHERES
+    public ArticleVendu(int noArticle, String nomArticle, Date dateFinEncheres) throws SQLException
+    {
+    	this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.dateFinEncheres = dateFinEncheres;
+	}
 
 		//---------------------------------------------GETTER SETTER ZONE-------------------------------------------------------//
 		public int getNoArticle() {

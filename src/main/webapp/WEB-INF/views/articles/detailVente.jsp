@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="fr.eni.projetenchere.messages.LecteurMessage" %>
+<%@ page import="fr.eni.projetenchere.bll.CodeErreur" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
@@ -90,6 +91,18 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- http://localhost:8080/ProjetEnchere/detailvente?id=5&error=20403 -->
+	<!-- FACTORISER LIRE URI ET RENVOYER CODE ERROR -->
+	<%
+	String errorCode = LecteurMessage.getErrorCodeFromURI(request, CodeErreur.ERROR_URL_PATTERN );
+		if (errorCode.length() != 0)
+		{%>
+			<div class="alert alert-danger">
+			        <%= LecteurMessage.getMessage(Integer.parseInt(errorCode)) %>
+			</div>
+	<% } %>
+        
 </div>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />
